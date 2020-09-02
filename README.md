@@ -122,6 +122,7 @@ coisas que irão cair no curso:
     * Higher Kinded Types (HKTs)
     * sinônimos de tipos
     * phantom types
+    * type roles
     * Void / bottom types
     * o que é unsoundness?
     * o que é um sistema de tipos decidível?
