@@ -110,7 +110,7 @@ coisas que irão cair no curso:
     * [o que são thunks?](o-que-sao-thunks)
     * [WHNF](whnf)
     * [day's plot twist: laziness são impuras e seq te permite ter efeitos observáveis](plor-twist)
-* [quantificação]
+* [quantificação](quantificacao)
     * [quantificação universal](quantificacao-universal)
     * [quantificação existencial](quantificacao-existencial)
     * [rankNTypes](rankntypes)
