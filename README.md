@@ -7,169 +7,175 @@ Este repósitório irá te ensinar programação funcional do zero com Haskell :
 Para contribuir com o projeto, você deve seguir as seguintes regras:
 
 1. Sem comentários ou exemplos que possam ofender os demais
-2. Uma explicação clara, direta e sem uso de muitos termos complexos
-3. Um código menor e não complexo (aonde o fluxo do programa se interage de várias maneiras entre si criando abstrações) será priorizado
-4. Caso você encontre alguma informação errada ou algum erro, faça o pull request explicando exatamente o problema
+2. Uma explicação clara, direta e sem uso de muitos termos complexos.
+3. Um código menor e não complexo (aonde o fluxo do programa se interage de várias maneiras entre si criando abstrações) será priorizado.
+4. Caso você encontre alguma informação errada ou algum erro, faça o pull request explicando exatamente o problema.
 5. A explicação deve estar no idioma português. Sobre a escrita do código, tem que ser em inglês. E sobre comentários, evite fazê-los, apenas se forem exemplos muito complexos, caso contrário, tente explicar tudo no enunciado. Comentários devem estar em português.
+6. Todo novo tópico deve ser incluído no prefácio, e todo novo header deve conter um id específicado manualmente.
+7. Apenas abrevie id se é normal abreviar a frase. E fique atento para não usar um id mais já utilizado.
+8. Os nomes dos ids não devem conter caracteres especiais a menos que seja o `-`, e todas as letras devem ser em maiúsculas.
+9. Você deve explicitar o motivo do pull request, caso contrário, o PR pode não ser aceito (caso você mude muitas coisas, você pode colocar algo como "alguns erros fixados").
+10. Se for modificar as regras, faça-o em um PR separado.
+11. O commit deve estar em inglês.
 
 obs: se você sabe bem matemática, eu ficaria bastante grato se você pudesse ajudar a criar um capítulo sobre matemática ;)
 
 # Conteúdo
 
 coisas que irão cair no curso:
-* instalação
-    * instalando o stack
-    * configurando o stack
-    * stack vs cabal
-    * instalando o SWI-prolog
-    * instalando o Emacs
-        * Windows
-        * Linux
-    * configurando o Emacs e o MELPA
-    * instalando Agda e o agda-stdlib
-    * configurando o nosso .ghci + hoogle
-* história da programação funcional e do lambda-calculus
-    * LISP
-    * ML
-    * evolução do lambda-calculus
-* características funcionais
-    * dados imutáveis
-    * transparência referencial
-    * sem nulos e exceções
-    * toda função retorna algo
-    * first class functions
-    * sem globais
-    * pureza
-    * side effects
-* lambda-calculus
-    * funções simples
-    * números
-    * lógica booleana
-* programação lógica
-    * o que é programação lógica?
-    * a linguagem prolog
-    * predicados
-    * modus ponens
-    * backtracking
-    * resolução SLD
-    * cut, negação e a resolução SLDNF
-* programação funcional no geral
-    * morfismo
-    * polimorfismo
-    * função id
-    * isomorfismo
-    * pattern matching
-    * composição
-    * lifting
-    * curry e point free / programação tácita
-    * Higher Order Functions (HOF) & closures
-    * recursão
-    * tail call recursion & tail call optimization
-    * total functions & partial functions
-    * list comprehension
-    * map
-    * filter
-    * reduce
-    * fold / reduce
-    * zip
-    * continuation passing style (CPS)
-    * tipos em haskell
-* introdução a teoria das categorias
-    * o que é uma categoria?
-    * endomorfismo
-    * idempotência
-    * monomorfismo
-    * o que são domínios e codomínios?
-    * setóide
-    * semigrupo
-    * bijeção
-    * injeção
-    * surjeção
-    * o que é uma operação binária?
-    * o que são funtores?
-    * o que são endofuntores?
-    * o que são monóides?
-    * o que são applicative functors?
-    * o que são arrows?
-    * o que são monads?
-    * o prefixo co
-    * comonads
-    * transformações naturais
-    * produtos e coprodutos
-* lazy programming
-    * o que é laziness?
-    * o que é strictness?
-    * bang patterns
-    * irrefutable patterns
-    * o que são thunks?
-    * WHNF
-    * day's plot twist: laziness são impuras e seq te permite ter efeitos observáveis
-* quantificação
-    * quantificação universal
-    * quantificação existencial
-    * rankNTypes
-    * Hindley-Milner
-    * System F
-    * System Fω
-    * System FC
-    * ScopedTypeVariables
-    * tipos impredicativos
-* type-level programming
-    * typeclasses
-    * subtipagem
-    * variância
-    * tipos de dados abstratos (ADTs) / sum types, nullary e unários
-    * Higher Kinded Types (HKTs)
-    * sinônimos de tipos
-    * phantom types
-    * type roles
-    * Void / bottom types
-    * o que é unsoundness?
-    * o que é um sistema de tipos decidível?
-    * o problema da parada
-    * o que turing-complete tem a ver com o problema da parada?
-    * absurd
-    * bottom values
-    * tipos de dados algébricos generalizados (GADTs)
-    * type families e data families
-    * o que é type-level programming?
-    * closed type families
-    * o que são promotions?
-    * HLists
-* coisas específicas de Haskell
-    * boolean blindness
-    * traversable
-    * TypeApplications
-    * FlexibleInstances
-    * FlexibleContexts
-    * OverloadedStrings
-    * OverloadedLists
-    * Text e ByteString
-    * free monads
-    * funções de ponto fixo
-    * design by contract
-* recursion schemes
-    * catamorfismo
-    * anamorfismo
-    * hilomorfismo
-    * apomorfismo
-    * paramorfismo
-    * homomorfismo
-* lenses
-* tipos dependentes
-    * o que são tipos dependentes?
-    * universos
-    * refinamento de tipos
-    * singleton types
-* livros recomendados
-    * what I wish I knew when learning Haskell
-    * haskell programming from first principles
-    * category theory for programmers
-    * SICP
-    * CTMCP
-    * learn prolog now
-    * programming languages foundations in Agda
-    * types and programming languages
-    * HtDP
-    * HoTT
-    * purely functional data structures
+* [instalação](instalacao)
+    * [instalando o stack](instalando-o-stack)
+    * [configurando o stack](configurando-o-stack)
+    * [stack vs cabal](stack-vs-cabal)
+    * [instalando o SWI-prolog](instalando-o-swi-prolog)
+    * [instalando o Emacs](instalando-o-emacs)
+        * [Windows](emacs-windows)
+        * [Linux](emacs-linux)
+        * [BSD](emacs-bsd)
+    * [configurando o Emacs e o MELPA](configurando-o-emacs-e-o-melpa)
+    * [instalando Agda e o agda-stdlib](instalando-agda-e-o-agda-stdlib)
+    * [configurando o nosso .ghci + hoogle](configurando-o-nosso-ghci-e-hoogle)
+* [história da programação funcional e do lambda-calculus](historia-da-programacao-funcional)
+    * [LISP](lisp)
+    * [ML](ml)
+    * [evolução do lambda-calculus](evolucao-do-lambda-calculus)
+* [características funcionais](caracteristicas-funcionais)
+    * [dados imutáveis](dados-imutaveis)
+    * [transparência referencial](transparencia-referencial)
+    * [sem nulos e exceções](sem-nulos-e-excecoes)
+    * [toda função retorna algo](toda-funcao-retorna-algo)
+    * [first class functions](first-class-Functions)
+    * [sem globais](sem-globais)
+    * [pureza](pureza)
+    * [side effects](side-effects)
+* [lambda-calculus](lambda-calculus)
+    * [funções simples](funcoes-simples)
+    * [números](numeros)
+    * [lógica booleana](logica-booleana)
+* [programação lógica](programacao-logica)
+    * [o que é programação lógica?](o-que-e-programacao-logica)
+    * [a linguagem prolog](a-linguagem-prolog)
+    * [predicados](predicados)
+    * [modus ponens](modus-ponens)
+    * [backtracking](backtracking)
+    * [resolução SLD](resolucao-sld)
+    * [cut, negação e a resolução SLDNF](cut-negacao-e-resolucao-sldnf)
+* [programação funcional no geral](programacao-funcional-no-geral)
+    * [morfismo](morfismo)
+    * [polimorfismo](polimorfismo)
+    * [função id](funcao-id)
+    * [isomorfismo](isomorfismo)
+    * [pattern matching](pattern-matching)
+    * [omposição](composicao)
+    * [lifting](lifting)
+    * [curry e point free / programação tácita](programacao-tacita)
+    * [Higher Order Functions (HOF) & closures](higher-order-functions)
+    * [recursão](recursao)
+    * [tail call recursion & tail call optimization](tail-call-recursion)
+    * [total functions & partial functions](total-functions)
+    * [list comprehension](list-comprehension)
+    * [map](map)
+    * [filter](filter)
+    * [fold / reduce](fold-reduce)
+    * [zip](zip)
+    * [continuation passing style (CPS)](continuation-passing-style)
+    * [tipos em haskell](tipos-em-haskell)
+* [introdução a teoria das categorias](introducao-a-teoria-das-categorias)
+    * [o que é uma categoria?](o-que-e-uma-categoria)
+    * [endomorfismo](endomorfismo)
+    * [idempotência](idempotencia)
+    * [monomorfismo](monomorfismo)
+    * [o que são domínios e codomínios?](o-que-sao-dominios-e-codominios)
+    * [setóide](setoide)
+    * [semigrupo](semigrupo)
+    * [bijeção](bijecao)
+    * [injeção](injecao)
+    * [surjeção](surjecao)
+    * [o que é uma operação binária?](o-que-e-uma-operacao-binaria)
+    * [o que são funtores?](o-que-sao-funtores)
+    * [o que são endofuntores?](o-que-sao-endofuntores)
+    * [o que são monóides?](o-que-sao-monoides)
+    * [o que são applicative functors?](o-que-sao-applicative-functors)
+    * [o que são arrows?](o-que-sao-arrows)
+    * [o que são monads?](o-que-sao-monads)
+    * [o prefixo co](o-prefixo-co)
+    * [comonads](comonads)
+    * [transformações naturais](transformacoes-naturais)
+    * [produtos e coprodutos](produtos-e-coprodutos)
+* [lazy programming](lazy-programming)
+    * [o que é laziness?](o-que-e-laziness)
+    * [o que é strictness?](o-que-e-strictness)
+    * [bang patterns](bang-patterns)
+    * [irrefutable patterns](irrefutable-patterns)
+    * [o que são thunks?](o-que-sao-thunks)
+    * [WHNF](whnf)
+    * [day's plot twist: laziness são impuras e seq te permite ter efeitos observáveis](plor-twist)
+* [quantificação]
+    * [quantificação universal](quantificacao-universal)
+    * [quantificação existencial](quantificacao-existencial)
+    * [rankNTypes](rankntypes)
+    * [Hindley-Milner](hindley-milner)
+    * [System F](system-f)
+    * [System Fω](system-f-omega)
+    * [System FC](system-fc)
+    * [ScopedTypeVariables](scoped-type-variables)
+    * [tipos impredicativos](tipos-impredicativos)
+* [type-level programming](type-level-programming)
+    * [typeclasses](typeclasses)
+    * [subtipagem](subtipagem)
+    * [variância](variancia)
+    * [tipos de dados abstratos (ADTs) / sum types, nullary e unários](adts)
+    * [Higher Kinded Types (HKTs)](hkts)
+    * [sinônimos de tipos](sinonimos-de-tipos)
+    * [phantom types](phantom-types)
+    * [type roles](type-roles)
+    * [Void / bottom types](bottom-types)
+    * [o que é unsoundness?](o-que-e-unsoundness)
+    * [o que é um sistema de tipos decidível?](o-que-e-sistema-indecidivel)
+    * [o problema da parada](o-problema-da-parada)
+    * [o que turing-complete tem a ver com o problema da parada?](turing-complete)
+    * [absurd](absurd)
+    * [bottom values](bottom-values)
+    * [tipos de dados algébricos generalizados (GADTs)](gadts)
+    * [type families e data families](type-families)
+    * [o que é type-level programming?](o-que-e-type-level-programming)
+    * [closed type families](closed-type-families)
+    * [o que são promotions?](o-que-sao-promotions)
+    * [HLists](hlists)
+* [coisas específicas de Haskell](coisas-especificas-de-haskell)
+    * [boolean blindness](boolean-blindness)
+    * [traversable](traversable)
+    * [TypeApplications](typeapplications)
+    * [FlexibleInstances](flexibleinstances)
+    * [FlexibleContexts](flexiblecontexts)
+    * [OverloadedStrings](overloadedstrings)
+    * [OverloadedLists](overloadedlists)
+    * [Text e ByteString](text-e-bytestring)
+    * [free monads](free-monads)
+    * [funções de ponto fixo](funcoes-de-ponto-fixo)
+    * [design by contract](design-by-contract)
+* [recursion schemes](recursion-schemes)
+    * [catamorfismo](catamorfismo)
+    * [anamorfismo](anamorfismo)
+    * [hilomorfismo](hilomorfismo)
+    * [apomorfismo](apomorfismo)
+    * [paramorfismo](paramorfismo)
+    * [homomorfismo](homomorfismo)
+* [lenses](lenses)
+* [tipos dependentes](tipos-dependentes)
+    * [o que são tipos dependentes?](o-que-sao-tipos-dependentes)
+    * [universos](universos)
+    * [refinamento de tipos](refinamento-de-tipos)
+    * [singleton types](singleton-types)
+* [livros recomendados](livros-recomendados)
+    * [what I wish I knew when learning Haskell](wiwikwlh)
+    * [haskell programming from first principles](haskell-book)
+    * [category theory for programmers](category-theory-for-programmers)
+    * [SICP](sicp)
+    * [CTMCP](ctmcp)
+    * [learn prolog now](lpn)
+    * [programming languages foundations in Agda](plfa)
+    * [types and programming languages](types-and-programming-languages)
+    * [HtDP](htdp)
+    * [HoTT](hott)
+    * [purely functional data structures](purely-functional-data-structures)
