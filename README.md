@@ -30,9 +30,8 @@ coisas que irão cair no curso:
     * [instalando o SWI-prolog](instalando-o-swi-prolog)
     * [instalando o Emacs](instalando-o-emacs)
         * [Windows](emacs-windows)
-        * [Linux](emacs-linux)
-        * [BSD](emacs-bsd)
-    * [configurando o Emacs e o MELPA](configurando-o-emacs-e-o-melpa)
+        * [Unix](emacs-unix-like)
+    * [configurando o Emacs](configurando-o-emacs)
     * [instalando Agda e o agda-stdlib](instalando-agda-e-o-agda-stdlib)
     * [configurando o nosso .ghci + hoogle](configurando-o-nosso-ghci-e-hoogle)
 * [história da programação funcional e do lambda-calculus](historia-da-programacao-funcional)
@@ -179,3 +178,107 @@ coisas que irão cair no curso:
     * [HtDP](htdp)
     * [HoTT](hott)
     * [purely functional data structures](purely-functional-data-structures)
+
+## instalação {#instalacao}
+
+### instalando o stack {#instalando-o-stack}
+
+O stack vai ser o seu segundo melhor amigo daqui pra frente, atrás apenas do GHC. Ele è um gerenciador de pacotes e resolve muitos problemas por você. Para instalá-lo, acesse <https://docs.haskellstack.org/en/stable/README/> e siga o manual de instalação para o seu sistema operacional. Como nem tudo nesta vida é fácil, recomendo você ler a documentação do stack em <https://docs.haskellstack.org/en/stable/GUIDE/> para não ter problemas futuros, e caso os tenha, que saiba resolver. E digo isso por experiência própria :)
+
+### configurando o stack {#configurando-o-stack}
+
+Para configurar o stack, você primeiro deve rodar o comando:
+
+`$ stack setup`
+
+A partir daí, vai demorar um pouco até que a instalação seja concluída. Ele vai instalar todas as ferramentas necessárias para o nosso ambiente Haskell e você pode conferí-las (e no futuro quem sabe poder apagá-las) no diretório `$HOME/.stack`. Caso você por alguma razão queira mudar a versão do GHC, consulte a [questão no stack overflow](https://stackoverflow.com/questions/44346435/change-ghci-version-on-stack) que se trata sobre isso. Caso alguma das libs que formos usar não esteja incluída junto do GHC, tente instalar elas pelo nome, e.g: Control.Comonad seria um `stack (ou cabal) install comonad`. Para as outras libs, procure na internet como instalá-las.
+
+Agora, vamos instalar o cabal. Basicamente, como a Wikipédia diz:
+
+> O Cabal foi introduzido para simplificar o empacotamento de software e módulos Haskell. Ele foi adicionado ao Glasgow Haskell Compiler versão 6.4 como gerenciador de pacotes padrão, junto com o gerenciador interno ghc-pkg do GHC. O binário real cabal e a biblioteca Cabal são desenvolvidas em pacotes diferentes.
+
+Fonte: [Wikipedia-EN](https://en.m.wikipedia.org/wiki/Cabal_(software))
+
+Iremos discutir no capítulo a seguir as diferenças dele pro stack.
+
+### stack vs cabal {#stack-vs-cabal}
+
+Basicamente o stack usa o cabal por baixo, mas usa o stackage como repositório ao invés do hackage como o cabal. E pelo stack usar o cabal por baixo, você não tem perda de compatibilidade. Mas é apenas isso?! Não!! O stack é um cabal melhorado ou mais automatizado. Basicamente o stack evita de você ter as cabal hells, uma dor de cabeça imensa para programadores Haskell no passado! Apesar do cabal ter evoluído bastante nos últimos tempos com o `cabal sandbox` e os comandos new-*, iremos usar o stack neste tutorial. Mas fica a sua escolha.
+
+### instalando o SWI-prolog {#instalando-o-swi-prolog}
+
+Iremos ensinar um pouco sobre a linguagem prolog aqui, e já é bom ter de antemão, o interpretador instalado. Para instalá-lo, confira no site oficial e instale de acordo com o seu sistema operacional (ou você pode pesquisar no gerenciador de pacotes da sua distribuição, mas não é uma coisa que geralmente se recomenda) em <https://www.swi-prolog.org/Download.html>.
+
+### instalando o Emacs {#instalando-o-emacs}
+
+Basicamente o Emacs é um editor de texto muito poderoso (podendo acessar o telegram, músicas, servir como daemon init do sistema, ser usado para fazer programação literária e muito mais), que usa a linguagem Elisp, uma DSL parecida com Common LISP. Caso você esteja acostumado com o VI/VIM/neovim, não se preocupe, ensinaremos a instalar o evil depois, que irá nos permitir usar keybindings (combinações de teclas) iguais as do VI no Emacs. Mas até mesmo usando as keybindings do VI, acho que é importante saber Emacs, portanto, eu recomendo você ler o [tour sob o Emacs](https://www.gnu.org/software/emacs/tour).
+
+Mas por que usar o Emacs? Já que não importa a maneira como seu código será escrito, não é? Mas infelizmente (ou felizmente para você, leitor que está descobrindo novas coisas) a linguagem de programação Agda é muito dependente do Emacs.
+
+#### Windows {#emacs-windows}
+
+Para instalar o Emacs no seu sistema operacional Windows, acesse a [página de download](https://ftp.gnu.org/gnu/emacs/windows/) do projeto GNU e escolha a melhor opção para o seu sistema.
+
+#### Unix {#emacs-unix-like}
+
+Para instalar o Emacs em um sistema unix-like, você pode instalar ele pelo gerenciador de pacotes mesmo que não tem problema. Mas caso não confie no gerenciador de pacotes da sua distribuição, instale pelo [site oficial](https://www.gnu.org/software/emacs/download.html).
+
+### configurando o Emacs {#configurando-o-emacs}
+
+Basicamente, o Emacs tem 3 implementações de gerenciamento de pacotes:
+
+- [GNU ELPA](https://elpa.gnu.org/) talvez o nais popular de todos, e bem pequeno, mantido pelo projeto GNU.
+- [MELPA](https://melpa.org) é um repositório não oficial e também é o repósitório com a maior quantidade de pacotes.
+    - [MELPA stable](https://stable.melpa.org) é um MELPA que inclui apenas paco5es estáveis. Ele è o que tem menos pacotes de todos.
+- [Marmalade](https://marmalade-repo.org) o marmalade è um projeto já morto, e não faz sentido de usarmos aqui. Apesar dele ter sido extensivamente utilizado no passado.
+
+Enfim... Bora parar de falar. Basicamente, o Emacs tem os arquivos de configuração localizados em $HOME/.emacs.d/init.el (ambos Windows e Linux) ou em $HOME/.emacs. Muita gente usa o .emacs, mas o correto seria usar o .emacs.d pois seus arquivos de configuração ficam mais organizados. Após instalar o Emacs, insira isso dentro do `$HOME/.emacs.d/init.el`:
+
+```el
+(require 'package)
+(add-to-list 'package-archives
+  '("melpa" . "http://melpa.milkbox.net/packages/"))
+(package-initialize)
+```
+
+Isso irá habilitar o repositório MELPA. Agora, é hora de usar o Emacs... Por causa do Emacs demorar muito para ser iniciado, muita gente prefere usar o emacsclient porque ele deixa o processo rodando com os arquivos já carregados, e isso fez meu Emacs sair de 15 segundos de inicialização para 2 segundos. Para isso, rode o comando:
+
+`$ emacs --daemon`
+
+Após isso, ele carregará todos os processos. A partir daí, não use mais emacs, e sim emacsclient, exemplo:
+
+`$ emacsclient foo.hs`
+
+Após isso, entre em qualquer arquivo com o emacs e tecle `M-x`, aonde a tecla M (meta) é o Alt do seu teclado. Agora, iremos atualizar o repositório digitando `package-refresh-contents` após digitar `M-x` (obs: se você ver o símbolo RET, ele se refere ao enter/return key). Isso vai atualizar a lista de pacotes do repósitório. Agora, rode `M-x package-install RET helm`, basicamente o helm é uma interface pro `M-x` mais moderna e intuitiva. Para configurá-lo, adicione estas linhas no seu arquivo de configuração:
+
+```el
+(require 'helm-config)
+
+(use-package lsp-ui)
+
+(global-set-key (kbd "M-x") #'helm-M-x)
+(global-set-key (kbd "C-x r b") #'helm-filtered-bookmarks)
+(global-set-key (kbd "C-x C-f") #'helm-find-files)
+
+(helm-mode 1)
+```
+
+Isto irá habilitar o helm. Para sair do Emacs, basta digitar `C-x C-c` aonde C è o control. Agora, vamos instalar o evil da mesma forma que instalamos o helm: `M-x package-install RET evil RET`. Após isso, adicione as seguintes linhas de configuração:
+
+```el
+(require 'evil)
+(evil-mode 1)
+```
+
+E por último, mas não menos importante, vamos habilitar a contagem de linhas e o auto-complete do Emacs adicionando as seguintes linhas de configurações:
+
+```el
+(when (version<= "26.0.50" emacs-version )
+  (global-display-line-numbers-mode))
+
+(add-hook 'emacs-startup-hook
+          (lambda ()
+            (auto-complete-mode t)))
+```
+
+No futuro, iremos ensinar a como configurar mais ainda o Emacs :)
