@@ -34,7 +34,7 @@ coisas que irão cair no curso:
     * [configurando o Emacs](#configurando-o-emacs)
     * [instalando Agda e o agda-stdlib](#instalando-agda-e-o-agda-stdlib)
     * [configurando o nosso .ghci + hoogle](#configurando-o-nosso-ghci-e-hoogle)
-* [história da programação funcional e do lambda-calculus](#historia-da-programacao-funcional)
+* [história da programação funcional e do lambda-calculus](#história-da-programação-funcional-e-do-lambda-calculus)
     * [LISP](#lisp)
     * [ML](#ml)
     * [evolução do lambda-calculus](#evolucao-do-lambda-calculus)
@@ -337,3 +337,11 @@ Agora, para testar, rode:
 E então, rode:
 
 `λ :hoogle "a -> a"`
+
+## história da programação funcional e do lambda calculus
+
+### LISP
+
+Aiai... LISP, o que eu posso dizer desta `((((((((maravilhosa))))))))` linguagem? Basicamente, LISP foi a segunda linguagem criada no mundo, a primeira linguagem interpretada, a primeira linguagem a ter um GC, a primeira linguagem homoicônica, a primeira linguagem com computação simbólica, a primeira linguagem a ter if, a primeira linguagem a ter meta-programação, a primeira linguagem funcional, a primeira linguagem reflexiva, a pioneira em linguística e inteligência artificial, sem falar das LISPs machines, além de seu inventor ter inventado o time sharing, impulsionou a criação de DSLs (linguagens de domínio específico), pioneira em recursão, estruturas de dados, self-hosting compiler, tipagem dinâmica... E não para por aí. Se eu quisesse, faria um artigo inteiro sobde LISP e o John McCarthy.
+
+LISP não é só importante por ter sido a primeira linguagem funcional, mas ela é um elemento importante para a próxima linguagem que iremos falar adiante: ML, a mãe de Haskell e da programação funcional moderna.
