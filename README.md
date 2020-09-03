@@ -29,8 +29,8 @@ coisas que irão cair no curso:
     * [stack vs cabal](#stack-vs-cabal)
     * [instalando o SWI-prolog](#instalando-o-swi-prolog)
     * [instalando o Emacs](#instalando-o-emacs)
-        * [Windows](#emacs-windows)
-        * [Unix](#emacs-unix-like)
+        * [Emacs no Windows](#emacs-no-windows)
+        * [Emacs em Unix-like](#emacs-em-unix-like)
     * [configurando o Emacs](#configurando-o-emacs)
     * [instalando Agda e o agda-stdlib](#instalando-agda-e-o-agda-stdlib)
     * [configurando o nosso .ghci + hoogle](#configurando-o-nosso-ghci-e-hoogle)
@@ -179,13 +179,13 @@ coisas que irão cair no curso:
     * [HoTT](#hott)
     * [purely functional data structures](#purely-functional-data-structures)
 
-## instalação ## {#instalacao}
+## instalação
 
-### instalando o stack ### {#instalando-o-stack}
+### instalando o stack
 
 O stack vai ser o seu segundo melhor amigo daqui pra frente, atrás apenas do GHC. Ele è um gerenciador de pacotes e resolve muitos problemas por você. Para instalá-lo, acesse <https://docs.haskellstack.org/en/stable/README/> e siga o manual de instalação para o seu sistema operacional. Como nem tudo nesta vida é fácil, recomendo você ler a documentação do stack em <https://docs.haskellstack.org/en/stable/GUIDE/> para não ter problemas futuros, e caso os tenha, que saiba resolver. E digo isso por experiência própria :)
 
-### configurando o stack ### {#configurando-o-stack}
+### configurando o stack
 
 Para configurar o stack, você primeiro deve rodar o comando:
 
@@ -201,29 +201,29 @@ Fonte: [Wikipedia-EN](https://en.m.wikipedia.org/wiki/Cabal_(software))
 
 Iremos discutir no capítulo a seguir as diferenças dele pro stack.
 
-### stack vs cabal ### {#stack-vs-cabal}
+### stack vs cabal
 
 Basicamente o stack usa o cabal por baixo, mas usa o stackage como repositório ao invés do hackage como o cabal. E pelo stack usar o cabal por baixo, você não tem perda de compatibilidade. Mas é apenas isso?! Não!! O stack é um cabal melhorado ou mais automatizado. Basicamente o stack evita de você ter as cabal hells, uma dor de cabeça imensa para programadores Haskell no passado! Apesar do cabal ter evoluído bastante nos últimos tempos com o `cabal sandbox` e os comandos new-*, iremos usar o stack neste tutorial. Mas fica a sua escolha.
 
-### instalando o SWI-prolog ### {#instalando-o-swi-prolog}
+### instalando o SWI-prolog
 
 Iremos ensinar um pouco sobre a linguagem prolog aqui, e já é bom ter de antemão, o interpretador instalado. Para instalá-lo, confira no site oficial e instale de acordo com o seu sistema operacional (ou você pode pesquisar no gerenciador de pacotes da sua distribuição, mas não é uma coisa que geralmente se recomenda) em <https://www.swi-prolog.org/Download.html>.
 
-### instalando o Emacs ### {#instalando-o-emacs}
+### instalando o Emacs
 
 Basicamente o Emacs é um editor de texto muito poderoso (podendo acessar o telegram, músicas, servir como daemon init do sistema, ser usado para fazer programação literária e muito mais), que usa a linguagem Elisp, uma DSL parecida com Common LISP. Caso você esteja acostumado com o VI/VIM/neovim, não se preocupe, ensinaremos a instalar o evil depois, que irá nos permitir usar keybindings (combinações de teclas) iguais as do VI no Emacs. Mas até mesmo usando as keybindings do VI, acho que é importante saber Emacs, portanto, eu recomendo você ler o [tour sob o Emacs](https://www.gnu.org/software/emacs/tour).
 
 Mas por que usar o Emacs? Já que não importa a maneira como seu código será escrito, não é? Mas infelizmente (ou felizmente para você, leitor que está descobrindo novas coisas) a linguagem de programação Agda é muito dependente do Emacs.
 
-#### Windows #### {#emacs-windows}
+#### Emacs no Windows
 
 Para instalar o Emacs no seu sistema operacional Windows, acesse a [página de download](https://ftp.gnu.org/gnu/emacs/windows/) do projeto GNU e escolha a melhor opção para o seu sistema.
 
-#### Unix #### {#emacs-unix-like}
+#### Emacs em Unix-like
 
 Para instalar o Emacs em um sistema unix-like, você pode instalar ele pelo gerenciador de pacotes mesmo que não tem problema. Mas caso não confie no gerenciador de pacotes da sua distribuição, instale pelo [site oficial](https://www.gnu.org/software/emacs/download.html).
 
-### configurando o Emacs ### {#configurando-o-emacs}
+### configurando o Emacs
 
 Basicamente, o Emacs tem 3 implementações de gerenciamento de pacotes:
 
