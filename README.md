@@ -49,9 +49,9 @@ coisas que irão cair no curso:
     * [side effects](#side-effects)
     * [pureza](#pureza)
 * [lambda-calculus](#lambda-calculus)
-    * [funções simples](#funcoes-simples)
-    * [números](#numeros)
-    * [lógica booleana](#logica-booleana)
+    * [funções simples](#funções-simples)
+    * [números em lambda-calculus](#números-em-lambda-calculus)
+    * [lógica booleana em lambda-calculus](#lógica-booleana-em-lambda-calculus)
 * [programação lógica](#programacao-logica)
     * [o que é programação lógica?](#o-que-e-programacao-logica)
     * [a linguagem prolog](#a-linguagem-prolog)
@@ -66,7 +66,7 @@ coisas que irão cair no curso:
     * [função id](#funcao-id)
     * [isomorfismo](#isomorfismo)
     * [pattern matching](#pattern-matching)
-    * [omposição](#composicao)
+    * [composição](#composicao)
     * [lifting](#lifting)
     * [curry e point free / programação tácita](#programacao-tacita)
     * [Higher Order Functions (HOF) & closures](#higher-order-functions)
@@ -341,7 +341,7 @@ E então, rode:
 
 ## história da programação funcional e do lambda calculus
 
-A programação funcional nasceu como um modelo matemático arquitetado por Alan Churchill, o lambda-calculus. O Churchill era professor do Alan Turing, que inventou o modelo concorrente: o modelo de turing. E basicamente o modelo de turing foi o mais adotado com o passar dos anos, e o lambda-calculus se tornou mais acessível para pessoas acadêmicas. Mas o cenário mudou um pouco quando Haskell conseguiu resolver o maior problema da programação funcional: I/O. Após isso, várias linguagens funcionais também cresceram, como Clojure, Elixir, Scala, os LISPs voltaram a vida e Scheme também embarcou nessa... F# e OCaml foram criados, Rust mais recentemente... E linguagens imperativas agora estão adotando cada vez mais features funcionais
+A programação funcional nasceu como um modelo matemático arquitetado por Alan Church, o lambda-calculus. O Church era professor do Alan Turing, que inventou o modelo concorrente: o modelo de turing. E basicamente o modelo de turing foi o mais adotado com o passar dos anos, e o lambda-calculus se tornou mais acessível para pessoas acadêmicas. Mas o cenário mudou um pouco quando Haskell conseguiu resolver o maior problema da programação funcional: I/O. Após isso, várias linguagens funcionais também cresceram, como Clojure, Elixir, Scala, os LISPs voltaram a vida e Scheme também embarcou nessa... F# e OCaml foram criados, Rust mais recentemente... E linguagens imperativas agora estão adotando cada vez mais features funcionais
 
 Mas por quê? O que há de tão especial com funcional? Basicamente, funcional é mais seguro porque é matematicamente consistente (porém, não necessariamente você precisa saber matemática para aprender), e você consegue codificar problemas em funções, eliminando a necessidade de design patterns, além de que você tem mais ergonomia. Além de tudo, é meio difícil e controverso classificar linguagens de programação funcionais...
 
@@ -365,7 +365,7 @@ Espera, Haskell e Rust? Como o assunto aqui não é Rust, pesquisem na internet 
 
 ### evolução do lambda-calculus
 
-Alonso Churchill cria o lambda-calculus na década 30;
+Alonzo Church cria o lambda-calculus na década 30;
 
 Haskell Curry cria o currying e permite múltiplos argumentos no lambda-calculus;
 
@@ -583,3 +583,92 @@ E linguagens funcionais não tem side effets... Mas pera, não dá para programa
 ### pureza
 
 En funcional, pureza se refere a funções que tem seus resultados determinados pelos seus argumentos, e nunca por uma váriavel global. E elas também não podem ter side effects.
+
+## lambda-calculus
+
+### funções simples
+
+Basicamente, com o lambda-calculus, você consegue criar funções, aonde λ é o lambda e tudo antes do ponto é um argumento. Alguns exemplos:
+
+```
+id := λx.x -- retorna o argumento recebido
+sum := λx.λy.x+y -- usando currying para múltiplos argumentos, e retornando a soma deles
+```
+
+E basicamente, uma expressäo lambda-calculus pode ser composta de:
+
+- variável - o argumento
+- abstração - o corpo da função
+- aplicação - a aplicação dos argumentos a função
+
+Exemplos:
+
+```
+-- variável
+λx
+-- abstração
+λx.x
+-- aplicação
+(λx.x+1)(3) -- retorna 4
+```
+
+### números em lambda-calculus
+
+Os números do lambda-calculus são definidos pelo numeral de Church, assim:
+
+```
+0 := λf.λx.x
+1 := λf.λx.fx
+2 := λf.λx.f(fx)
+3 := λf.λx.f(f(fx))
+```
+
+Ou então:
+
+```
+0 := λfx.x
+1 := λfx.f x
+2 := λfx.f (f x)
+3 := λfx.f (f (f x))
+```
+
+Aonde f seria um:
+
+`λx.x+1`
+
+### lógica booleana em lambda-calculus
+
+Agora que você já sabe formar passos em lambda-calculus na sua cabeça (caso contrário, leia a lição anterior), vou deixar você pensar sozinho:
+
+```
+true := λab.a
+false := λab.b
+
+and := λab.a b false
+or := λab.a true b
+not := λabc.a c b
+if := λabc.a b c
+eq := λxy.if x == 0 then true else false
+```
+
+## programação lógica
+
+## programação funcional no geral
+
+## introdução a teoria das categorias
+
+## lazy programming
+
+## quantificação
+
+## type-level programming
+
+## coisas específicas de Haskell
+
+## recursion schemes
+
+## lenses
+
+## tipos dependentes
+
+## livros recomendados
