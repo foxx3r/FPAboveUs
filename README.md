@@ -199,6 +199,10 @@ Agora, vamos instalar o cabal. Basicamente, como a Wikipédia diz:
 
 Fonte: [Wikipedia-EN](https://en.m.wikipedia.org/wiki/Cabal_(software))
 
+Para instalar o cabal, digite o seguinte comando no seu terminal:
+
+`$ stack install Cabal cabal-install`
+
 Iremos discutir no capítulo a seguir as diferenças dele pro stack.
 
 ### stack vs cabal
@@ -282,3 +286,54 @@ E por último, mas não menos importante, vamos habilitar a contagem de linhas e
 ```
 
 No futuro, iremos ensinar a como configurar mais ainda o Emacs :)
+
+### instalando Agda e o agda-stdlib
+
+Agda é uma linguagem de provação de teoremas dependentemente tipada que iremos discutir no último capítulo do curso, e portanto, iremos instalar agora, com os seguintes comandos:
+
+```
+$ cabal update
+$ cabal install Agda
+```
+
+Ou caso você queira mais informações sobre a instalação, você pode conferir no [site oficial](https://agda.readthedocs.io/en/v2.6.1/getting-started/installation.html).
+
+Depois de ter instalado Agda, rode o seguinte comando:
+
+`$ agda-mode setup`
+
+Lembra que eu disse que Agda é muito dependente do Emacs? O agda-mode setup irá configurar o agda-mode no Emacs, para que possamos digitar unicodes e poder interpretar Agda pelo Emacs.
+
+### configurando o nosso .ghci e hoogle
+
+Antes de tudo, vamos configurar o interpretador do Haskell. O arquivo de configuração fica em `$HOME/.ghci`, no qual aceita código válido dentro do GHCi. Caso você ainda não saiba, comentários de uma única linha em Haskell são feitos usando `--` e comentários de múltiplas linhas são feitos usando `{- -}`. Vamos colocar isso no arquivo de configuração do GHCi:
+
+```hs
+:set prompt "λ " -- muda o tipo do prompt
+:set prompt-cont "∈ " -- muda o tipo do prompt multi-linha
+:set +m -- te permite ter multi-linha com blocos do e case
+:set +t -- sempre retorna o tipo de uma expressäo
+```
+
+Agora que configuramos coisas básicas, vamos instalar o hoogle. Basicamente o hoogle ê o google do Haskell, com ele, você pode pesquisar o tipo de uma função e ele te devolverá funções com o mesmo tipo. E ele também procura por nomes de funções e de qul biblioteca ela vem. Para instalá-lo, rode:
+
+`$ cabal install hoogle`
+
+Após isso, temos que gerar as databases do hoogle (que pode demorar um pouquinho, e consumir um bom espaço no seu HD):
+
+`$ hoogle generate`
+
+Após isso, inclua as seguintes configurações ao seu `.ghci`:
+
+```hs
+:def hoogle \x -> return $ ":!hoogle \"" ++ x ++ "\""
+:def doc \x -> return $ ":!hoogle --info \"" ++ x ++ "\""
+```
+
+Agora, para testar, rode:
+
+`$ stack exec ghci`
+
+E então, rode:
+
+`λ :hoogle "a -> a"`
