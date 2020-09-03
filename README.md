@@ -582,4 +582,4 @@ E linguagens funcionais não tem side effets... Mas pera, não dá para programa
 
 ### pureza
 
-En funcional, pureza se refere a funções que tem seus resultados determinados pelos seus argumentos, e nunca por uma váriavel global.
+En funcional, pureza se refere a funções que tem seus resultados determinados pelos seus argumentos, e nunca por uma váriavel global. E elas também não podem ter side effects.
