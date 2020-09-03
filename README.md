@@ -232,7 +232,7 @@ Basicamente, o Emacs tem 3 implementações de gerenciamento de pacotes:
     - [MELPA stable](https://stable.melpa.org) é um MELPA que inclui apenas paco5es estáveis. Ele è o que tem menos pacotes de todos.
 - [Marmalade](https://marmalade-repo.org) o marmalade è um projeto já morto, e não faz sentido de usarmos aqui. Apesar dele ter sido extensivamente utilizado no passado.
 
-Enfim... Bora parar de falar. Basicamente, o Emacs tem os arquivos de configuração localizados em $HOME/.emacs.d/init.el (ambos Windows e Linux) ou em $HOME/.emacs. Muita gente usa o .emacs, mas o correto seria usar o .emacs.d pois seus arquivos de configuração ficam mais organizados. Após instalar o Emacs, insira isso dentro do `$HOME/.emacs.d/init.el`:
+Enfim... Bora parar de falar. Basicamente, o Emacs tem os arquivos de configuração localizados em `$HOME/.emacs.d/init.el` (ambos Windows e Linux) ou em `$HOME/.emacs`. Muita gente usa o `.emacs`, mas o correto seria usar o `.emacs.d` pois seus arquivos de configuração ficam mais organizados. Após instalar o Emacs, insira isso dentro do `$HOME/.emacs.d/init.el`:
 
 ```el
 (require 'package)
