@@ -37,12 +37,13 @@ coisas que irão cair no curso:
 * [história da programação funcional e do lambda-calculus](#história-da-programação-funcional-e-do-lambda-calculus)
     * [LISP](#lisp)
     * [ML](#ml)
-    * [evolução do lambda-calculus](#evolucao-do-lambda-calculus)
-* [características funcionais](#caracteristicas-funcionais)
-    * [dados imutáveis](#dados-imutaveis)
-    * [transparência referencial](#transparencia-referencial)
-    * [sem nulos e exceções](#sem-nulos-e-excecoes)
-    * [toda função retorna algo](#toda-funcao-retorna-algo)
+    * [evolução do lambda-calculus](#evolução-do-lambda-calculus)
+* [características funcionais](#características-funcionais)
+    * [dados imutáveis](#dados-imutáveis)
+    * [transparência referencial](#transparência-referencial)
+    * [sem nulos e exceções](#sem-nulos-e-exceções)
+    * [funções tem tipos únicos](#funções-tem-tipos-únicos)
+    * [toda função retorna algo](#toda-função-retorna-algo)
     * [first class functions](#first-class-Functions)
     * [sem globais](#sem-globais)
     * [pureza](#pureza)
@@ -231,10 +232,10 @@ Para instalar o Emacs em um sistema unix-like, você pode instalar ele pelo gere
 
 Basicamente, o Emacs tem 3 implementações de gerenciamento de pacotes:
 
-- [GNU ELPA](https://elpa.gnu.org/) talvez o nais popular de todos, e bem pequeno, mantido pelo projeto GNU.
-- [MELPA](https://melpa.org) é um repositório não oficial e também é o repósitório com a maior quantidade de pacotes.
-    - [MELPA stable](https://stable.melpa.org) é um MELPA que inclui apenas paco5es estáveis. Ele è o que tem menos pacotes de todos.
-- [Marmalade](https://marmalade-repo.org) o marmalade è um projeto já morto, e não faz sentido de usarmos aqui. Apesar dele ter sido extensivamente utilizado no passado.
+- [GNU ELPA](https://elpa.gnu.org/) - talvez o nais popular de todos, e bem pequeno, mantido pelo projeto GNU.
+- [MELPA](https://melpa.org) - é um repositório não oficial e também é o repósitório com a maior quantidade de pacotes.
+    - [MELPA stable](https://stable.melpa.org) - é um MELPA que inclui apenas paco5es estáveis. Ele è o que tem menos pacotes de todos.
+- [Marmalade](https://marmalade-repo.org) - o marmalade è um projeto já morto, e não faz sentido de usarmos aqui. Apesar dele ter sido extensivamente utilizado no passado.
 
 Enfim... Bora parar de falar. Basicamente, o Emacs tem os arquivos de configuração localizados em `$HOME/.emacs.d/init.el` (ambos Windows e Linux) ou em `$HOME/.emacs`. Muita gente usa o `.emacs`, mas o correto seria usar o `.emacs.d` pois seus arquivos de configuração ficam mais organizados. Após instalar o Emacs, insira isso dentro do `$HOME/.emacs.d/init.el`:
 
@@ -351,3 +352,220 @@ Aliás, várias coisas nasceram de funcional e você nem deve saber, como sistem
 Aiai... LISP, o que eu posso dizer desta `((((((((maravilhosa))))))))` linguagem? Basicamente, LISP foi a segunda linguagem criada no mundo, a primeira linguagem interpretada, a primeira linguagem a ter um GC, a primeira linguagem homoicônica, a primeira linguagem com computação simbólica, a primeira linguagem a ter if, a primeira linguagem a ter meta-programação, a primeira linguagem funcional, a primeira linguagem reflexiva, a pioneira em linguística e inteligência artificial, sem falar das LISPs machines, além de seu inventor ter inventado o time sharing, impulsionou a criação de DSLs (linguagens de domínio específico), pioneira em recursão, estruturas de dados, self-hosting compiler, tipagem dinâmica... E não para por aí. Se eu quisesse, faria um artigo inteiro sobre LISP e o John McCarthy.
 
 LISP não é só importante por ter sido a primeira linguagem funcional, mas ela é um elemento importante para a próxima linguagem que iremos falar adiante: ML, a mãe de Haskell e da programação funcional moderna.
+
+### ML
+
+Não, não é Machine Learning desta vez... ML significa MetaLanguage, e nasceu lá na década de 70, quando Robin Milner queria dar tipagem ao LISP, mas não conseguia fazer isso de forma matematicamente consistente. Até que ele olhou para uma idéia promissora na época: a teoria dos tipos.
+
+E com isso, nasceu a linguagem ML, que antes era mais uma DSL para um provador de teoremas do que uma linguagem. Por anos, ML foi apenas nicho e não servia para o mundo real... Até que alguém muito perspicaz pegou a ML e transformou-a em uma linguagem multi-propósito, que permite vários outros paradigmas. E assim, até hoje ML é conhecida por ser principalmente funcional, mas também, **multi-propósito**.
+
+E desde então, ML não é só mais uma linguagem, é uma família de linguagens... comppsta principalmente por Standard ML, OCaml, F#, F*, Haskell e Rust.
+
+Espera, Haskell e Rust? Como o assunto aqui não é Rust, pesquisem na internet sobre. Mas sobre Haskell, há controvérsias... Assim como Rust. E eu creio firmemente que Haskell seja uma ML, apesar de ter certas dúvidas em relação a Rust. Mas por que eu creio que Haskell seja uma ML? Porque Haskell surgiu como um lazy ML, e o argumento que muita gente contrária diz "Haskell foi uma junção de várias linguagens na época, incluindo algumas MLs, mas o seu maior inspirador foi o Miranda..No final, foi um processo inevitável, eram MLs, mas não quer dizer que Haskell também seja, porque existiam não-MLs" não vale nada, já que Haskell queria ser um lazy ML, e também, muitas coisas em Haskell poderiam "melhorar", mas eles queriam que a linguagem fosse mais parecida com ML.
+
+### evolução do lambda-calculus
+
+Alonso Churchill cria o lambda-calculus na década 30;
+
+Haskell Curry cria o currying e permite múltiplos argumentos no lambda-calculus;
+
+O lambda-calculus tipado é inventado;
+
+Howard cria o isomorfismo de Curry-Howard e relaciona provas matemáticas com programação;
+
+R. Hindley e D. Milner criam o sistema de tipos Hindley-Milner e permitem lambda-calculus parametricamente tipado, e ainda criam a linguagem ML que mais tarde viria a se tornar uma família;
+
+John C. Reynolds cria o system F, uma extensão do Hindley-Milner, e ainda cria o system F ômega, uma extensão do system F que permitiam ter construtores e type families;
+
+em 1994, Augustsson e Petersson criam GADTs (estruturas de dados álgebricos generalizadas) no ALF. Cheney & Hinze levaram GADTs a ML e Haskell em 2003, mas só que Haskell se saiu melhor porque eles tiveram que inventar o system FC, e o Hindley-Milner era fraco demais para permitir compatibilidade com o system FC (como todos sabem, as MLs são famosas por serem Hindley-Milner);
+
+E em 1991, o Henk desenhou o lambda cube... Assim, chegando a última evolução do lambda-calculus atualmente: O lambda-pi-calculus... Que deveria se chamar apenas pi-calculus (sim, se tornou incompatível com o lambda-calculus) mas já existia uma formalização com este nome;
+
+## características funcionais
+
+Agora, chegou a hora em que vamos realmente ter contato com o Haskell. No futuro, iremos ensinar IO e, consequentemente, a como compilar um arquivo Haskell. Por enquanto, abra o interpretador com:
+
+`$ stack exec ghci`
+
+Agora, se você quiser digitar múltiplas linhas dentro do GHCi (como por exemplo, tipps), digite `:{` para inserir múltiplas linhas e `:}` para terminar.
+
+Ou então se você preferir (e é o que eu recomendo), abra um arquivo e digite as funções nele, e então chame `:l meu_arquivo.hs` no ghci e ele vai importar todas as funções deste arquivo e você poderá rodá-las, e para recompilar o arquivo, basta digitar `:r`
+
+### dados imutáveis
+
+Basicamente, linguagens funcionais te previnem de ter efeitos colaterais, e eles são causados principalmente por mutabilidade. Em uma linguagem como Python, o seguinte seria possível:
+
+```py
+x = 1
+x = x + 1
+```
+
+E x viraria 2. Agora, preste atenção: Haskell permite redefinição de variável (também chamada de constante polimórfica), mas não é mutabilidade. Um exemplo simples:
+
+```hs
+x = 1
+x = 2
+```
+
+Neste pequeno exemplo, a gente só redefiniu a constante polimórfica. Se a gente fizesse isso por exemplo nos tipos, um tipo que se referiria ao seu tipo que foi redefinido, teria um tipo parecido com `Ghci2.MeuTipo`, ou seja, no final, você apenas invalida aquilo, e só o programa que teve acesso ao antigo valor, vai ter acesso a ele no futuro. Agora um outro exemplo em Haskell:
+
+```hs
+x = 1
+x = x + 1
+```
+
+Este código funciona, mas ê um loop infinito, mas por que? Porque simplesmente, Haskell não permite mutabilidade. Neste caso, x foi redefinido, e ele não se lembra mais do valor antigo de x, assim, formando uma recursão infinita + 1 (sim, funções em Haskell tem a mesma sintaxe que variáveis).
+
+Obs: para ver o tipo de uma variável no GHCi, use `:t variavel`, ou `:i variavel` para mais informações.
+
+### transparência referencial
+
+Basicamente, a transparência referencial quer dizer que você pode trocar toda a lógica de uma função por um código inline. Ainda não entendeu? Então veja um exemplo:
+
+```hs
+foo = "hello world"
+print foo -- argumentos não precisam de parênteses
+          -- a menos que se faça alguma operação dentro deles
+
+sum x y = x + y -- função com argumentos x e y
+print (sum 4 6)
+```
+
+Poderia ser substituído por:
+
+```hs
+print "hello world"
+
+print (4 + 6)
+```
+
+E o exemplo é bem simples, talvez todas as linguagens permitem definir este exemplo simples, mas não para tudo... Nem tudo em uma linguagem pode ser transparentemente referencial. E portanto, as linguagens funcionais comumente tem a característica de serem transparentemente referenciais.
+
+### sem nulos e exceções
+
+Basicamente, o `null` ê o erro do século. Ele basicamente consegue quebrar o sistema de tipos, e você não tem como saber por onde ele virá, e talvez ele foi feito para quebrar o sistema de tipos... Um erro grave de arquitetura, porque o `null` não funciona sem você abrir uma exceção para ele no sistema de tipos, ou torná-lo menos rigoroso.
+
+Linguagens funcionais não tem `null`, no caso, Haskell tem o `Maybe` para caso a função possa não retornar nada, que contém os construtores `Just` para caso retorne e `None` para caso não retorne, e isso é perfeitamente seguro porque eles são do mesmo tipo. Um exemplo:
+
+```hs
+div _ 0 = None -- "_" é uma boa prática porque não o usamos
+               -- e 0 quer dizer que se o valor y for 0, então retorne None
+div x y = Just $ x / y -- caso o segundo valor seja 0
+                       -- retorne Just $ x / y
+                       -- aonde $ ê tipo um parêntese
+```
+
+Obs: para funções múltiplas linhas como essa, insira `:{` e `:}` no GHCi
+
+Mas como o `Maybe` é definido? Simples:
+
+```hs
+data Maybe a = None | Just a
+```
+
+Você não precisa entender este código agora, só precisamos saber que criamos um tipo `Maybe` que recebe um parâmetro `a` de qualquer tipo, e tem o construtor sem argumentos `None` e `Just` que é unário (recebe apenas 1 argumento). E não é importante agora entender o que eu falei, mas sim entender que este código existe... Porque linguagens funcionais geralmente não tem exceções, e no caso de Haskell, a gente usa o `Either`, que é definido como:
+
+```hs
+data Either a b = Left a | Right b
+```
+
+Aonde `Left` significa erro e `Right` significa sucesso. Mas você deve estar se perguntando "exceções não são naturalmente geradas? Podendo dar erro em tempo de execução como UB em C++ ou `RuntimeError` como em Python? Ou você tem que usar `try/catch` porque determinado tipo pode vir errado e dividir uma string por 6?"... E a resposta é NÃO! Haskell tem um sistema de tipos forte o bastante para garantir exceções não sejam geradas automaticamente. Agora, vamos parsear um `Either` com uma função que recebe `Either`:
+
+```hs
+parse (Left x) = error $ "an error has occured " ++ x -- ++ concatena
+parse (Right _) = print $ "hello, you have a good luck"
+
+parse (Left "I missed the bus") -- erro
+parse (Right "I won the lottery") -- "hello, you have a good luck"
+```
+
+### funções tem tipos únicos
+
+Em linguagens funcionais, funções tem tipos concretos, exemplo:
+
+```hs
+foo 0 = 100
+foo x = print x
+
+bar 1 = "hello"
+bar _ = 0
+```
+
+Por que os dois exemplos não compilam? Porque na primeira linha, ele infere que o tipo do primeiro argumento de foo ê `Int`, mas no segundo, `print` só pode receber `String`, então, ele inferirá que x é `String`, mas não tem como x ser `Int` e `String` ao mesmo tempo. E no bar, ele inferiu que o tipo de entrada é um número, e o tipo de saída é uma string, mas abaixo, a gente retorna um 0.
+
+### toda função retorna algo
+
+Em funcional, tudo é baseado em funções, aonde toda função retorna algo, um exemplo:
+
+```hs
+print "foo"      :: IO ()
+sum x y = x + y  :: Int
+"foo" ++ "bar"   :: String
+[1, 2] ++ [3, 4] :: [Int]
+```
+
+Aonde `::` é o tipo de retorno.
+
+### first class functions
+
+Uma linguagem é chamada first class se as funções dela são tratadas como qualquer outro tipo de dado da linguagem, isso inclui as seguintes regras:
+
+1. Uma variável pode ser uma função
+
+```js
+const foo = () => {
+    console.log("hello")
+}
+```
+
+Dei o exemplo em JavaScript porque em Haskell ê menos explícito, já que variáveis são funções. Mas você pode ter lambdas em Haskell, assim:
+
+```hs
+sum x y = x + y
+sum x = \y -> x + y
+sum = \x y -> x + y
+sum = \x -> \y -> x + y
+```
+
+Todas estas funções acima são iguais, e na aula sobre currying, iremos descobrir o porque.
+
+2. Passar uma função como argumento
+
+```hs
+map (+ 1) [1..10]
+```
+
+Aonde map aplica +1 a todos os elementos da lista. Aonde + é uma função que recebeu o argumento 1 (e por causa do currying, podemos passar argumentos incompletos, mas iremos falar disso mais a frente) e uma lista de 1 a 10. Iremos ver mais sobre map/fmap no capítulo sobre functors, e funções como argumentos no capítulo sobre Higher Order Functions (HOF).
+
+3. Retornar uma função
+
+```js
+function sum() {
+    return (x, y) => x + y
+}
+```
+
+Mais um exemplo em JavaScript porque em Haskell isso é implícito, já que por causa do currying, funções sempre retornam funções. Mas está aqui um pequeno exemplo para você que já deve estar curioso para saber o que é o curry:
+
+```hs
+sum = \x -> \y -> x + y -- função que retorna 2 funções recebendo 1 argumento cada
+sumWith10 = sum 10 -- sempre irá somar com 10
+sumWith10 20 -- 30
+```
+
+E como Haskell tem auto-currying, `sum x y = ...` é o mesmo que `sum x = \y -> ...`, `sum = \x y -> ...` e `sum = \x -> \y -> ...` (sendo este último, a forma mais correta), e o exemplo acima também é possível de simular em JavaScript, porque simplesmente curry são lambdas aninhados, veja:
+
+```js
+function sum() {
+    return (x) => (y) => x + y
+}
+
+const sumWith10 = sum()(10)
+sumWith10(20) // == sumWith10()(10)(20)
+```
+
+Aonde cada parêntese se refere a um espaço em Haskell.
+
+### sem globais
+
+Todas as variáveis em funcional são locais, assim como funções aninhadas... Aliás, lembra que em Haskell, uma variável (constante polimórfica) é só uma função (ou tratada como -- first class), funções/variáveis dentro de funções/variáveis (que são a mesma coisa) não são acessíveis fora dela. Isso é muito mais seguro porque código global é uma ameaça, e código local só você pode ter o controle.
