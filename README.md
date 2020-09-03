@@ -23,7 +23,7 @@ obs: se você sabe bem matemática, eu ficaria bastante grato se você pudesse a
 # Conteúdo
 
 coisas que irão cair no curso:
-* [instalação](#instalacao)
+* [instalação](#instalação)
     * [instalando o stack](#instalando-o-stack)
     * [configurando o stack](#configurando-o-stack)
     * [stack vs cabal](#stack-vs-cabal)
