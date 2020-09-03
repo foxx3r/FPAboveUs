@@ -46,8 +46,8 @@ coisas que irão cair no curso:
     * [toda função retorna algo](#toda-função-retorna-algo)
     * [first class functions](#first-class-Functions)
     * [sem globais](#sem-globais)
-    * [pureza](#pureza)
     * [side effects](#side-effects)
+    * [pureza](#pureza)
 * [lambda-calculus](#lambda-calculus)
     * [funções simples](#funcoes-simples)
     * [números](#numeros)
@@ -569,3 +569,17 @@ Aonde cada parêntese se refere a um espaço em Haskell.
 ### sem globais
 
 Todas as variáveis em funcional são locais, assim como funções aninhadas... Aliás, lembra que em Haskell, uma variável (constante polimórfica) é só uma função (ou tratada como -- first class), funções/variáveis dentro de funções/variáveis (que são a mesma coisa) não são acessíveis fora dela. Isso é muito mais seguro porque código global é uma ameaça, e código local só você pode ter o controle.
+
+### side effects
+
+O termo side effet qyer dizer que uma função pode ter efeitos colaterais, e geralmente elas são classificadas com as seguintes regras:
+
+1. Mudar o valor de uma variável
+2. Escrever/ler dados do disco
+3. Escrever na GUI
+
+E linguagens funcionais não tem side effets... Mas pera, não dá para programar em GUI ou escrever/ler do disco??? Calma, Haskell tem side effects controlados pela monad IO.
+
+### pureza
+
+En funcional, pureza se refere a funções que tem seus resultados determinados pelos seus argumentos, e nunca por uma váriavel global.
