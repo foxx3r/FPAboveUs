@@ -59,7 +59,7 @@ coisas que irão cair no curso:
     * [predicados](#predicados)
     * [modus ponens](#modus-ponens)
     * [backtracking](#backtracking)
-    * [resolução SLD](#resolucao-sld)
+    * [resolução SLD](#resolução-sld)
     * [cut, negação e a resolução SLDNF](#cut-negacao-e-resolucao-sldnf)
 * [programação funcional no geral](#programacao-funcional-no-geral)
     * [morfismo](#morfismo)
