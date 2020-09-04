@@ -71,7 +71,7 @@ coisas que irão cair no curso:
     * [lifting](#lifting)
     * [constraints](#constraints)
     * [declarativismo](#declarativismo)
-    * [curry e point free / programação tácita](#curry-e-point-free--programação-tácita)
+    * [curry e point-free](#curry-e-point-free)
     * [Higher Order Functions (HOF) & closures](#higher-order-functions)
     * [recursão](#recursao)
     * [tail call recursion & tail call optimization](#tail-call-recursion)
@@ -1149,7 +1149,7 @@ joao = name
         name = "joao"
 ```
 
-### curry e point-free / programação tácita
+### curry e point-free
 
 Ah... O curry, o maravilhoso curry, tão suculen... Espwra, a gente não está falando do molho, e sim do currying do haskell curry (um matemático). Basicamente, o curry são lambda-calculus aninhados, e lambda-calculus são funções, certo? Então... `foo x y = ...` é igual a `foo = \x -> \y -> ...`, e tudo em Haskell é curried automaticamente. Existe uma função chamada `curry` que pega uma função de 2 argumentos (se você quiser mais, você vai precisar criar uma função pra cada elemento, esta é uma das desvantagens de não usar curry) e retorna ela sem curry, por exemplo:
 
