@@ -53,8 +53,9 @@ coisas que irão cair no curso:
     * [números em lambda-calculus](#números-em-lambda-calculus)
     * [lógica booleana em lambda-calculus](#lógica-booleana-em-lambda-calculus)
 * [programação lógica](#programacao-logica)
-    * [o que é programação lógica?](#o-que-e-programacao-logica)
     * [a linguagem prolog](#a-linguagem-prolog)
+    * [o paradigma de programação lógico](#o-paradigma-de-programação-lógico)
+    * [o paradigma de programação declarativo](#o-paradigma-de-programação-declarativo)
     * [predicados](#predicados)
     * [modus ponens](#modus-ponens)
     * [backtracking](#backtracking)
@@ -652,6 +653,144 @@ eq := λxy.if x == 0 then true else false
 ```
 
 ## programação lógica
+
+A programação lógica é baseada na resolução SLD e nas claúsulas de horn, e usa backtracking por baixo para resolver claúsulas, e calma, apesar dos nomes difíceis, Prolog é a linguagem mais simples que eu já vi na minha vida :)
+
+### a linguagem Prolog
+
+A linguagem de programação Prolog foi criada em 1972 com intuito em programação lógica, linguística e inteligência artificial. Mas o que faz esta linguagem se destacar tanto entre as linguagens de programação lógica? Bem, eu te dou 3 motivos:
+
+1. Prolog é simples, ainda mais por ser do paradigma declarativo.
+2. Nenhuma outra linguagem de programação lógica inovou tanto quanto Prolog.
+3. Prolog além de suportar a resolução SLDNF, suporta cut da árvore de backtracking, assim sendo muito mais rápida e eficiente.
+
+### o paradigma de programação declarativo
+
+O paradigma declarativo te permite não mais dizer passo a passo o que seu computador deve fazer, mas sim, o que seu computador deve fazer para chegar a determinado resultado. Por exemplo, em SQL temos a seguinte declaração:
+
+```sql
+SELECT * FROM people WHERE age > 10 ORDER BY country DESC
+```
+
+Agora, imagine isso em Python, seria algo como:
+
+```py
+accumulator = []
+for person in people:
+    if person.age > 10:
+        accumulator.append(person)
+accumulator.reverse_by_country("desc")
+```
+
+Mas por que tivemos que especificar tudo em Python e fazer quase nada em SQL apenas dizendo como eu queria? Porque simplesmente SQL é declarativo. Python não. Haskell e Prolog são dois exemplos de linguagem declarativa.
+
+### predicados
+
+Agora, você escreve seus predicados em um arquivo .pl ou .pro, e testa eles (com ?-) entrando no interpretador com:
+
+`$ swipl meu_arquivo.pl`
+
+Agora, vamos ver o que são predicados. Basicamente, um programa lógico se consiste de predicados, aonde:
+
+```pl
+% isso é um comentário
+homem(joao). % fato, joao é homem
+             % programas em prolog terminam com ponto
+mae(ana, joao). % ana é mãe de joao, fato
+mae(X, Y) :- filho(Y, X). % regra, X é mae de Y se Y for filho de X
+
+% exemplo
+filho(gabriel, cris).
+filho(nicolas, cris).
+mae(X, Y) :- filho(Y, X).
+?- mae(cris, gabriel). % query: cris é mae de gabriel?
+% true
+```
+
+Agora que você sabe isto, você já pode escrever programas mais complexos em Prolog. Viu como é simples? Você consegue até entender um programa de árvore genealógica que eu fiz <https://github.com/foxx3r/genealogy_prolog>, e basicamente Prologé pura lógica.
+
+### modus ponens
+
+Basicamente, diz que em `P ⊦ Q`, quer dizer "se P implica Q, e Q é verdadeiro, então P também é". Uma curiosidade é que vírgula em Prolog significa AND e ponto-e-vírgula significa OR. Vamos ver um exemplo:
+
+```pl
+irmao(X, Y) :- pai(P, X), pai(P, Y), X \= Y, homem(X).
+irmao(X, Y) :- mae(M, X), mae(M, Y), X \= Y, homem(X).
+```
+
+Aqui, irmao é um modus ponens verdadeiro para todos que tem o mesmo pai/mãe que ele, e que não é ele próprio e contanto que seja homem.
+
+### backtracking
+
+Bem, o backtracking é o algorítmo de resolução que o Prolog usa, e basicamente ele consegue fazer coisas como testar e eliminar possibilidades. Vamos ver um pequeno exemplo:
+
+`backtracking.pl`
+```pl
+mulher(cris).
+mulher(ana).
+mulher(maria).
+
+filho(gabriel, cris).
+filho(bernardo, cris).
+filho(nicolas, cris).
+filho(juninho, ana).
+filho(jose, maria).
+
+mae(X, Y) :- filho(Y, X), mulher(X).
+```
+
+Agora, importe ele com:
+
+`$ swipl backtracking.pl`
+
+E agora digite:
+
+`?- mae(X, Y).`
+
+E ele tentará adivinhar todas as possibilidades de X e Y, mas... O que é isso? É simplesmente o algorítmo de backtracking trabalhando. E isso irá retornar:
+
+```
+X = cris,
+Y = gabriel ;
+X = cris,
+Y = bernardo ;
+X = cris,
+Y = nicolas ;
+X = ana,
+Y = juninho ;
+X = maria,
+Y = jose.
+```
+
+E o que acontece na real, é que minúsculas em Prolog são átomos (valores que correspondem a eles mesmo, por exemplo: true é true, e 1 é 1). Aqui está a explicação de backtracking da Wikipédia:
+
+> Backtracking é um tipo de algoritmo que representa um refinamento da busca por força bruta, em que múltiplas soluções podem ser eliminadas sem serem explicitamente examinadas. O termo foi cunhado pelo matemático estado-unidense D. H. Lehmer na década de 1950.
+> O procedimento é usado em linguagens de programação como Prolog. Uma busca inicial em um programa nessa linguagem segue o padrão busca em profundidade, ou seja, a árvore é percorrida sistematicamente de cima para baixo e da esquerda para direita. Quando essa pesquisa falha ou é encontrado um nodo terminal da árvore, entra em funcionamento o mecanismo de backtracking. Esse procedimento faz com que o sistema retorne pelo mesmo caminho percorrido com a finalidade de encontrar soluções alternativas.
+
+### resolução SLD
+
+Basicamente, a resolução SLD trabalha como o algorítmo de inferência do Prolog sob as claúsulas horn. Ele trabalha com unificações, um exemplo de unificação:
+
+```pl
+?- true = true.
+true.
+?- false = false.
+true.
+?- mia = mia.
+true.
+?- 'mia' = mia.
+true.
+?- foo = bar.
+false.
+?- X = Y.
+X = Y.
+?- X = a.
+X = a.
+```
+
+Aonde em casos que ele não pode afirmar nada e nem negar (como no caso de `X = Y`), ele apenas concorda com você.
+
+### cut, negação e a resolução SLDNF
 
 ## programação funcional no geral
 
