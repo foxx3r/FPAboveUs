@@ -964,7 +964,7 @@ letter 'a'
 
 Basicamente, é uma forma de evitar bastante if pelo código e também fazer desconstruções no código. E se você não cobrir todos os casos, a função pode gerar uma exceção "non-exhaustive pattern". Existem também outras 3 formas de testar condições em Haskell:
 
-1. if
+**1. if**
 
 Um if sempre deve ter um bloco else e não pode ter mais de uma verificação (a menos que você coloqye dentro do else).
 
@@ -973,7 +973,7 @@ id :: Int -> Maybe Int
 id = if x == 0 then None else Just x
 ```
 
-2. case
+**2. case**
 
 Basicamente, pattern matching são desconstruídos para case. Vamos ver um exemplo com o exemplo de pattern matching que demos agora há pouco:
 
@@ -989,7 +989,7 @@ number x = case x of
     _ -> "unknown number"
 ```
 
-3. guards
+**3. guards**
 
 São uma forma mais bonita e que permite múltiplos casos em relação ao if. Um exemplo bem famoso:
 
