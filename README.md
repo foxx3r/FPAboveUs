@@ -71,7 +71,7 @@ coisas que irão cair no curso:
     * [lifting](#lifting)
     * [constraints](#constraints)
     * [declarativismo](#declarativismo)
-    * [curry e point free / programação tácita](#curry-e-point-free-programação-tácita)
+    * [curry e point free / programação tácita](#curry-e-point-free--programação-tácita)
     * [Higher Order Functions (HOF) & closures](#higher-order-functions)
     * [recursão](#recursao)
     * [tail call recursion & tail call optimization](#tail-call-recursion)
