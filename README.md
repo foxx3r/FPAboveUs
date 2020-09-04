@@ -792,6 +792,54 @@ Aonde em casos que ele não pode afirmar nada e nem negar (como no caso de `X = 
 
 ### cut, negação e a resolução SLDNF
 
+Primeiro, vamos falar sobre o controverso cut... Mas por que controverso? Porque simplesmente, ele foi adicionado apenas por motivos de eficiência em Prolog e não segue as claúsulas horn. A lógica do cut é cortar a árvore de busca de possibilidades do backtracking, assim, permitindo maior performance. Um exemplo, aonde `!` é o cut operator:
+
+```pl
+a(X, Y) :- b(X), !, c(Y).
+b(1).
+b(2).
+b(3).
+
+c(1).
+c(2).
+c(3).
+```
+
+Agora, vamos rodar:
+
+```pl
+?- a(X, Y).
+X = Y, Y = 1 ;
+X = 1,
+Y = 2 ;
+X = 1,
+Y = 3.
+```
+
+Ele achou todas as possibilidades possíveis, né? Mas repare que o valor do X nunca muda, porque a gente diz que não é mais necessário produzir um valor novo para o X, caso contrário, sem o cut, o código rodaria assim:
+
+
+```pl
+?- a(X, Y).
+X = Y, Y = 1 ;
+X = 1,
+Y = 2 ;
+X = 1,
+Y = 3 ;
+X = 2,
+Y = 1 ;
+X = Y, Y = 2 ;
+X = 2,
+Y = 3 ;
+X = 3,
+Y = 1 ;
+X = 3,
+Y = 2 ;
+X = Y, Y = 3.
+```
+
+Aqui você pode ver que o X e Y foram repetidos, mas... Isso é realmente necessário? Não! Por isso usamos o cut. Agora, iremos falar sobre a resolução SLDNF, que é basicamente a resolução SLD com "negação por falha". Mas o que quer dizer "negação por falha"? Simplesmente qyando passamos um predicado simples para o Prolog, como `foo(X) :- bar(X)`, você verifica se X é bar, mas e se der falha? Você pode usar o operador `\+` para negar a expressäo caso dê falha, ou seja, uma expressäo falsa virá a se tornar verdadeira. A expressäo acima ficaria `foo(X) :- \+ bar(X)`.
+
 ## programação funcional no geral
 
 ## introdução a teoria das categorias
