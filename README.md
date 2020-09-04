@@ -573,7 +573,7 @@ Todas as variáveis em funcional são locais, assim como funções aninhadas... 
 
 ### side effects
 
-O termo side effet qyer dizer que uma função pode ter efeitos colaterais, e geralmente elas são classificadas com as seguintes regras:
+O termo side effet quer dizer que uma função pode ter efeitos colaterais, e geralmente elas são classificadas com as seguintes regras:
 
 1. Mudar o valor de uma variável
 2. Escrever/ler dados do disco
@@ -838,7 +838,7 @@ Y = 2 ;
 X = Y, Y = 3.
 ```
 
-Aqui você pode ver que o X e Y foram repetidos, mas... Isso é realmente necessário? Não! Por isso usamos o cut. Agora, iremos falar sobre a resolução SLDNF, que é basicamente a resolução SLD com "negação por falha". Mas o que quer dizer "negação por falha"? Simplesmente qyando passamos um predicado simples para o Prolog, como `foo(X) :- bar(X)`, você verifica se X é bar, mas e se der falha? Você pode usar o operador `\+` para negar a expressäo caso dê falha, ou seja, uma expressäo falsa virá a se tornar verdadeira. A expressäo acima ficaria `foo(X) :- \+ bar(X)`.
+Aqui você pode ver que o X e Y foram repetidos, mas... Isso é realmente necessário? Não! Por isso usamos o cut. Agora, iremos falar sobre a resolução SLDNF, que é basicamente a resolução SLD com "negação por falha". Mas o que quer dizer "negação por falha"? Simplesmente quando passamos um predicado simples para o Prolog, como `foo(X) :- bar(X)`, você verifica se X é bar, mas e se der falha? Você pode usar o operador `\+` para negar a expressäo caso dê falha, ou seja, uma expressäo falsa virá a se tornar verdadeira. A expressäo acima ficaria `foo(X) :- \+ bar(X)`.
 
 ## programação funcional no geral
 
@@ -873,7 +873,7 @@ fact n = fact (n - 1) * n
 id :: a -> a
 id x = x
 
--- função recebe qyalquer função que receba "a" e retorna "b",
+-- função recebe qualquer função que receba "a" e retorna "b",
 -- depois como argumento recebe "a" e como desejado, retorna "b"
 ex :: (a -> b) -> a -> b
 ex f b = f b
@@ -918,7 +918,7 @@ Na matemática, o elemento identidade é o elemento que não muda em nada a oper
 
 ```hs
 -- aqui nós forçamos para a função receber e retornar Int
--- e como id recebe qyalquer tipo, então será válido
+-- e como id recebe qualquer tipo, então será válido
 func :: (Int -> Int) -> Int
 func f = f 5
 
@@ -966,7 +966,7 @@ Basicamente, é uma forma de evitar bastante if pelo código e também fazer des
 
 **1. if**
 
-Um if sempre deve ter um bloco else e não pode ter mais de uma verificação (a menos que você coloqye dentro do else).
+Um if sempre deve ter um bloco else e não pode ter mais de uma verificação (a menos que você coloque dentro do else).
 
 ```hs
 id :: Int -> Maybe Int
