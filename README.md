@@ -926,6 +926,85 @@ func id
 -- 5
 ```
 
+### isomorfismo
+
+Basicamente, a palavra isomorfismo quer dizer que um objeto X é o mesmo que um Y. Por exemplo, como a gente já havia discutido aqui antes `foo x = ...` é isomórfico a `foo = \x -> ...`.
+
+### pattern matching
+
+Basicamente, pattern matching são uma espécie de if mais poderoso, e você vai entender o porque agora:
+
+```hs
+number :: Int -> String
+number 0 = "zero"
+number 1 = "one"
+number 2 = "two"
+number 3 = "three"
+number 4 = "four"
+number 5 = "five"
+numbwr _ = "unknown number"
+
+number 6
+-- unknown number
+
+number 3
+-- three
+
+letter :: Char -> String
+letter 'a' = "abc"
+letter 'b' = "bc"
+letter 'c' = "c"
+
+letter 'd'
+-- Non-exhaustive patterns in function letter
+
+letter 'a'
+-- abc
+```
+
+Basicamente, é uma forma de evitar bastante if pelo código e também fazer desconstruções no código. E se você não cobrir todos os casos, a função pode gerar uma exceção "non-exhaustive pattern". Existem também outras 3 formas de testar condições em Haskell:
+
+1. if
+
+Um if sempre deve ter um bloco else e não pode ter mais de uma verificação (a menos que você coloqye dentro do else).
+
+```hs
+id :: Int -> Maybe Int
+id = if x == 0 then None else Just x
+```
+
+2. case
+
+Basicamente, pattern matching são desconstruídos para case. Vamos ver um exemplo com o exemplo de pattern matching que demos agora há pouco:
+
+```hs
+number :: Int -> String
+number x = case x of
+    0 -> "zero"
+    1 -> "one"
+    2 -> "two"
+    3 -> "three"
+    4 -> "four"
+    5 -> "five"
+    _ -> "unknown number"
+```
+
+3. guards
+
+São uma forma mais bonita e que permite múltiplos casos em relação ao if. Um exemplo bem famoso:
+
+```hs
+bmiTell bmi  
+    | bmi <= 18.5 = "You're underweight, you emo, you!"  
+    | bmi <= 25.0 = "You're supposedly normal. Pffft, I bet you're ugly!"  
+    | bmi <= 30.0 = "You're fat! Lose some weight, fatty!"  
+    | otherwise   = "You're a whale, congratulations!"  
+```
+
+Aonde o otherwise seria o "caso contrário".
+
+### composição
+
 ## introdução a teoria das categorias
 
 ## lazy programming
