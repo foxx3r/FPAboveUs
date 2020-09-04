@@ -60,11 +60,11 @@ coisas que irão cair no curso:
     * [modus ponens](#modus-ponens)
     * [backtracking](#backtracking)
     * [resolução SLD](#resolução-sld)
-    * [cut, negação e a resolução SLDNF](#cut-negacao-e-resolucao-sldnf)
-* [programação funcional no geral](#programacao-funcional-no-geral)
+    * [cut, negação e a resolução SLDNF](#cut-negação-e-resolução-sldnf)
+* [programação funcional no geral](#programação-funcional-no-geral)
     * [morfismo](#morfismo)
     * [polimorfismo](#polimorfismo)
-    * [função id](#funcao-id)
+    * [função id](#função-id)
     * [isomorfismo](#isomorfismo)
     * [pattern matching](#pattern-matching)
     * [composição](#composicao)
@@ -841,6 +841,90 @@ X = Y, Y = 3.
 Aqui você pode ver que o X e Y foram repetidos, mas... Isso é realmente necessário? Não! Por isso usamos o cut. Agora, iremos falar sobre a resolução SLDNF, que é basicamente a resolução SLD com "negação por falha". Mas o que quer dizer "negação por falha"? Simplesmente qyando passamos um predicado simples para o Prolog, como `foo(X) :- bar(X)`, você verifica se X é bar, mas e se der falha? Você pode usar o operador `\+` para negar a expressäo caso dê falha, ou seja, uma expressäo falsa virá a se tornar verdadeira. A expressäo acima ficaria `foo(X) :- \+ bar(X)`.
 
 ## programação funcional no geral
+
+Agora neste capítulo iremos te ensinar features funcionais
+
+### morfismo
+
+Basicamente, morfismo quer dizer uma "forma", em Haskell, ela diz a forma de um objeto/função, ou seja, é a anotação de tipos. Vamos ver a anotação de uma função matemática:
+
+`foo : A → A → A`
+
+Basicamente, esta função pega 2 argumentos do tipo A e retorna um argumento do tipo A. Agora vamos fazer isso em Haskell'
+
+```hs
+foo :: a -> a -> a
+```
+
+Viu como é bem simples? Mas você deve estar se perguntando "por que não separaram o tipo de retorno dos argumentos?" e iremos explicar mais para frente falando do currying. Agora, vamos escrever algumas funções anotando os tipos delas:
+
+```hs
+head :: [a] -> a
+head (x:_) = x
+-- x é o primeiro elemento, e _ o resto da lista
+
+tail :: [a] -> [a]
+tail (_:xs) = xs
+
+fact :: Int -> Int
+fact 1 = 1
+fact n = fact (n - 1) * n
+
+id :: a -> a
+id x = x
+
+-- função recebe qyalquer função que receba "a" e retorna "b",
+-- depois como argumento recebe "a" e como desejado, retorna "b"
+ex :: (a -> b) -> a -> b
+ex f b = f b
+-- não entendeu? fique analisando a lógica até chegar lá
+
+parse :: Maybe String -> String
+parse (Just x) = x
+parse None = "failed"
+
+-- ou...
+
+parse :: Maybe a -> a
+parse (Just x) = x -- não sabemos o tipo de x, então o que faremos em None?
+parse None = error "foo"
+```
+
+Wow, pera lá, por que podemos dae erro? Como sabemos que ele sempre vai ser do tipo do nosso tipo? Bem, claramente não iremos falar disso agora, mas em Haskell (e basicamente todas as linguagens turing completas com polimorfismo paramétrico), você pode ter funções que sejam de todos os tipos, os famosos bottom values.
+
+### polimorfismo
+
+Basicamente o polimorfismo significa "muitas formas", e se você veio de alguma linguagem como TypeScript, Rust, Java, Dart, Swift ou C++, você deve conhecer esta feature pelo nome "generics". E se não veio, basicamente ela quer dizer que um argumento/retorno pode ter várias formas. E bem, como você já deve saber, o sistema de tipos de Haskell é bem forte e te previne de muito erro, então você não pode fazer algo como `foo :: x -> y`, tipos de retornos genéricos tem que se basear no tipo de entrada, caso contrário, você terá que explicitar o tipo retornado. Alguns exemplos de polimorfismo em Haskell:
+
+```hs
+id :: x -> x
+id x = x
+
+-- os dois tipos podem ser diferentes ou iguais
+const :: a -> b -> a
+const a _ = a
+
+-- os dois tipos devem ser do mesmo tipo
+const :: a -> a -> a
+const a _ = a
+
+const 1 7
+-- 1
+```
+
+### função id
+
+Na matemática, o elemento identidade é o elemento que não muda em nada a operação. Por exemplo, `1 + 0` é igual a 1, então o elemento identidade é o 0. Mas... No caso de Haskell, estamos falando da função identidade, e por que ela é tão importante? Basicamente, se uma função te obriga a passar uma função para dentro dela, mas você não quer modificar o resultado, então você passa a função id. Um exemplo:
+
+```hs
+-- aqui nós forçamos para a função receber e retornar Int
+-- e como id recebe qyalquer tipo, então será válido
+func :: (Int -> Int) -> Int
+func f = f 5
+
+func id
+-- 5
+```
 
 ## introdução a teoria das categorias
 
