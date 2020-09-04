@@ -67,8 +67,10 @@ coisas que irão cair no curso:
     * [função id](#função-id)
     * [isomorfismo](#isomorfismo)
     * [pattern matching](#pattern-matching)
-    * [composição](#composicao)
+    * [composição](#composição)
     * [lifting](#lifting)
+    * [constraints](#constraints)
+    * [declarativismo](#declarativismo)
     * [curry e point free / programação tácita](#programacao-tacita)
     * [Higher Order Functions (HOF) & closures](#higher-order-functions)
     * [recursão](#recursao)
@@ -1026,6 +1028,125 @@ baz = foo . bar 3
 
 baz 5
 -- 64 == (3 + 5) * (3 + 5) == foo (bar 3 5)
+```
+
+### lifting
+
+Basicamente o termo lifting se refere a pegar um valor e converter ele para um contexto, no qual iremos explicar daqui há a algumas aulas, aqui estão alguns exemplos:
+
+```hs
+λ a = 3
+a :: Num p => p
+λ a = return 3
+a :: (Monad m, Num a) => m a
+λ a = "hello"
+a :: String
+λ a = lift "foo"
+a :: MonadTrans t => t [] String
+```
+
+### constraints
+
+Basicamente, uma constraint é uma restrição que podemos fazer no sistema de tipos, ou no nosso caso, é para deixar o código mais polimórfico. Um exemplo:
+
+```hs
+foo :: Num p => p -> p
+foo x = x + 1
+```
+
+E basicamente ao fazer isso, estamos dizendo que p é qualquer tipo que instancie de `Num`, ou seja, como nós sabemos, Haskell tem vários tipos de inteiros, como `Int`, `Integer`, `Word` e outros. Mas o que fazem eles serem números válidos? Basicamente Haskell é feito em Haskell, então o `Num` foi feito em Haskell, o `Int`, o `Integer` e etc... Mas o que os torna realmente um número? Basicamente todo tipo de número instancia `Num`, e então ao invés de aceitarmos apenas um tipo de número, a gente pode aceitar todos os tipos de número. Mesma coisa com a typeclasse `Show`, aonde todo tipo que pode ser printável tem que derivar de `Show`, porque `Show` oferece a função `show` que basicamente o que o GHCi faz por baixo quando você faz algo como `id 3`, ele transforma para `show (id 3)`. Se você fizer algo como:
+
+```hs
+foo :: x -> IO () -- IO () é o tipo de retorno de print
+foo x = print x
+```
+
+Não vai passar, porque o `print` requer que o valor recebido instancie `Show` porque o sistema de tipos nos previne de fazer código errado, vamos ver a declaração do `print`:
+
+```hs
+print :: Show a => a -> IO ()
+```
+
+Então, para a função acima dar certo, a gente faz:
+
+```hs
+foo :: Show x => x -> IO ()
+foo x = print x
+```
+
+E se quisermos, você pode adicionar mais de uma constraint fazendo algo como `(Show p, Monad p, Functor f) => ...`. Agora, vamos criar o nosso próprio número, e no final explico cada código:
+
+```hs
+data Foo = Foo Integer deriving (Show)
+
+instance Num Foo where
+    fromInteger x = Foo x
+
+bar :: Foo
+bar = 3
+
+print bar
+-- Foo 3
+```
+
+Obs: isto pode dar warnings, mas é comum porque não satisfazemos todas as funções.
+
+Basicamente na primeira linha nós criamos um tipo de dado `Foo` que contém un construtor `Foo` que recebe um `Integer`. Logo após, a declaração `deriving (Show)` nos permite instanciar automaticamente o `Show`. Logo abaixo, a gente instancia o `Foo` para `Num`, e dizemos que a função `fromInteger` recebe um x e retorna `Foo x`. E por que `Foo x`? Porque basicamente o `Num` foi criado assim:
+
+```hs
+class Num a where
+  (+) :: a -> a -> a
+  (-) :: a -> a -> a
+  (*) :: a -> a -> a
+  negate :: a -> a
+  abs :: a -> a
+  signum :: a -> a
+  fromInteger :: Integer -> a
+```
+
+Aonde `a` é o seu tipo. Poderiamos ter feito algo como:
+
+```hs
+instance Num Foo where
+    (Foo x) * (Foo y) = Foo (x * y)
+    (Foo x) + (Foo y) = Foo (x + y)
+    (Foo x) - (Foo y) = Foo (x - y)
+    abs (Foo x)       = Foo (abs x)
+    signum (Foo x)    = Foo (signum x)
+    fromInteger x     = Foo x
+```
+
+Agora observe o código do `Num` e tente raciocinar. Agora, vamos ver alguns exemplos:
+
+```hs
+Foo 3 * Foo 2
+-- Foo 6
+Foo 7 + Foo 2
+-- Foo 9
+Foo 2 - Foo 2
+-- Foo 0
+abs (Foo (-3))
+-- Foo 3
+signum (Foo 4)
+-- Foo 1
+fromInteger 6 :: Foo
+-- Foo 6
+```
+
+Mas iremos falar disso depois.
+
+### declarativismo
+
+Basicamente, Haskell suporta programação declarativa com o `where`, assim:
+
+```hs
+divide x = x / pi
+    where
+        pi = 3.14
+
+joao = name
+    where
+        name = "joao"
 ```
 
 ## introdução a teoria das categorias
