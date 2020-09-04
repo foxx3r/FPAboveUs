@@ -1005,6 +1005,29 @@ Aonde o otherwise seria o "caso contrário".
 
 ### composição
 
+Basicamente, a composição matemática é algo como:
+
+`(f • g)(x)`
+
+E você provavelmente já deve tê-lo visto por aí, por exemplo, composição em matemática é só uma forma de não ter que fazer `f(g(x))` e sim usar `(f • g)(x)`, em shell script, o código `f(g(x))` seria `f ${g x}`, ou poderia ser `x | g | f`, a mesma coisa em Elixir/F# que poderia ser `f (g x)` ou `x |> g |> f`. Então, basicamente a composição matemática seria da esquerda para a direita e a da computação da direita para a esquerda. Em Haskell temos ambos, porém, o da direita pra esquerda é acessível apenas via biblioteca. E ele não é tão bom porque não podemos nos aproveitar do currying com ele. Agora vamos deixar de papo e mostrar como é definido por baixo o operador `.` de composição de Haskell:
+
+```hs
+(.) :: (b -> c) -> (a -> b) -> a -> c
+(.) f g = \x -> f (g x)
+```
+
+Agora, pare um pouco e pense nos tipos e tente raciocinar. Basicamente, colocamos o `.` entre parênteses pra ele poder ser chamado de forma infixa (no meio de dois termos), agora, vamos ver um exemplo:
+
+```hs
+foo x = x * x
+bar x y = x + y
+
+baz = foo . bar 3
+
+baz 5
+-- 64 == (3 + 5) * (3 + 5) == foo (bar 3 5)
+```
+
 ## introdução a teoria das categorias
 
 ## lazy programming
