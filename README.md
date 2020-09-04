@@ -71,7 +71,7 @@ coisas que irão cair no curso:
     * [lifting](#lifting)
     * [constraints](#constraints)
     * [declarativismo](#declarativismo)
-    * [curry e point free / programação tácita](#programacao-tacita)
+    * [curry e point free / programação tácita](#curry-e-point-free-programação-tácita)
     * [Higher Order Functions (HOF) & closures](#higher-order-functions)
     * [recursão](#recursao)
     * [tail call recursion & tail call optimization](#tail-call-recursion)
@@ -1147,6 +1147,55 @@ divide x = x / pi
 joao = name
     where
         name = "joao"
+```
+
+### curry e point-free / programação tácita
+
+Ah... O curry, o maravilhoso curry, tão suculen... Espwra, a gente não está falando do molho, e sim do currying do haskell curry (um matemático). Basicamente, o curry são lambda-calculus aninhados, e lambda-calculus são funções, certo? Então... `foo x y = ...` é igual a `foo = \x -> \y -> ...`, e tudo em Haskell é curried automaticamente. Existe uma função chamada `curry` que pega uma função de 2 argumentos (se você quiser mais, você vai precisar criar uma função pra cada elemento, esta é uma das desvantagens de não usar curry) e retorna ela sem curry, por exemplo:
+
+```hs
+λ foo x y = x + y
+foo :: Num a => a -> a -> a
+λ :t uncurry
+uncurry :: (a -> b -> c) -> (a, b) -> c
+λ bar = uncurry foo
+bar :: Num c => (c, c) -> c
+λ -- bar 3 2 daria erro
+λ bar (2, 6)
+8
+it :: Num c => c
+```
+
+E o curry não acontece apenas a nível de função não... Lembra que eu perguntei a Vocês o porque de Haskell não ter adotado uma anotação diferente para diferenciar os argumentos e o retorno? Então...
+
+```hs
+foo :: a -> b -> c -> d
+
+-- é isomórfico a
+
+foo :: ((a -> b) -> c) -> d
+```
+
+E com isso, podemos fazer coisas como:
+
+```hs
+sum :: Num p => p -> p -> p
+sum x y = x + y
+
+sumWith10 :: Num p => p -> p
+sumWith10 = sum 10
+```
+
+Agora que já sabemos como o currying trabalha... Vamos te apresentar o point-free style, ou programação tácita. Basicamente é a programação "orientada a currying", aonde você geralmente faz uso de currying para não ter argumentos explícitos, e.g:
+
+```hs
+foo :: Num p => [p]
+foo = fmap (*5)
+
+-- ao invés de
+
+foo :: Num p => [p]
+foo x = fmap (*5) x
 ```
 
 ## introdução a teoria das categorias
