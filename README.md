@@ -1425,6 +1425,16 @@ Depois, temos `n - 1` que vira 0, e `cur + prev (2 + 1)` dá 3, e `prev` vira `c
 
 E basicamente se a linguagem suportar a otimização TCO (Taill Call Optimization), o compilador conseguirá tratar essa recursão como um loop iterativo e otimizá-lo.
 
+### total functions e partial functions
+
+Uma função parcial em Haskell é uma função cujo argumento de retorno pode ser diferente, por exemplo, um bottom, que como discutimos já, permite que algumas funções se encaixem em tosos os tipos. Um exemplo de função parcial é o `head` e o `tail`, que podem retornar erro caso a lista esteja vazia. E o motivo de Haskell não ter adotado `Maybe` ou `Either` nestes casos é por compatibilidade, porque Haskell queria se parecer com um lazy ML. E total functions são o contrário de partial functions. Vamos criar um `head` total:
+
+```hs
+head :: [a] -> Maybe a
+head [] = None
+head (x:_) = Just x
+```
+
 ## introdução a teoria das categorias
 
 ## lazy programming
