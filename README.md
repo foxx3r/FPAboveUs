@@ -1435,6 +1435,31 @@ head [] = None
 head (x:_) = Just x
 ```
 
+### list comprehension
+
+Basicamente, a compreensão de listas tem a seguinte sintaxe:
+
+`[estrutura dos dados | associaçãp dos dados, if ... condições]`
+
+E além disso, é comum usar a sintaxe `x..y`, aonde x é um número menor que y, então isso diz que uma lista de x até y. E `x..` gera um valor infinito.  e `x, y...z` gera um valor de y a z pulando de x em x, e para funcionar como o esperado, y deve ser o dobro de x, e caso `x == y`, então o valor gerado é infinito.
+
+Alguns exemplos:
+
+```hs
+λ [x | x <- [1..10]]
+[1,2,3,4,5,6,7,8,9,10]
+λ [x * x | x <- [1..10]]
+[1,4,9,16,25,36,49,64,81,100]
+λ [(x, y) | x <- [1, 2, 3], y <- [1..7], y > 4]
+[(1,5),(1,6),(1,7),(2,5),(2,6),(2,7),(3,5),(3,6),(3,7)]
+λ [x | x <- [2, 4..20]]
+[2,4,6,8,10,12,14,16,18,20]
+λ [x | x <- [2, 1..20]]
+[]
+λ [x | x <- [2, 6..20]]
+[2,6,10,14,18]
+```
+
 ## introdução a teoria das categorias
 
 ## lazy programming
