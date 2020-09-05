@@ -709,7 +709,7 @@ mae(X, Y) :- filho(Y, X).
 % true
 ```
 
-Agora que você sabe isto, você já pode escrever programas mais complexos em Prolog. Viu como é simples? Você consegue até entender um programa de árvore genealógica que eu fiz <https://github.com/foxx3r/genealogy_prolog>, e basicamente Prologé pura lógica.
+Agora que você sabe isto, você já pode escrever programas mais complexos em Prolog. Viu como é simples? Você consegue até entender um programa de árvore genealógica que eu fiz <https://github.com/foxx3r/genealogy_prolog>, e basicamente Prolog é pura lógica.
 
 ### modus ponens
 
