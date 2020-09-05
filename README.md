@@ -1514,7 +1514,7 @@ filter (\x -> length x > 4) ["a", "ab", "abc", "abcd", "abcde", "abcdef", "abcde
 -- ["abcde", "abcdef", "abcdefg"]
 ```
 
-### reduce ou fold
+### fold ou reduce
 
 Basicamente, o que você deve conhecer como `reduce` de outras linguagens, é o `fold` de Haskell. Haskell tem 2 tipos de fold, ou melhor... 8. Mas já vamos discutir sobre cada um. Vamos começar com o `foldl`, basicamente, fold significa dobrar. O `foldl` dobra da esquerda pra direita, ou seja:
 
