@@ -79,7 +79,7 @@ coisas que irão cair no curso:
     * [list comprehension](#list-comprehension)
     * [fmap](#fmap)
     * [filter](#filter)
-    * [fold ou reduce](#fold-reduce)
+    * [fold ou reduce](#fold-ou-reduce)
     * [zip](#zip)
     * [continuation passing style (CPS)](#continuation-passing-style)
     * [tipos em haskell](#tipos-em-haskell)
