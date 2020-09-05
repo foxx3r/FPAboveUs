@@ -72,9 +72,9 @@ coisas que irão cair no curso:
     * [constraints](#constraints)
     * [declarativismo](#declarativismo)
     * [curry e point-free](#curry-e-point-free)
-    * [Higher Order Functions (HOF) & closures](#higher-order-functions)
-    * [recursão](#recursao)
-    * [tail call recursion & tail call optimization](#tail-call-recursion)
+    * [Higher Order Functions e closures](#higher-order-functions-e-closures)
+    * [recursão](#recursão)
+    * [tail call recursion e tail call optimization](#tail-call-recursion-e-tail-call-optimization)
     * [total functions & partial functions](#total-functions)
     * [list comprehension](#list-comprehension)
     * [map](#map)
@@ -1197,6 +1197,233 @@ foo = fmap (*5)
 foo :: Num p => [p]
 foo x = fmap (*5) x
 ```
+
+### Higher Order Functions e closures
+
+As famosas HOF são um termo que se refere a passar uma função como argumento, um exemplo:
+
+```hs
+foo :: a -> (a -> b) -> b
+foo x f = f x
+
+foo 3 (\x -> x + 1)
+-- 4
+```
+
+Aonde elas são denotadas por `(a -> b -> c -> d)` no sistema de tipos. Já o termo closure, é o termo dado a retornar uma função de uma outra função. Em Haskell não é tão explícito porque é exatamente isso que o curry faz, por isso, iremos dar um exemplo em JS:
+
+```js
+function closure() {
+    return x => y => x + y
+}
+```
+
+### recursão
+
+Um ponto que difere Haskell de outras linguagens, é que usa-se recursão ao invés de loop, isto quer dizer que, executamos um loop chamando a própria função. Vamos ver um exemplo:
+
+```hs
+fact 1 = 1
+fact n = fact (n - 1) * n
+```
+
+Simplesmente leia como se fosse "se o argumento for 1, retorne 1, caso contrário, então chame fact (n - 1) * n", isto é chamado de pattern matching. Agora vamos desconstruir a função com o argumento 4:
+
+```hs
+fact 4
+4 * (fact 3)
+4 * (3 * (fact 2))
+4 * (3 * (2 * (fact 1)))
+4 * (3 * (2 * 1))
+4 * (3 * 2)
+4 * 6
+24
+```
+
+Relaxa, com o tempo você pega a prática... E quem sabe, você até ache o processo linear iterativo mais fácil assim como eu. E você não precisa ser um matemático para saber lidar com recursão. E nem mesmo precisará contar nos dedos toda vez que for fazer uma recursão. É só você treinar que você pega a prática.
+
+Para calcular uma recursão, geralmente não precisa de um cálculo na mão, e sim um pouco de lógica. Vamos usar a sintaxe (x:xs) aonde x é o primeiro elemento da lista, e xs é o resto. Sabendo disso, vamos ao exemplo:
+
+```hs
+-- se a lista estiver vazia
+product :: [Int] -> Int
+product [] = 0
+product (x:xs) = x * product xs
+```
+
+Aqui, ao fazermos "x * product xs", estamos falando para ele multiplicar o primeiro elemento da lista pelo resto, e quando ele for executar "product xs", o primeiro elemento da lista agora vai ser o segundo elemento, e por assim vai. Esta é a lógica da função, multiplicar todos os elementos da lista, fazendo [1 * 2 * 3 * 4], aonde o x vai ser o 1, depois o 2, o 3, o 4, e depois []. Mas... Espera aí, se você executar a função, ela retornará sempre 0, mas por que? Bem... Vamos dar uma olhada em como é feito por baixo:
+
+```hs
+product [1, 2, 3, 4]
+1 * product [2, 3, 4]
+1 * 2 * product [3, 4]
+1 * 2 * 3 * product [4]
+1 * 2 * 3 * 4 * product []
+1 * 2 * 3 * 4 * 0
+0
+```
+
+Bem... Estamos retornando 0, como vocês todos sabem, a gente está fazendo multiplicação, e tudo multiplicado a 0 é 0, isto é um perigo pra nossa aplicação. Se fosse +, tudo bem. Mas a gente quer um valor que não modifique o resultado, então usaremos o 1, pois qualquer número multiplicado a 1 é igual a ele mesmo. Vamos ver como ficaria:
+
+```hs
+product :: [Int] -> Int
+product [] = 0
+product (x:xs) = x * product xs
+```
+
+Agora sim, vamos ver como é calculado por baixo:
+
+```hs
+product [1, 2, 3, 4]
+1 * product [2, 3, 4]
+1 * 2 * product [3, 4]
+1 * 2 * 3 * product [4]
+1 * 2 * 3 * 4 * product []
+1 * 2 * 3 * 4 * 1
+24
+```
+
+### tail call recursion e tail call optimization
+
+Conhecida também como processk iterativo linear por schemeiros/SICPeiros
+.. Este tipo de recursão é iterativo, ou seja, diferente da recursão convencional, ele não vai acumulando `1 * 2 * 3 * 4` por exemplo, ele vai fazendo avaliando a cada iteração esse valor e produzindo o resultado, assim, as probabilidades da complexidade do algoritmo ser O(n) são muito grandes, um exemplo de como um fatorial é calculado por baixo:
+
+```lisp
+(factorial 6)
+(6 * (factorial 5))
+(6 * (5 * (factorial 4)))
+(6 * (5 * (4 * (factorial 3))))
+(6 * (5 * (4 * (3 * (factorial 2)))))
+(6 * (5 * (4 * (3 * (2 * (factorial 1))))))
+(6 * (5 * (4 * (3 * (2 * 1)))))
+(6 * (5 * (4 * (3 * 2))))
+(6 * (5 * (4 * 6)))
+(6 * (5 * 24))
+(6 * 120)
+720
+```
+
+Você percebe que a função cresceu pra depois diminuir? Agora vamos ver como é o fatorial na forma linear iterativa:
+
+```lisp
+(factorial 6)
+(fact-iter 1 1 6)
+(fact-iter 1 2 6)
+(fact-iter 2 3 6)
+(fact-iter 6 4 6)
+(fact-iter 24 5 6)
+(fact-iter 120 6 6)
+(fact-iter 720 7 6)
+```
+
+Com a forma linear iterativa, a linguagem consegue fazer um processo de otimização chamado TCO (Tail Call Optimization), aonde o processador consegue limpar a stack a cada loop, assim a memória na stack não vai se acumulando e provavelmente não vai causar um stack overflow. Agora vamos ver como se faz, e a diferença da recursão convencional e a tail recursion:
+
+```hs
+fact :: Int -> Int
+fact 1 = 1
+fact n = fact (n - 1) * n
+
+fact' :: Int -> Int
+fact' n = fact_iter n 1
+    where
+        fact_iter 1 acc = acc
+        fact_iter product acc = fact_iter (product - 1) (acc * product)
+```
+
+Conseguiram perceber como faz?
+
+**1:**
+```hs
+n - 1
+```
+**2:**
+```hs
+product - 1
+```
+
+**1:**
+retorna 1
+**2:**
+retorna `acc`
+
+**1:**
+`fact(...) * n`
+**2:**
+```hs
+acc * product
+```
+
+Aonde acc é o acumulador. Agora vamos ver como é o fibonacci:
+
+```hs
+fib 0 = 1
+fib 1 = 1
+fib n = fib (n - 1) + fib (n - 2)
+
+fib' n = fib_iter n 1 0 where
+    fib_iter n cur prev | n <= 0    = cur
+                        | otherwise = fib_iter (n - 1) (cur + prev) cur
+```
+
+Por baixo:
+
+```hs
+fibonacci 3
+fibonacci 2 + fibonacci 1
+fibonacci 1 + fibonacci 0 + fibonacci 1
+1 + fibonacci 0 + fibonacci 1
+1 + 1 + fibonacci 1
+1 + 1 + 1
+2 + 1
+3
+
+fib' 3
+fib_iter 3 1 0
+fib_iter 2 1 1
+fib_iter 1 2 1
+fib_iter 0 3 2
+3
+```
+
+Aonde current é o quanto de iterações que o programa já rodou, e o previous é o número anterior a essa iteração. a pergunta que vocês devem estar se perguntando agora é:
+
+Por que temos um `current` e `previous`? Porque não é assim em fatorial
+
+Simples, porque a gente só precisa dos dois números anteriores na fibonacci:
+
+```hs
+fib(n - 1) + fib(n - 2)
+```
+
+Precisamos de um número anterior e de um anterior a esse.
+
+Então a cada iteração, dizemos que:
+
+```hs
+current = current + previous
+previous = cur
+```
+
+Neste código, o acumulador é o current.
+
+Para você saber qual é o acumulador, você simplesmente vê qual está sendo retornado, um exemplo:
+
+```hs
+fib' 3
+fib' 3 1 0
+fib' 2 1 1
+fib' 1 2 1
+fib' 0 3 2
+3
+```
+
+Deu 3, porque o segundo parâmetro é o acumulador. Iniciamos com `fib(n, 1, 0)`, depois previous vira o valor do `current` (1), e temos um `n - 1`.
+
+Depois disso, é realizado um `n - 1` novamente, o que o faz virar 1, e temos `cur + prev` que dá 2, e `prev` vira `cur`, que dá 1
+
+Depois, temos `n - 1` que vira 0, e `cur + prev (2 + 1)` dá 3, e `prev` vira `cur`, que dá 2. Agora aqui, ele só retorna 3. Não precisa desencapsular nem nada, só retornar o valor que foi incrementado durante todo o processo.
+
+E basicamente se a linguagem suportar a otimização TCO (Taill Call Optimization), o compilador conseguirá tratar essa recursão como um loop iterativo e otimizá-lo.
 
 ## introdução a teoria das categorias
 
