@@ -75,7 +75,7 @@ coisas que irão cair no curso:
     * [Higher Order Functions e closures](#higher-order-functions-e-closures)
     * [recursão](#recursão)
     * [tail call recursion e tail call optimization](#tail-call-recursion-e-tail-call-optimization)
-    * [total functions e partial functions](#total-functions-e-partial)
+    * [total functions e partial functions](#total-functions-e-partial-functions)
     * [list comprehension](#list-comprehension)
     * [fmap](#fmap)
     * [filter](#filter)
@@ -1515,6 +1515,17 @@ filter (\x -> length x > 4) ["a", "ab", "abc", "abcd", "abcde", "abcdef", "abcde
 ```
 
 ### reduce ou fold
+
+Basicamente, o que você deve conhecer como `reduce` de outras linguagens, é o `fold` de Haskell. Haskell tem 2 tipos de fold, ou melhor... 8. Mas já vamos discutir sobre cada um. Vamos começar com o `foldl`, basicamente, fold significa dobrar. O `foldl` dobra da esquerda pra direita, ou seja:
+
+```hs
+foldl (+) 0 [1..10]
+-- == 0 + 1 + 2 + 3 + ...
+```
+
+Aonde o 0 é o acumulador. Tome cuidado com qual acumulador usar. Por exemplo, usar 1 em operações com + aumentaria o resultado em 1, e usar 0 em operações com * sempre retornaria 0, porque todo número multiplicado por 0 é igual a 0. Já o `foldr` começa a dobrar da direi5a para a esquerda, e só vai se diferenciar do `foldl` se a operação não for comutativa (e.g: `a + b` é `b + a`, portanto, adição é comutativa). Agora, temos o `foldl1` e `foldr1`, aonde o acumulador por padrão é 1, e é bem interessante você usar semore que puder. Já o `foldl'` e `foldr'` (conta com o `foldl1` e `foldr1'`) são os que eu recomendo sempre usar, ele são uma versão sem stack overflow dos `fold`s, que Basicamente usa strictness evaluation que iremos explicar nos capítulos sobre lazy programming.
+
+### zip
 
 ## introdução a teoria das categorias
 
