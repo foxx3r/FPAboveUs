@@ -77,9 +77,9 @@ coisas que irão cair no curso:
     * [tail call recursion e tail call optimization](#tail-call-recursion-e-tail-call-optimization)
     * [total functions e partial functions](#total-functions-e-partial)
     * [list comprehension](#list-comprehension)
-    * [map](#map)
+    * [fmap](#fmap)
     * [filter](#filter)
-    * [fold / reduce](#fold-reduce)
+    * [fold ou reduce](#fold-reduce)
     * [zip](#zip)
     * [continuation passing style (CPS)](#continuation-passing-style)
     * [tipos em haskell](#tipos-em-haskell)
@@ -1459,6 +1459,62 @@ Alguns exemplos:
 λ [x | x <- [2, 6..20]]
 [2,6,10,14,18]
 ```
+
+### fmap
+
+Basicamente, o `fmap` quer dizer functor map, no qual iremos falar mais a frente em teoria das categorias. Basicamente, com `fmap`, a gente consegue aplicar funções em valores/tipos que derivem de `Functor`. Vamos ver a definição de functor com `:i`:
+
+```hs
+type Functor :: (* -> *) -> Constraint
+class Functor f where
+  fmap :: (a -> b) -> f a -> f b
+  (<$) :: a -> f b -> f a
+  {-# MINIMAL fmap #-}
+        -- Defined in ‘GHC.Base’
+instance Functor (Map k) -- Defined in ‘Data.Map.Internal’
+instance Functor (Array i) -- Defined in ‘GHC.Arr’
+instance Functor (Either a) -- Defined in ‘Data.Either’
+instance Functor [] -- Defined in ‘GHC.Base’
+instance Functor Maybe -- Defined in ‘GHC.Base’
+instance Functor IO -- Defined in ‘GHC.Base’
+instance Functor ((->) r) -- Defined in ‘GHC.Base’
+instance Functor ((,,,) a b c) -- Defined in ‘GHC.Base’
+instance Functor ((,,) a b) -- Defined in ‘GHC.Base’
+instance Functor ((,) a) -- Defined in ‘GHC.Base’
+```
+
+Aonde cada instance é uma instância de `Functor`. Alguns exemplos:
+
+```hs
+fmap (* 2) [2..8]
+-- [2 * 2, 3 * 2, 4 * 2, 5 * 2, 6 * 2, 7 * 2, 8 * 2]
+-- [4, 6, 8, 10, 12, 14, 16]
+fmap (+5) (Just 4)
+-- Just 9
+fmap (++ "!") ["I win", "I get", "I feel"]
+-- ["I win!", "I get!", "I feel!"]
+fmap id [1, 2, 3]
+-- [1, 2, 3]
+```
+
+E um fato interessante é que o `map` é um `fmap` que funciona apenas para listas e foi um erro de design, e até hoje é mantido apenas por compatibilidade. Então, sempre usem `fmap`.
+
+### filter
+
+Basicamente o filter filtra os resultados em uma lista, por exemplo:
+
+```hs
+filter odd [3,6,7,9,12,14]
+-- [3, 7, 9,]
+filter False [1..30]
+-- []
+filter True [1, 2, 3, 4, 5]
+-- [1, 2, 3, 4, 5]
+filter (\x -> length x > 4) ["a", "ab", "abc", "abcd", "abcde", "abcdef", "abcdefg"]
+-- ["abcde", "abcdef", "abcdefg"]
+```
+
+### reduce ou fold
 
 ## introdução a teoria das categorias
 
