@@ -1462,7 +1462,7 @@ Alguns exemplos:
 
 ### fmap
 
-Basicamente, o `fmap` quer dizer functor map, no qual iremos falar mais a frente em teoria das categorias. Basicamente, com `fmap`, a gente consegue aplicar funções em valores/tipos que derivem de `Functor`. Vamos ver a definição de functor com `:i`:
+Basicamente, o `fmap` quer dizer functor map, no qual iremos falar mais a frente em teoria das categorias. Basicamente, com `fmap`, a gente consegue aplicar funções em valores/tipos que derivem de `Functor`. Vamos ver a definição de `Functor` com `:i`:
 
 ```hs
 type Functor :: (* -> *) -> Constraint
