@@ -75,7 +75,7 @@ coisas que irão cair no curso:
     * [Higher Order Functions e closures](#higher-order-functions-e-closures)
     * [recursão](#recursão)
     * [tail call recursion e tail call optimization](#tail-call-recursion-e-tail-call-optimization)
-    * [total functions & partial functions](#total-functions)
+    * [total functions e partial functions](#total-functions-e-partial)
     * [list comprehension](#list-comprehension)
     * [map](#map)
     * [filter](#filter)
