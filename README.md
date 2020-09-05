@@ -1227,7 +1227,7 @@ fact 1 = 1
 fact n = fact (n - 1) * n
 ```
 
-Simplesmente leia como se fosse "se o argumento for 1, retorne 1, caso contrário, então chame fact (n - 1) * n", isto é chamado de pattern matching. Agora vamos desconstruir a função com o argumento 4:
+Simplesmente leia como se fosse "se o argumento for 1, retorne 1, caso contrário, então chame `fact (n - 1) * n`", isto é chamado de pattern matching. Agora vamos desconstruir a função com o argumento 4:
 
 ```hs
 fact 4
