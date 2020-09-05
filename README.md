@@ -1439,7 +1439,7 @@ head (x:_) = Just x
 
 Basicamente, a compreensão de listas tem a seguinte sintaxe:
 
-`[estrutura dos dados | associaçãp dos dados, condições]`
+`[estrutura dos dados | associação dos dados, condições]`
 
 E além disso, é comum usar a sintaxe `x..y`, aonde x é um número menor que y, então isso diz que uma lista de x até y. E `x..` gera um valor infinito.  e `x, y...z` gera um valor de y a z pulando de x em x, e para funcionar como o esperado, y deve ser o dobro de x, e caso `x == y`, então o valor gerado é infinito.
 
