@@ -83,17 +83,17 @@ coisas que irão cair no curso:
     * [zip](#zip)
     * [continuation passing style](#continuation-passing-style)
     * [tipos em haskell](#tipos-em-haskell)
-* [introdução a teoria das categorias](#introducao-a-teoria-das-categorias)
-    * [o que é uma categoria?](#o-que-e-uma-categoria)
+* [introdução a teoria das categorias](#introdução-a-teoria-das-categorias)
+    * [o que é uma categoria?](#o-que-é-uma-categoria)
     * [endomorfismo](#endomorfismo)
     * [idempotência](#idempotencia)
     * [monomorfismo](#monomorfismo)
     * [o que são domínios e codomínios?](#o-que-sao-dominios-e-codominios)
-    * [setóide](#setoide)
+    * [setóide](#setóide)
     * [semigrupo](#semigrupo)
-    * [bijeção](#bijecao)
-    * [injeção](#injecao)
-    * [surjeção](#surjecao)
+    * [bijeção](#bijeção)
+    * [injeção](#injeção)
+    * [surjeção](#surjeção)
     * [o que é uma operação binária?](#o-que-e-uma-operacao-binaria)
     * [o que são funtores?](#o-que-sao-funtores)
     * [o que são endofuntores?](#o-que-sao-endofuntores)
@@ -1563,6 +1563,72 @@ Como todos sabemos, o `Int` em Haskell é um inteiro normal, que deriva de `Num`
 ## introdução a teoria das categorias
 
 A teoria das categorias pode não ser tão útil ou amplamente utilizada por matemáticos, mas se encaixa exatamente com programação, porque você tem una generalização da matemática toda em categorias, e categorias são possíveis de serem expressadas em programação de forma simples.
+
+### o que é uma categoria?
+
+Basicamente, una categoria seria um monte de objetos e setas entre eles (algo como `A → B`), e eles devem obedecer 3 regras:
+
+**1. composição** - se há uma seta `A` para `B` e de `B` para `C`, então existe uma seta de `A` para `C`, que seria sua composição:
+
+```
+f = A
+g = B
+
+f : A → B
+g : B → C
+
+composition : A → C
+composition(a) = g (f a)
+```
+
+**2. identidade** - a identidade em categorias é um pouco diferente da identidade que conhecemos por função... Basicamente ela faz com que a seta do objeto retorne para si mesma.
+
+**3. composição associativa** - isso quer dizer que a composição de `a . b . c` deve ser igual a `(a . b) . c` ou `a . (b . c)`.
+
+Agora, vamos criar uma categoria usando typeclasses:
+
+```hs
+{-# LANGUAGE KindSignatures #-}
+
+class Cat (cat :: * -> * -> *) where
+    id_   :: cat a a
+    (...) :: cat b c -> cat a b -> cat a c
+```
+
+A anotação `cat :: * -> * -> *` quer dizer que `cat` deve ser um tipo que recehe 2 argumentos. E o `KindSignatures` é a eztensão que nos permite escrever explicitamente o tipo de `cat`. Agora, vamos mostrar um exemplo:
+
+```hs
+data Foo a b = Foo a b deriving (Show)
+
+instance Cat Foo where
+    id_ = Foo undefined undefined -- tem que ser um bottom, porque como o a é 
+                                  -- quantificado (não vem de nenhum 
+                                  -- arg de fora), ele tem que ser de todos os
+                                  -- tipos, e não um dinâmico como o cat
+    (...) f g = \x -> f (g x) -- associativo
+
+f :: Cat cat => cat a a
+f = id_
+
+g :: Foo a a
+g = id_
+```
+
+Agora, para finalizar, vamos definir o comportamento da nossa categoria para funções, porém, iremos nos aprofundar mais quando estivermos falando sobre arrows. Vamos ver:
+
+```hs
+instance Cat ((->)) where
+    id_ = id
+    (...) f g = \x -> f (g x)
+
+test :: Num a => a -> a
+test = (+1) ... (+2)
+
+test 6
+-- 9
+```
+
+Viu como basicamente definimos o comportamento da nossa typeclass para funções?
 
 ## lazy programming
 
