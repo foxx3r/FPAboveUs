@@ -1562,11 +1562,11 @@ Como todos sabemos, o `Int` em Haskell é um inteiro normal, que deriva de `Num`
 
 ## introdução a teoria das categorias
 
-A teoria das categorias pode não ser tão útil ou amplamente utilizada por matemáticos, mas se encaixa exatamente com programação, porque você tem una generalização da matemática toda em categorias, e categorias são possíveis de serem expressadas em programação de forma simples.
+A teoria das categorias pode não ser tão útil ou amplamente utilizada por matemáticos, mas se encaixa exatamente com programação, porque você tem uma generalização da matemática toda em categorias, e categorias são possíveis de serem expressadas em programação de forma simples.
 
 ### o que é uma categoria?
 
-Basicamente, una categoria seria um monte de objetos e setas entre eles (algo como `A → B`), e eles devem obedecer 3 regras:
+Basicamente, uma categoria seria um monte de objetos e setas entre eles (algo como `A → B`), e eles devem obedecer 3 regras:
 
 **1. composição** - se há uma seta `A` para `B` e de `B` para `C`, então existe uma seta de `A` para `C`, que seria sua composição:
 
