@@ -1592,7 +1592,7 @@ class Cat (cat :: * -> * -> *) where
     (...) :: cat b c -> cat a b -> cat a c
 ```
 
-A anotação `cat :: * -> * -> *` quer dizer que `cat` deve ser um tipo que recehe 2 argumentos. E o `KindSignatures` é a eztensão que nos permite escrever explicitamente o tipo de `cat`. Agora, vamos mostrar um exemplo:
+A anotação `cat :: * -> * -> *` quer dizer que `cat` deve ser um tipo que recebe 2 argumentos. E o `KindSignatures` é a extensão que nos permite escrever explicitamente o tipo de `cat`. Agora, vamos mostrar um exemplo:
 
 ```hs
 data Foo a b = Foo a b deriving (Show)
