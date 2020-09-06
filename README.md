@@ -1578,7 +1578,7 @@ f : A → B
 g : B → C
 
 composition : A → C
-composition(a) = g (f a)
+composition(a) = g(f(a))
 ```
 
 **2. identidade** - a identidade em categorias é um pouco diferente da identidade que conhecemos por função... Basicamente ela faz com que a seta do objeto retorne para si mesma.
