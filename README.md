@@ -513,7 +513,7 @@ Aonde `::` é o tipo de retorno.
 
 Uma linguagem é chamada first class se as funções dela são tratadas como qualquer outro tipo de dado da linguagem, isso inclui as seguintes regras:
 
-1. Uma variável pode ser uma função
+**1.** Uma variável pode ser uma função
 
 ```js
 const foo = () => {
@@ -532,7 +532,7 @@ sum = \x -> \y -> x + y
 
 Todas estas funções acima são iguais, e na aula sobre currying, iremos descobrir o porque.
 
-2. Passar uma função como argumento
+**2.** Passar uma função como argumento
 
 ```hs
 map (+ 1) [1..10]
@@ -540,7 +540,7 @@ map (+ 1) [1..10]
 
 Aonde map aplica +1 a todos os elementos da lista. Aonde + é uma função que recebeu o argumento 1 (e por causa do currying, podemos passar argumentos incompletos, mas iremos falar disso mais a frente) e uma lista de 1 a 10. Iremos ver mais sobre map/fmap no capítulo sobre functors, e funções como argumentos no capítulo sobre Higher Order Functions (HOF).
 
-3. Retornar uma função
+**3.** Retornar uma função
 
 ```js
 function sum() {
