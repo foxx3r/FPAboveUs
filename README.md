@@ -81,7 +81,7 @@ coisas que irão cair no curso:
     * [filter](#filter)
     * [fold ou reduce](#fold-ou-reduce)
     * [zip](#zip)
-    * [continuation passing style (CPS)](#continuation-passing-style)
+    * [continuation passing style](#continuation-passing-style)
     * [tipos em haskell](#tipos-em-haskell)
 * [introdução a teoria das categorias](#introducao-a-teoria-das-categorias)
     * [o que é uma categoria?](#o-que-e-uma-categoria)
@@ -1527,7 +1527,42 @@ Aonde o 0 é o acumulador. Tome cuidado com qual acumulador usar. Por exemplo, u
 
 ### zip
 
+Basicamenre, o zip nos permite pegar 2 listas, e juntar o index 1 da primeira lista com o index 1 da outra lista numa mesma tupla, e assim por diante. Alguns exemplos:
+
+```hs
+zip [1, 2, 3] [9, 8, 7]
+-- [(1, 9), (2, 8), (3, 7)]
+zip [1..5] [9, 8]
+-- [(1, 9), (2, 8)]
+```
+
+### continuation passing style 
+
+Basicamente, o CPS é um caso de callback, aonde você se aproveita da computação de recursos na stack, e aonde você acumula valores... Uhmm, acumular, vocês se lembram desta frase? Bora ver um exemplo de callback em JavaScript:
+
+```js
+const sum = (x, y, k) => k(x + y)
+```
+
+Aonde `k` é o callback. Mas o que seria uma CPS? Seria uma continuação da continuação! Tipo o que fizemos no exemplo de Tail Call Optimization! Mas de uma forma otimizada parecida com callbacks.
+
+```hs
+fact' :: Int -> Int
+fact' n k = fact_iter n 1
+    where
+        fact_iter 1 acc = acc
+        fact_iter product acc = k $ fact_iter (product - 1) (acc * product)
+```
+
+Aonde `fact_iter` é uma continuação de `fact'` e `fact_iter` (a recursão) é uma continuação de si mesma, aonde `k` é o callback. Repare que a continuação é sempre a última coisa que a função faz.
+
+### tipos em Haskell
+
+Como todos sabemos, o `Int` em Haskell é um inteiro normal, que deriva de `Num`, e `Integer` é conhecido como big int, aonde temos um tamanho infinito de possibilidades de números. `Char` é apenas um caractere, `[a]` é uma lista com tipos `a` dentro dela, e `String` é um sinônimo para `[Char]`. `Float` são números de ponto flutuante e `Fractional` é um número de ponto flutuante que pode ser representado fracionalmente. `Word` equivale ao word do processador. `(Int, Int, Int)` é uma tupla com 3 `Int`s. E `Bool` são booleanos. `*` é o tipo dos tipos nos quais iremos falar no capítulo sobre type-level programming, e `Constraint`, bem... A maneira mais simplesnde explicá-lo mas talvez não tão correta/perfeccionista, seria que ele é geralmente retornado por typeclasses e quer dizer que ela pode servir com constraint.
+
 ## introdução a teoria das categorias
+
+A teoria das categorias pode não ser tão útil ou amplamente utilizada por matemáticos, mas se encaixa exatamente com programação, porque você tem una generalização da matemática toda em categorias, e categorias são possíveis de serem expressadas em programação de forma simples.
 
 ## lazy programming
 
