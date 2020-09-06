@@ -1571,9 +1571,6 @@ Basicamente, una categoria seria um monte de objetos e setas entre eles (algo co
 **1. composição** - se há uma seta `A` para `B` e de `B` para `C`, então existe uma seta de `A` para `C`, que seria sua composição:
 
 ```
-f = A
-g = B
-
 f : A → B
 g : B → C
 
