@@ -575,13 +575,13 @@ Todas as variáveis em funcional são locais, assim como funções aninhadas... 
 
 ### side effects
 
-O termo side effet quer dizer que uma função pode ter efeitos colaterais, e geralmente elas são classificadas com as seguintes regras:
+O termo side effect quer dizer que uma função pode ter efeitos colaterais, e geralmente elas são classificadas com as seguintes regras:
 
 1. Mudar o valor de uma variável
 2. Escrever/ler dados do disco
 3. Escrever na GUI
 
-E linguagens funcionais não tem side effets... Mas pera, não dá para programar em GUI ou escrever/ler do disco??? Calma, Haskell tem side effects controlados pela monad IO.
+E linguagens funcionais não tem side effects... Mas pera, não dá para programar em GUI ou escrever/ler do disco??? Calma, Haskell tem side effects controlados pela monad IO.
 
 ### pureza
 
