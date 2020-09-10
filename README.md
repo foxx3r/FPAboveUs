@@ -245,7 +245,7 @@ Enfim... Bora parar de falar. Basicamente, o Emacs tem os arquivos de configura√
 ```el
 (require 'package)
 (add-to-list 'package-archives
-  '("melpa" . "http://melpa.milkbox.net/packages/"))
+             '("melpa" . "http://melpa.org/packages/"))
 (package-initialize)
 ```
 
@@ -261,8 +261,6 @@ Ap√≥s isso, entre em qualquer arquivo com o emacs e tecle `M-x`, aonde a tecla M
 
 ```el
 (require 'helm-config)
-
-(use-package lsp-ui)
 
 (global-set-key (kbd "M-x") #'helm-M-x)
 (global-set-key (kbd "C-x r b") #'helm-filtered-bookmarks)
