@@ -1717,7 +1717,7 @@ A regra de ser injetivo é que sempre no conjunto `A`, tenha menos elementos que
 
 ### sobrejetividade
 
-Já uma função sobrejetiva, ela é o contrário da injetiva: **uma função sobrejetiva tem seu conjunto A maior que o conjunto B**. Um exemplo:
+Já uma função sobrejetiva, ela é o contrário da injetiva: **uma função sobrejetiva tem o seu conjunto A maior que o conjunto B**. Um exemplo:
 
 ```
 A = {1, 2, 3, 4}
