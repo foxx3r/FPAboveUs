@@ -1777,7 +1777,9 @@ Uma operação binária nada mais é do que uma função que contém 2 domínios
 
 Basicamente, um functor (ou funtor -- em português), é uma seta apontando de uma categoria para outra, e basicamente ela "transforma" uma categoria em outra, mas... Como assim transformar? Pense no seguinte caso: `a -> b -> c`, aqui nôs transformamos um `a` em `b` e `b` em um `c`, mas pera, por que "transformar" se é só uma função com 2 argumentos? É aí que está... Você se lembra do nosso velho amigo curry? `(a -> b) -> c`, funções retornam funções, então no final é tudo uma nova função... Assim, uma transformação. E como você já deve ter percebido, o `->` é um functor. Basicamente, um functor em Haskell é definido como:
 
-`type (->) a b = a -> b`
+```hs
+type (->) a b = a -> b
+```
 
 Aonde iremos explorar essa nova sintaxe no capítulo sobre type-level programming. Em Haskell, também temos a typeclass `Functor` que contém uma função `fmap` que mapeia um objeto para ele mesmo. Um exemplo:
 
