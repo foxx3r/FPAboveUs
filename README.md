@@ -1773,6 +1773,47 @@ D → 2
 
 Uma operação binária nada mais é do que uma função que contém 2 domínios e retorna um codomínio. Isso quer dizer que `+` e `*` são dois exemplos de operações binárias.
 
+### o que são funtores?
+
+Basicamente, um functor (ou funtor -- em português), é uma seta apontando de uma categoria para outra, e basicamente ela "transforma" uma categoria em outra, mas... Como assim transformar? Pense no seguinte caso: `a -> b -> c`, aqui nôs transformamos um `a` em `b` e `b` em um `c`, mas pera, por que "transformar" se é só uma função com 2 argumentos? É aí que está... Você se lembra do nosso velho amigo curry? `(a -> b) -> c`, funções retornam funções, então no final é tudo uma nova função... Assim, uma transformação. E como você já deve ter percebido, o `->` é um functor. Basicamente, um functor em Haskell é definido como:
+
+`type (->) a b = a -> b`
+
+Aonde iremos explorar essa nova sintaxe no capítulo sobre type-level programming. Em Haskell, também temos a typeclass `Functor` que contém uma função `fmap` que mapeia um objeto para ele mesmo. Um exemplo:
+
+```hs
+foo :: [Int]
+foo = fmap (-1) [6, 2]
+-- [5, 1]
+
+bar :: Maybe String
+bar = fmap (++ "!") (Just ["hello", "hi"])
+-- Just ["hello!", "hi!"]
+```
+
+### o que são endofuntores?
+
+Endofunctors são basicamente functors que mapeiam um objeto para si mesmo. Vamos ver um exemplo criando uma typeclass:
+
+```hs
+class Foo m where
+    endo :: a -> m a
+
+foo :: (Foo m, Num a) => m a
+foo = endo 2
+```
+
+Neste caso não é necessário usar `instance`, porque nós definimos o comportamento no nível dos tipos para a função. Mas se quisermos instanciar, teremos que fazer isso para um tipo de dado com tipo `* -> *`, como por exemplo, `data Bar a = Baz a` e podemos fazer o seguinte:
+
+```hs
+instance Foo Bar where
+    endo x = Baz x
+
+foo :: Bar Int
+foo = endo 3
+-- Baz 3
+```
+
 ## lazy programming
 
 ## quantificação
