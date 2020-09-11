@@ -1637,7 +1637,7 @@ increment :: Integer -> Integer
 
 ### idempotência
 
-Uma função é considerada idempotente se aplicar o valor a ela, não mude o resultado. Exemplo:
+Uma função é considerada idempotente se aplicar um valor a ela várias vezes, não mude o resultado. Exemplo:
 
 ```hs
 sort (sort (sort (sort (sort [1, 8, 3, 6]))))
