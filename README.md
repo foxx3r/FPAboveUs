@@ -86,14 +86,15 @@ coisas que irão cair no curso:
 * [introdução a teoria das categorias](#introdução-a-teoria-das-categorias)
     * [o que é uma categoria?](#o-que-é-uma-categoria)
     * [endomorfismo](#endomorfismo)
-    * [idempotência](#idempotencia)
+    * [idempotência](#idempotência)
     * [monomorfismo](#monomorfismo)
-    * [o que são domínios e codomínios?](#o-que-sao-dominios-e-codominios)
+    * [o que são domínios e codomínios?](#o-que-são-domínios-e-codomínios)
     * [setóide](#setóide)
     * [semigrupo](#semigrupo)
-    * [bijeção](#bijeção)
-    * [injeção](#injeção)
-    * [surjeção](#surjeção)
+    * [injetividade](#injetividade)
+    * [sobrejetividae](#sobrejetividae)
+    * [bijetividade](#bijetividade)
+    * [função inversa](#função-inversa)
     * [o que é uma operação binária?](#o-que-e-uma-operacao-binaria)
     * [o que são funtores?](#o-que-sao-funtores)
     * [o que são endofuntores?](#o-que-sao-endofuntores)
@@ -1624,6 +1625,69 @@ test 6
 ```
 
 Viu como basicamente definimos o comportamento da nossa typeclass para funções?
+
+### endomorfismo
+
+Basicamente, o termo endomorfismo se refere ao tipo de entrada ser o mesmo da saída. Um exemplo:
+
+```hs
+uppercase :: String -> String
+increment :: Integer -> Integer
+```
+
+### idempotência
+
+Uma função é considerada idempotente se aplicar o valor a ela, não mude o resultado. Exemplo:
+
+```hs
+sort (sort (sort (sort (sort [1, 8, 3, 6]))))
+-- [1, 3, 6, 8]
+```
+
+### monomorfismo
+
+Basicamente o termo monomorfismo é o contrário de polimorfismo... Então se polimorfismo são várias formas, monomorfismo é apenas uma forma? Exatamente! Vamos dar um exemplo de um `add` monomórfico e outro polimórfico:
+
+```hs
+-- monomórfico
+add :: Int -> Int -> Int
+-- polimórfico
+add :: Num a => a -> a -> a
+```
+
+Viu? No primeiro só podemos ter uma forma de números. No segundo, a gente pode ter de vários tipos.
+
+### o que são domínios e codomínios?
+
+Basicamente, esses termos se referem aos argumentos e retorno de uma função respectivamente. Por exemplo, `add :: Int -> Int -> Int` tem 2 domínios `Int` e um codomínio `Int`.
+
+### setóide
+
+Basicamente um setóide é um conjunto com uma relação de equivalência. Ele tem uma função chamada `equals` que compara objetos do mesmo tipo. E um setóide tem que obedecer 3 regras:
+
+**1. reflexividade** -
+
+```hs
+(a == a) = true
+```
+
+**2. simetria** -
+
+```hs
+(a == b) = (b == a)
+```
+
+**3. transitividade** -
+
+```hs
+if a == b && b == c then a == c
+```
+
+### semigrupo
+
+Um semigrupo é basicamente um monoid com um elemento neutro / identidade, no qual iremos falar depois. Basicamente, um semigrupo contém uma operação binária (que iremos falar mais para frente) e obedece apenas uma regra: **associatividade**, tal que `(a ++ b) ++ c` é igual a `a ++ (b ++ c)`.
+
+### 
 
 ## lazy programming
 
