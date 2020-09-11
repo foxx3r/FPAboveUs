@@ -1687,7 +1687,61 @@ if a == b && b == c then a == c
 
 Um semigrupo é basicamente um monoid com um elemento neutro / identidade, no qual iremos falar depois. Basicamente, um semigrupo contém uma operação binária (que iremos falar mais para frente) e obedece apenas uma regra: **associatividade**, tal que `(a ++ b) ++ c` é igual a `a ++ (b ++ c)`.
 
-### 
+### injetividade
+
+Basicamente, **função injetiva** é o nome que se dá quando há um conjunto `A` e um conjunto `B` (considerando que `A != B`), e para todo `A`, há um correspondente em `B`. Um exemplo:
+
+```
+A = {1, 2, 3, 4}
+B = {A, B, C, D}
+
+1 → A
+2 → B
+3 → C
+4 → D
+```
+
+Ou assim também seria possível:
+
+```
+A = {1, 2, 3}
+B = {A, B, C, D}
+
+1 → A
+2 → B
+3 → C
+3 → D
+```
+
+A regra de ser injetivo é que sempre no conjunto `A`, tenha menos elementos que o conjunto `B`.
+
+### sobrejetividade
+
+Já uma função sobrejetiva, ela é o contrário da injetiva: **uma função subjetiva tem seu elemento A maior que o elemento B**. Um exemplo:
+
+```
+A = {1, 2, 3, 4}
+B = {A, B, C}
+
+1 → A
+2 → B
+3 → C
+4 → C
+```
+
+### bijetividade
+
+Uma função bijetiva é a combinação de injetividade + sobrejetividade, tal que para todo elemento no conjunto `A`, deve haver um correspondente no conjunto `B`. Um exemplo:
+
+```
+A = {1, 2, 3, 4}
+B = {A, B, C, D}
+
+1 → A
+2 → B
+3 → C
+4 → D
+```
 
 ## lazy programming
 
