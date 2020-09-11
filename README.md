@@ -1743,6 +1743,32 @@ B = {A, B, C, D}
 4 → D
 ```
 
+### função inversa
+
+Comumente, uma função inversa na matemática é representada como `f⁻¹`, e como o nome já diz, ela inverte uma função... Então, qual seria o inverso da seguinte função?
+
+```
+A = {1, 2}
+B = {A, B, C, D}
+
+1 → A
+2 → B
+2 → C
+2 → D
+```
+
+Aqui temos uma função injetiva, certo? Agora, vamos transformá-la em sobrejetiva simplesmente revertendo a função:
+
+```
+A = {A, B, C, D}
+B = {1, 2}
+
+A → 1
+B → 2
+C → 2
+D → 2
+```
+
 ## lazy programming
 
 ## quantificação
