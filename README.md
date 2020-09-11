@@ -92,7 +92,7 @@ coisas que irão cair no curso:
     * [setóide](#setóide)
     * [semigrupo](#semigrupo)
     * [injetividade](#injetividade)
-    * [sobrejetividae](#sobrejetividae)
+    * [sobrejetividade](#sobrejetividade)
     * [bijetividade](#bijetividade)
     * [função inversa](#função-inversa)
     * [o que é uma operação binária?](#o-que-e-uma-operacao-binaria)
