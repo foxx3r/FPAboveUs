@@ -2049,6 +2049,63 @@ do a <- m
         g b
 ```
 
+### o que são free monads?
+
+Basicamente, uma free monad pega um functor e transforma ele em uma monad, e ao contrário de uma monad, ela não faz nenhuma computação, ou seja, a gente só usa ele para interpretar código e criar uma "sintaxe intermediária", geralmente para criar DSLs. Vamos criar um pequeno interpretador passo-a-passo:
+
+```hs
+{-# LANGUAGE DeriveFunctor #-}
+import Control.Monad.Free
+
+data Example a
+    = Puts String a
+    | Gets (String -> a)
+    deriving (Functor)
+```
+
+A nossa estrutura básica já está montada. `Gets` recebe uma função que recebe uma string como parâmetro e retorna um novo tipo. Precisamos do `Functor` para podermos usar o `liftF` que iremos falar após.
+
+```hs
+type IOFree a = Free Example a
+```
+
+Agora, para simplificar, criamos um novo tipo. Basicamente o `Free` requer como argumento a nossa estrutura de dados álgebricas e o tipo retornado (que no nosso caso, é polimórfico). Agora vamos criar as nossas 2 representações de funções:
+
+```hs
+gets :: IOFree String
+gets = liftF $ Gets id
+
+puts :: String -> IOFree ()
+puts str = liftF $ Puts str ()
+```
+
+Bem, como você já deve imaginar o `liftF` transforma a nossa função em um valor do tipo `IOFree`. Uma pergunta que você deve estar se fazendo agora, é porque a gente usa `Puts str ()`, bem, o `()` é o valor retornado, e o `str` é o valor que vai para o stdout. Bem, agora que mostramos essa estrutura, vamos criar o interpretador de comandos, veja:
+
+```hs
+interp :: IOFree a -> IO a
+interp (Pure r) = return r
+interp (Free x) = case x of
+    Puts s t -> putStr s >> interp t
+    Gets f -> getLine >>= interp . f
+```
+
+Bem, aqui ele diz que caso a função receber Puts ou Gets, ele faz tal coisa. O `Pure` é o valor de valores sozinhos, é o que acontecerá com o `()` do `Puts`. Agora que temos nosso interpretador, só precisamos da função, vejamos:
+
+```hs
+dsl :: IOFree ()
+dsl = do
+    puts "digite o seu nome -> "
+    nome <- gets
+    puts ("seu nome é " ++ nome)
+```
+
+Agora, podemos rodar o código em cima do interpretador que a gente criou, simplesmente fazendo:
+
+```hs
+main :: IO ()
+main = interp dsl
+```
+
 ## lazy programming
 
 ## quantificação
