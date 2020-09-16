@@ -100,9 +100,8 @@ coisas que irão cair no curso:
     * [o que são endofuntores?](#o-que-são-endofuntores)
     * [o que são monoids?](#o-que-são-monoids)
     * [o que são applicative functors?](#o-que-são-applicative-functors)
-    * [o que são arrows?](#o-que-são-arrows)
     * [o que são monads?](#o-que-são-monads)
-    * [o que são free monads?](#)
+    * [o que são free monads?](#o-que-são-free-monads)
     * [o prefixo co](#o-prefixo-co)
     * [comonads](#comonads)
     * [transformações naturais](#transformações-naturais)
@@ -148,6 +147,10 @@ coisas que irão cair no curso:
     * [o que são promotions?](#o-que-são-promotions)
     * [HLists](#hlists)
 * [coisas específicas de Haskell](#coisas-específicas-de-haskell)
+    * [monad-reader](#monad-reader)
+    * [monad-writer](#monad-writer)
+    * [monad-state](#monad-state)
+    * [monad-transformers](#monad-transformers)
     * [boolean blindness](#boolean-blindness)
     * [traversable](#traversable)
     * [TypeApplications](#typeapplications)
@@ -156,7 +159,6 @@ coisas que irão cair no curso:
     * [OverloadedStrings](#overloadedstrings)
     * [OverloadedLists](#overloadedlists)
     * [Text e ByteString](#text-e-bytestring)
-    * [free monads](#free-monads)
     * [funções de ponto fixo](#funcoes-de-ponto-fixo)
     * [design by contract](#design-by-contract)
 * [recursion schemes](#recursion-schemes)
@@ -585,7 +587,7 @@ E linguagens funcionais não tem side effects... Mas pera, não dá para program
 
 ### pureza
 
-En funcional, pureza se refere a funções que tem seus resultados determinados pelos seus argumentos, e nunca por uma váriavel global. E elas também não podem ter side effects.
+En funcional, pureza se refere a funções que tem seus resultados determinados pelos seus argumentos, e nunca por uma variável global. E elas também não podem ter side effects.
 
 ## lambda-calculus
 
@@ -1611,7 +1613,7 @@ g :: Foo a a
 g = id_
 ```
 
-Agora, para finalizar, vamos definir o comportamento da nossa categoria para funções, porém, iremos nos aprofundar mais quando estivermos falando sobre arrows. Vamos ver:
+Agora, para finalizar, vamos definir o comportamento da nossa categoria para funções, porém, iremos nos aprofundar mais quando estivermos falando sobre typeclasses. Vamos ver:
 
 ```hs
 instance Cat ((->)) where
@@ -1855,7 +1857,7 @@ class Functor f => Applicative f where
   {-# MINIMAL pure, ((<*>) | liftA2) #-}
 ```
 
-Aqui, `pure` é um endofuctor, como a gente já viu. `pure 4 :: (Applicative f, Num a) => f a`. O `<*>` aplica a função à esquerda para o valor à direita. Alguns exemplos:
+Aqui, `pure` é um endofunctor, como a gente já viu. `pure 4 :: (Applicative f, Num a) => f a`. O `<*>` aplica a função à esquerda para o valor à direita. Alguns exemplos:
 
 ```hs
 λ pure (+) <*> pure 5 <*> pure 8
@@ -1905,6 +1907,147 @@ instance Applicative (Result a b) where
 Entenderam? Basicamente no final estamos apenas aplicando valores :D.
 
 ### o que são monads?
+
+As tão temíveis monads... Que na verdade são apenas monoids na categoria dos endofunctors :). Eu diria que monads se diferem de applicatives como applicatives sendo usados para aplicar elementos de entrada à função e assim produzir valores, mas sempre se tratando de uma função apenas, e também podendo rodar "pré-códigos" antes da função principal ser realmente executada. Já as monads não necessariamente compõem de uma só função, mas de várias funções, e o resultado anterior é usado para produzir um resultado novo. Se vocês querem saber os casos de uso de monads, vejam o primeiro exemplo do <https://stackoverflow.com/questions/28139259/why-do-we-need-monads> no qual explica bastante sobre os problemas que monads resolvem de uma forma didática e apresentando erro por erro e criando uma soluções **gambiarra** até chegar num ponto que não dá mais. Alguns exemplos comuns de monads são listas, `Maybe`, `Either`, `IO`, list comprehensions, parsers, `async`, exceções, etc. Agora que sabemos disso, vamos ver a definição de uma monad:
+
+```hs
+type Monad :: (* -> *) -> Constraint
+class Applicative m => Monad m where
+    (>>=)  :: m a -> (a -> m b) -> m b
+    (>>)   :: m a -> m b -> m b
+    return :: a -> m a
+    {-# MINIMAL (>>=) #-}
+```
+
+Basicamente o `return` é o endofuntor, então um `return 5` tem um tipo `(Monad m, Num a) => m a`. O que o `>>=` faz é Simplesmente pegar um valor do tipo `m a` e aplicar ele em uma função. Um exemplo:
+
+```hs
+λ return 3 >>= \x -> return (x + 5)
+8
+it :: (Monad m, Num b) => m b
+```
+
+Já o `>>` é sinônimo para `foo >>= \_ -> ...` e isso é bem útil para funções como `print` que retornam `()`. Um exemplo:
+
+```hs
+print "foo" >> print "bar" :: IO ()
+-- "foo"
+-- "bar"
+```
+
+Ou então:
+
+```hs
+print "foo" >>= \_ -> print "bar"
+```
+
+Mas eu vou ter que ficar escrevendo esta sintaxe feia? Não, vamos usar o famoso do-notation, primeiro, abra um arquivo `main.hs` e digite:
+
+```hs
+module Main where
+
+main :: IO ()
+main = do
+    print "What's your name? -> "
+    name <- getLine
+    print $ "your name is " ++ name
+```
+
+Aonde cada linha equivale a um `>>` e o `name <- getLine` equivale a `getLine >>= \name -> ...`. Um fato interessante é que podemos ter variáveis locais em Haskell, por exemplo:
+
+```hs
+foo = let x = 5 in x + 1
+```
+
+Porém, com o do-notation, a gente não precisa do `in`, um exemplo:
+
+```hs
+main = do
+    let x = 5
+    let y = 7
+    return (x / y)
+```
+
+É igual a:
+
+```hs
+main = let x = 5
+           y = 7
+       in
+          return (x / y)
+```
+
+As monads devem seguir as seguintes regras:
+
+**1 - Quando um return a é aplicado sob um (>>=) para uma função f, a expressão equivale exatamente a f a.** Exemplo:
+
+```hs
+return a >>= f = f a
+```
+
+**2 - Quando uma função m é passada de um (>>=) para return, ele é exatamente a ele mesmo.** Exemplo:
+
+```hs
+(someMonad val) >>= return = someMonad val
+```
+
+**3 - Quando um valor m é passado sob um (>>=) para uma função f, e então o resultado dessa expressão é passado para >>= g, o resultado da expressão é m >>= com uma expressão lambda que pega um argumento x que retorna f x... Mas calma, ainda não acabou. Pela proposição, f x retorna um valor encapsulado na mesma monad. Para isso, temos que passar um valor >>= g.** Exemplo:
+
+```hs
+(m >>= f) >>= g = m >>= (\x -> f x >>= g)
+```
+
+Aliás, podemos passar as regras acima para do-notation, vejamos:
+
+**1.**
+
+```hs
+do y <- return x
+    f y
+```
+
+É igual a:
+
+```hs
+do f x
+```
+
+**2.**
+
+```hs
+do x <- m
+    return x
+```
+
+É igual a:
+
+```hs
+do m
+```
+
+**3.**
+
+```hs
+do b <- do a <- m
+        f a
+    g b
+```
+
+É igual a:
+
+```hs
+do a <- m
+    b <- f a
+    g b
+```
+
+Que também é igual a:
+
+```hs
+do a <- m
+    do b <- f a
+        g b
+```
 
 ## lazy programming
 
