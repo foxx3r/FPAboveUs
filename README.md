@@ -102,6 +102,7 @@ coisas que irão cair no curso:
     * [o que são applicative functors?](#o-que-são-applicative-functors)
     * [o que são arrows?](#o-que-são-arrows)
     * [o que são monads?](#o-que-são-monads)
+    * [o que são free monads?](#)
     * [o prefixo co](#o-prefixo-co)
     * [comonads](#comonads)
     * [transformações naturais](#transformações-naturais)
@@ -1496,7 +1497,7 @@ fmap id [1, 2, 3]
 -- [1, 2, 3]
 ```
 
-E um fato interessante é que o `map` é um `fmap` que funciona apenas para listas e foi um erro de design, e até hoje é mantido apenas por compatibilidade. Então, sempre usem `fmap`.
+E um fato interessante é que o `map` é um `fmap` que funciona apenas para listas e foi um erro de design, e até hoje é mantido apenas por compatibilidade. Então, sempre usem `fmap`. O `<$>` é um `fmap` infixo, isso significa que `fmap (+2) [1..10]` é igual a `(+2) <$> [1..10]`.
 
 ### filter
 
@@ -1522,7 +1523,7 @@ foldl (+) 0 [1..10]
 -- == 0 + 1 + 2 + 3 + ...
 ```
 
-Aonde o 0 é o acumulador. Tome cuidado com qual acumulador usar. Por exemplo, usar 1 em operações com + aumentaria o resultado em 1, e usar 0 em operações com * sempre retornaria 0, porque todo número multiplicado por 0 é igual a 0. Já o `foldr` começa a dobrar da direi5a para a esquerda, e só vai se diferenciar do `foldl` se a operação não for comutativa (e.g: `a + b` é `b + a`, portanto, adição é comutativa). Agora, temos o `foldl1` e `foldr1`, aonde o acumulador por padrão é 1, e é bem interessante você usar semore que puder. Já o `foldl'` e `foldr'` (conta com o `foldl1'` e `foldr1'`) são os que eu recomendo sempre usar, ele são uma versão sem stack overflow dos `fold`s, que basicamente usa strictness evaluation que iremos explicar nos capítulos sobre lazy programming.
+Aonde o 0 é o acumulador. Tome cuidado com qual acumulador usar. Por exemplo, usar 1 em operações com + aumentaria o resultado em 1, e usar 0 em operações com * sempre retornaria 0, porque todo número multiplicado por 0 é igual a 0. Já o `foldr` começa a dobrar da direita para a esquerda, e só vai se diferenciar do `foldl` se a operação não for comutativa (e.g: `a + b` é `b + a`, portanto, adição é comutativa). Agora, temos o `foldl1` e `foldr1`, aonde o acumulador por padrão é 1, e é bem interessante você usar semore que puder. Já o `foldl'` e `foldr'` (conta com o `foldl1'` e `foldr1'`) são os que eu recomendo sempre usar, ele são uma versão sem stack overflow dos `fold`s, que basicamente usa strictness evaluation que iremos explicar nos capítulos sobre lazy programming.
 
 ### zip
 
@@ -1815,6 +1816,95 @@ foo :: Bar Int
 foo = endo 3
 -- Baz 3
 ```
+
+### o que é um monoid?
+
+Basicamente, um monoid é uma categoria contendo uma operação binária e um elemento neutro. Então, basicamente um monoid é um semigrupo com um elemento neutro. Agora, vamos ver a definição de monoid:
+
+```hs
+class Semigroup m => Monoid m where
+  mempty  :: m
+  mappend :: m -> m -> m
+  mappend = (<>)
+```
+
+Aqui, a gente tem um elemento neutro chamado `mempty`, que nos retorna um elemento neutro / identidade. Alguns exemplos:
+
+```hs
+mempty :: String
+-- ""
+mempty :: [Int]
+-- []
+```
+
+E também temos um `mappend` que é por padrão igual ao `<>` da typeclass `Semigroup`, no qual concatena/junta dois elementos.
+
+
+### o que são applicative functors?
+
+Basicamente, um applicative functor está entre functors e monads em questão de poder. Um applicative functor te permite modelar sequências que dependem de um argumento inicial, e você deveria sempre que puder, usar applicative ao invés de monads, porque monads irão te encorajar a pensar de maneira funcional e também existem mais applicatives do que monads, logo, é bem vantajoso. O applicative foi adicionado há um tempo em Haskell e por isso muita coisa na prelude (lib padrão do Haskell) como `filterM`, `sequence` e `mapM` poderiam ser applicatives mas são monads por questão histórica / de compatibilidade. Enfim, vamos ver como um applicative é criado em Haskell, mas primeiro, vamos importar a lib aonde há funções applicatives bem úteis, importe com `:m + Control.Applicative` caso você esteja no GHCi ou com `import Control.Applicative` caso você esteja criando um script. Agora, vamos ver a definição da typeclass `Applicative`:
+
+```hs
+type Applicative :: (* -> *) -> Constraint
+class Functor f => Applicative f where
+  pure   :: a -> f a
+  (<*>)  :: f (a -> b) -> f a -> f b
+  liftA2 :: (a -> b -> c) -> f a -> f b -> f c
+  (*>)   :: f a -> f b -> f b
+  (<*)   :: f a -> f b -> f a
+  {-# MINIMAL pure, ((<*>) | liftA2) #-}
+```
+
+Aqui, `pure` é um endofuctor, como a gente já viu. `pure 4 :: (Applicative f, Num a) => f a`. O `<*>` aplica a função à esquerda para o valor à direita. Alguns exemplos:
+
+```hs
+λ pure (+) <*> pure 5 <*> pure 8
+13
+λ Right (+) <*> Left [1] <*> Left [2]
+Left [1]
+λ pure (*10) <*> pure 100
+1000
+```
+
+Aonde `Left` é a identidade. Também é bem comum encontrar alguém que faça:
+
+```hs
+(+) <$> pure 4 <$> pure 6
+```
+
+Ao invés de:
+
+```hs
+pure (+) <*> pure 4 <*> pure 6
+```
+
+O `liftA` é a mesma coisa do `<*>` porém permite que a gente não use o `pure` na função. Já o `liftA2` é igual a `pure function <*> x <*> y`. O `liftA3` é igual a `pure function <*> x <*> y <*> z`. Já o `<*` ignora o valor/operação à esquerda, um exemplo:
+
+```hs
+λ pure (+2) <* pure 4 <*> pure 4
+6
+```
+
+O `*>` faz a mesma coisa, porém ignora o valor/operação à direita. Agora pars treinar nossas mentes, vamos recriar o `Result` (outro nome para `Either`) e torná-lo um functor e um applicative manualmente (tendo em conta que o mínimo que a typeclass requer é definirmos o `pure` e o `<*>` ou o `liftA2`) aonde o `Error` é o elemento identidade:
+
+```hs
+data Result a b = Err a | Ok b deriving (Eq, Show, Read, Ord)
+
+instance Functor (Result a b) where
+    fmap f (Ok x) = Right (f x)
+    fmap _ (Err x) = Left x
+
+instance Applicative (Result a b) where
+    pure = Ok -- programação tácita
+    Ok f <*> Ok x = Ok (f x)
+    Err f <*> Ok _ = Err f
+    Ok _ <*> Err x = Err x
+    Err x <*> Err y = Err (x <> y)
+```
+
+Entenderam? Basicamente no final estamos apenas aplicando valores :D.
+
+### o que são monads?
 
 ## lazy programming
 
