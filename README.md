@@ -52,7 +52,7 @@ coisas que irão cair no curso:
     * [funções simples](#funções-simples)
     * [números em lambda-calculus](#números-em-lambda-calculus)
     * [lógica booleana em lambda-calculus](#lógica-booleana-em-lambda-calculus)
-* [programação lógica](#programacao-logica)
+* [programação lógica](#programação-lógica)
     * [a linguagem prolog](#a-linguagem-prolog)
     * [o paradigma de programação lógico](#o-paradigma-de-programação-lógico)
     * [o paradigma de programação declarativo](#o-paradigma-de-programação-declarativo)
