@@ -2117,7 +2117,7 @@ cofoo : (* → * → *) → * → (* → *) → *
 
 Aonde `cofoo` é o dual (inverso) de `foo`.
 
-### o que são comonads?
+### comonads
 
 Existe uma famosa frase chamada "se você está trabalhando com grandes estruturas de dados, porém separadas em pequenas partes mas semelhantes, então você está provavelmente mexendo com comonads". E aqui está alguns exemplos interessantes para se usar comonads:
 
