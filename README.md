@@ -2106,6 +2106,77 @@ main :: IO ()
 main = interp dsl
 ```
 
+### o prefixo co
+
+O prefixo co significa que o objeto é o inverso daquele objeto, ou seja, ele é um dual daquele objeto. Um exemplo:
+
+```hs
+foo   : * → (* → *) → * → (* → * → *)
+cofoo : (* → * → *) → * → (* → *) → *
+```
+
+Aonde `cofoo` é o dual (inverso) de `foo`.
+
+### o que são comonads?
+
+Existe uma famosa frase chamada "se você está trabalhando com grandes estruturas de dados, porém separadas em pequenas partes mas semelhantes, então você está provavelmente mexendo com comonads". E aqui está alguns exemplos interessantes para se usar comonads:
+
+**1. Avaliar um autômato celular.**
+**2. Sequências, streams e segmentos.**
+**3. Coisas que simulam a vida real, como o Game Of Life.**
+
+Mas primeiro, antes de explicarmos a teoria, vamos criar uma comonad em Haskell. Primeiro importe a biblioteca com:
+
+```hs
+import Control.Comonad
+```
+
+Agora, vamos criar nosso próprio tipo que vai servir como comonad. Mas primeiro, vamos colocar:
+
+```hs
+{-# LANGUAGE DeriveFunctor #-}
+```
+
+No topo do arquivo. Esta extensão nos permitirá derivar de `Functor` automaticamente sem termos que fazer isso manualmente. Agora, vamos criar nossa ADT:
+
+```hs
+data Foo a = Foo a deriving (Show, Functor)
+```
+
+E então, vamos ver como a `Comonad` é definida:
+
+```hs
+type Comonad :: (* -> *) -> Constraint
+class Functor w => Comonad w where
+    extract   :: w a -> a
+    duplicate :: w a -> w (w a)
+    extend    :: (w a -> b) -> w a -> w b
+    {-# MINIMAL extract, (duplicate | extend) #-}
+```
+
+E aqui, podemos perceber que:
+
+```hs
+extract :: w a -> a
+return  :: a -> m a
+
+duplicate :: w a -> w (w a)
+join      :: m (m a) -> m a
+
+extend :: (w a -> b) -> w a -> w b
+(>>=)  :: m a -> (a -> m b) -> m b
+```
+
+Agora que a gente entende mais o design das coisas, vamos criar nossa comonad:
+
+```hs
+instance Comonad Foo where
+    extract (Foo x) = x
+    duplicate (Foo x) = Foo (Foo x)
+```
+
+E é basicamente isso. Para artigos mais avançados, eu recomendo <https://www.google.com/amp/s/fmapfixreturn.wordpress.com/2008/07/09/comonads-in-everyday-life/amp/> e <https://www.quora.com/What-is-a-Comonad-and-when-should-I-use-them>.
+
 ## lazy programming
 
 ## quantificação
