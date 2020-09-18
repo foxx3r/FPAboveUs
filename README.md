@@ -239,7 +239,7 @@ Para instalar o Emacs em um sistema unix-like, você pode instalar ele pelo gere
 
 Basicamente, o Emacs tem 3 implementações de gerenciamento de pacotes:
 
-- [GNU ELPA](https://elpa.gnu.org/) - talvez o nais popular de todos, e bem pequeno, mantido pelo projeto GNU.
+- [GNU ELPA](https://elpa.gnu.org/) - talvez o mais popular de todos, e bem pequeno, mantido pelo projeto GNU.
 - [MELPA](https://melpa.org) - é um repositório não oficial e também é o repósitório com a maior quantidade de pacotes.
     - [MELPA stable](https://stable.melpa.org) - é um MELPA que inclui apenas pacotes estáveis. Ele é o que tem menos pacotes de todos.
 - [Marmalade](https://marmalade-repo.org) - o marmalade é um projeto já morto, e não faz sentido de usarmos aqui. Apesar dele ter sido extensivamente utilizado no passado.
