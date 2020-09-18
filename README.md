@@ -191,7 +191,7 @@ coisas que irão cair no curso:
 
 ### instalando o stack
 
-O stack vai ser o seu segundo melhor amigo daqui pra frente, atrás apenas do GHC. Ele è um gerenciador de pacotes e resolve muitos problemas por você. Para instalá-lo, acesse <https://docs.haskellstack.org/en/stable/README/> e siga o manual de instalação para o seu sistema operacional. Como nem tudo nesta vida é fácil, recomendo você ler a documentação do stack em <https://docs.haskellstack.org/en/stable/GUIDE/> para não ter problemas futuros, e caso os tenha, que saiba resolver. E digo isso por experiência própria :)
+O stack vai ser o seu segundo melhor amigo daqui pra frente, atrás apenas do GHC. Ele é um gerenciador de pacotes e resolve muitos problemas por você. Para instalá-lo, acesse <https://docs.haskellstack.org/en/stable/README/> e siga o manual de instalação para o seu sistema operacional. Como nem tudo nesta vida é fácil, recomendo você ler a documentação do stack em <https://docs.haskellstack.org/en/stable/GUIDE/> para não ter problemas futuros, e caso os tenha, que saiba resolver. E digo isso por experiência própria :)
 
 ### configurando o stack
 
@@ -241,8 +241,8 @@ Basicamente, o Emacs tem 3 implementações de gerenciamento de pacotes:
 
 - [GNU ELPA](https://elpa.gnu.org/) - talvez o nais popular de todos, e bem pequeno, mantido pelo projeto GNU.
 - [MELPA](https://melpa.org) - é um repositório não oficial e também é o repósitório com a maior quantidade de pacotes.
-    - [MELPA stable](https://stable.melpa.org) - é um MELPA que inclui apenas paco5es estáveis. Ele è o que tem menos pacotes de todos.
-- [Marmalade](https://marmalade-repo.org) - o marmalade è um projeto já morto, e não faz sentido de usarmos aqui. Apesar dele ter sido extensivamente utilizado no passado.
+    - [MELPA stable](https://stable.melpa.org) - é um MELPA que inclui apenas pacotes estáveis. Ele é o que tem menos pacotes de todos.
+- [Marmalade](https://marmalade-repo.org) - o marmalade é um projeto já morto, e não faz sentido de usarmos aqui. Apesar dele ter sido extensivamente utilizado no passado.
 
 Enfim... Bora parar de falar. Basicamente, o Emacs tem os arquivos de configuração localizados em `$HOME/.emacs.d/init.el` (ambos Windows e Linux) ou em `$HOME/.emacs`. Muita gente usa o `.emacs`, mas o correto seria usar o `.emacs.d` pois seus arquivos de configuração ficam mais organizados. Após instalar o Emacs, insira isso dentro do `$HOME/.emacs.d/init.el`:
 
@@ -273,7 +273,7 @@ Após isso, entre em qualquer arquivo com o emacs e tecle `M-x`, aonde a tecla M
 (helm-mode 1)
 ```
 
-Isto irá habilitar o helm. Para sair do Emacs, basta digitar `C-x C-c` aonde C è o control. Agora, vamos instalar o evil da mesma forma que instalamos o helm: `M-x package-install RET evil RET`. Após isso, adicione as seguintes linhas de configuração:
+Isto irá habilitar o helm. Para sair do Emacs, basta digitar `C-x C-c` aonde C é o control. Agora, vamos instalar o evil da mesma forma que instalamos o helm: `M-x package-install RET evil RET`. Após isso, adicione as seguintes linhas de configuração:
 
 ```el
 (require 'evil)
