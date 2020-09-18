@@ -1,6 +1,6 @@
 # Aprenda programação funcional
 
-Este repósitório irá te ensinar programação funcional do zero com Haskell :) também falaremos um pouco de Prolog e Agda aqui.
+Este repositório irá te ensinar programação funcional do zero com Haskell :) também falaremos um pouco de Prolog e Agda aqui.
 
 # Como contribuir
 
@@ -240,7 +240,7 @@ Para instalar o Emacs em um sistema unix-like, você pode instalar ele pelo gere
 Basicamente, o Emacs tem 3 implementações de gerenciamento de pacotes:
 
 - [GNU ELPA](https://elpa.gnu.org/) - talvez o mais popular de todos, e bem pequeno, mantido pelo projeto GNU.
-- [MELPA](https://melpa.org) - é um repositório não oficial e também é o repósitório com a maior quantidade de pacotes.
+- [MELPA](https://melpa.org) - é um repositório não oficial e também é o repositório com a maior quantidade de pacotes.
     - [MELPA stable](https://stable.melpa.org) - é um MELPA que inclui apenas pacotes estáveis. Ele é o que tem menos pacotes de todos.
 - [Marmalade](https://marmalade-repo.org) - o marmalade é um projeto já morto, e não faz sentido de usarmos aqui. Apesar dele ter sido extensivamente utilizado no passado.
 
@@ -261,7 +261,7 @@ Após isso, ele carregará todos os processos. A partir daí, não use mais emac
 
 `$ emacsclient foo.hs`
 
-Após isso, entre em qualquer arquivo com o emacs e tecle `M-x`, aonde a tecla M (meta) é o Alt do seu teclado. Agora, iremos atualizar o repositório digitando `package-refresh-contents` após digitar `M-x` (obs: se você ver o símbolo RET, ele se refere ao enter/return key). Isso vai atualizar a lista de pacotes do repósitório. Agora, rode `M-x package-install RET helm`, basicamente o helm é uma interface pro `M-x` mais moderna e intuitiva. Para configurá-lo, adicione estas linhas no seu arquivo de configuração:
+Após isso, entre em qualquer arquivo com o emacs e tecle `M-x`, aonde a tecla M (meta) é o Alt do seu teclado. Agora, iremos atualizar o repositório digitando `package-refresh-contents` após digitar `M-x` (obs: se você ver o símbolo RET, ele se refere ao enter/return key). Isso vai atualizar a lista de pacotes do repositório. Agora, rode `M-x package-install RET helm`, basicamente o helm é uma interface pro `M-x` mais moderna e intuitiva. Para configurá-lo, adicione estas linhas no seu arquivo de configuração:
 
 ```el
 (require 'helm-config)
