@@ -113,7 +113,7 @@ coisas que irão cair no curso:
     * [irrefutable patterns](#irrefutable-patterns)
     * [o que são thunks?](#o-que-são-thunks)
     * [WHNF](#whnf)
-    * [day's plot twist: laziness é impura e seq te permite ter efeitos observáveis](#days-plot-twist:-laziness-é-impura-e-seq-te-permite-ter-efeitos-observáveis)
+    * [day's plot twist: laziness é impura e seq te permite ter efeitos observáveis](#days-plot-twist-laziness-é-impura-e-seq-te-permite-ter-efeitos-observáveis)
 * [quantificação](#quantificação)
     * [quantificação universal](#quantificação-universal)
     * [quantificação existencial](#quantificação-existencial)
@@ -2403,7 +2403,7 @@ Existem várias formas de escrever uma função, mas o que nos interessa a este 
 
 Perceberam a diferença? No WHNF, as funções podem ser reduzidas, igual ao "not in normal form", porém, eles tem data constructors associados a eles, como o `(,)` (sim, a vírgula é algo feito em Haskell), `(:)` e o lambda, e os valores que não são WHNF, são porque eles são aplicações de funções, mas só pode ser um WHNF caso seja uma lambda abstraction ou haja um data constructor.
 
-### day's plot twist: laziness são impuras e seq te permite ter efeitos observáveis
+### day's plot twist: laziness é impura e seq te permite ter efeitos observáveis
 
 Basicamente, `seq` te permite ter efeitos colaterais observáveis e é uma das maiores críticas da comunidade Haskell, [veja este link para mais informações](http://h2.jaguarpaw.co.uk/posts/impure-lazy-language/). Mas basicamente, não há como ter laziness sem impureza, ainda mais por causa das thunks... Mas a questão é que o compilador não deixa você ver esses efeitos, e usar seq permite com que você veja...
 
