@@ -114,7 +114,7 @@ coisas que irão cair no curso:
     * [o que são thunks?](#o-que-são-thunks)
     * [WHNF](#whnf)
     * [day's plot twist: laziness é impura e seq te permite ter efeitos observáveis](#days-plot-twist-laziness-é-impura-e-seq-te-permite-ter-efeitos-observáveis)
-* [quantificação](#quantificação)
+* [quantificação e sistemas de tipos](#quantificação-e-sistemas-de-tipos)
     * [quantificação universal](#quantificação-universal)
     * [quantificação existencial](#quantificação-existencial)
     * [rankNTypes](#rankntypes)
@@ -2405,9 +2405,32 @@ Perceberam a diferença? No WHNF, as funções podem ser reduzidas, igual ao "no
 
 ### day's plot twist: laziness é impura e seq te permite ter efeitos observáveis
 
-Basicamente, `seq` te permite ter efeitos colaterais observáveis e é uma das maiores críticas da comunidade Haskell, [veja este link para mais informações](http://h2.jaguarpaw.co.uk/posts/impure-lazy-language/). Mas basicamente, não há como ter laziness sem impureza, ainda mais por causa das thunks... Mas a questão é que o compilador não deixa você ver esses efeitos, e usar seq permite com que você veja...
+Basicamente, `seq` te permite ter efeitos colaterais observáveis e é uma das maiores críticas da comunidade Haskell, [veja este link para mais informações](http://h2.jaguarpaw.co.uk/posts/impure-lazy-language). Mas basicamente, não há como ter laziness sem impureza, ainda mais por causa das thunks... Mas a questão é que o compilador não deixa você ver esses efeitos, porém usar `seq` permite com que você veja...
 
-## quantificação
+## quantificação e sistemas de tipos
+
+### quantificação universal
+
+Basicamente, a quantificação universal corresponderia ao polimorfismo paramétrico... Ela é denotada por `∀` (forall) na matemática, e existem várias extensões que te permite usar `forall`, sendo elas `-XRankNTypes`, `-XExplicitForAll` e `-XRank2Types`, sendo a primeira a mais usada e a última, a versão antigo e **depreciada** do `-XRankNTypes`. Então, vamos começar com o básico:
+
+```hs
+id :: a -> a
+id x = x
+```
+
+Agora, vamos ver como é isto por baixo:
+
+```hs
+id :: forall a. a -> a
+id x = x
+```
+
+Ou então:
+
+```hs
+id :: ∀a. a -> a
+id x = x
+```
 
 ## type-level programming
 
