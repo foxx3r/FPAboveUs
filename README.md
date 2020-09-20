@@ -2210,6 +2210,164 @@ E como você já viu, codados são ótimos para lidar com streams.
 
 ## lazy programming
 
+Agora, você vai aprender sobre este maravilhoso recurso e as vezes tão controverso que levou haskell a ser criado: **lazy programming**.
+
+### o que é laziness?
+
+Para entendermos laziness, primeiro devemos entender como as linguagens de hoje em dia trabalham... Elas avaliam argumentos assim que possível, ou seja, não podemos criar uma lista potencialmente infinita e eles irão parar só para avaliar uma variável sendo declarada pausando assim todo o programa. O nome disso é **eager evaluation**, aí a estratégia de avaliação fica por conta do **call by value** que em C copiaria um valor para outro e seria expensivo, ou **call by reference** pela passagem de ponteiros, o que faz com que ele não realize a cópia. Agora, vamos ver um exemplo em Python e comparar com haskell:
+
+```py
+def loop():
+    return loop()
+
+def ignore(x):
+    return 1
+
+print(ignore(loop()))
+```
+
+E agora o mesmo programa em Haskell:
+
+```hs
+loop = loop
+ignore x = 1
+print (ignore loop)
+```
+
+Interessante... O de Python rodou infinitamente (ou melhor, até atingir o limite máximo de recursão), e o de Haskell printou 1... Como isto é possível? Basicamente Haskell usa laziness programming, então ele não tenta avaliar um valor sempre que puder, mas sim, **apenas quando você precisar**. A estratégia de avaliação padrão do laziness é o **non-strict**, contrário do que o que o eager usa que é o strict, que iremos discutir sobre strictness. Basicamente, há 2 estratégias de avaliação para strictness: **call by name** aonde os argumentos não são avaliados até que o argumento seja chamado, e o **call by need** faz a mesma coisa, porém ele faz **memoizing**, o que significa que ele guarda resultados de computações anteriores e assim ele não precisa calcular tudo de novo... E Haskell usa por padrão o **call by need**. Aliás, um mito bem comum é que Haskell é uma linguagem totalmente lazy, o que não é verdade, já que até o pattern matching depende de eager evaluation.
+
+### o que é strictness?
+
+Basicamente, strictness é a forma de como você avalia o argumento de uma função. Haskell por padrão é lazy (e portanto, non-strict para tornar o laziness mais eficiente), mas o pattern matching é eager (o que portanto, força ele a ser strict). Vou explicar a diferença deles comparando-os, por exemplo, vamos pensar numa função `A + (B * C)`:
+
+**non-strict**:
+- `+` recebe os parâmetros `A` e `B * C`
+- eventualmente, a execução de `+` força a avaliação de `A` e `b * c`
+- `*` recebe os valores `B` e `C`, e eventualmente força a avaliação de `B` e `C`
+- `*` retorna
+- `+` retorna
+
+strict:
+- `A` é avaliado, e força a execução de `B * C`
+- `B` e `C` são avaliados
+- `*` retorna
+- `+` retorna
+
+O ponto é: não confunda strict com avaliar o argumento na hora, não é bem o propósito dele, e mais uma consequência de como ele é avaliado... E no fim, ganhamos menos passos com o strictness... Com non-strict, a gente pode se beneficiar de laziness mas eu diria que só vale realmente tornar uma função non-strict se ela precisar mesmo. Por exemplo, `length [undefined, undefined, undefined]` só retorna 3 porque ele é non-strict, caso contrário, ele retornaria uma exceção... Mesmo que a gente não queira. Outro exemplo é o `head`, se o resto da lista (tail) fosse strict, então ele tentaria pegar um `[1, 2, undefined]` e falharia. Um exemplo:
+
+```hs
+λ func (_:_) = 0
+λ func []
+*** Exception: <interactive>:4:1-14: Non-exhaustive patterns in function func
+```
+
+Aonde como já sabemos, pattern matching é strict. Para mudarmos este comportamento, a gente pode usar o `~`:
+
+```hs
+λ func ~(_:_) = 0
+λ func []
+0
+```
+
+Ok... Se podemos converter de strict para non-strict no pattern matching, temos como converter um argumento non-strict para strict? Yep. Basicamente você vai ativar a seguinte extensão no topo do seu arquivo:
+
+```hs
+{-# LANGUAGE BangPatterns #-}
+```
+
+Ou `:set -XBangPatterns` no GHCi. Agora, todo argumento strict virá com `!` antes dele, um exemplo:
+
+```hs
+{-# LANGUAGE BangPatterns #-}
+
+sum :: Num a => [a] -> a
+sum = go 0
+    where
+        go !acc (x:xs) = go (acc + x) xs
+        go acc [] = acc
+```
+
+E um fato curioso é que o `!` é traduzido para a versão `seq`, aonde `seq` é uma simples ~~e controversa~~ função que apenas pega o segundo argumento e retorna ele. Eu não irei falar neste curso como o `seq` funciona, mas se quiser saber, eu recomendo [este tópico explicado em simples palavras](https://stackoverflow.com/questions/39645184/how-is-haskells-seq-used). No caso, a função acima seria traduzida para:
+
+```hs
+sum :: Num a => [a] -> a
+    sum = go 0
+        where
+            go acc _ | acc `seq` False = undefined
+            go acc (x:xs) = go (acc + x) xs
+            go acc [] = acc
+```
+
+Um exemplo:
+
+```hs
+a x = 0
+a undefined
+-- 0
+
+b !x = 0
+b undefined
+-- exceção
+```
+
+Apesar de tudo, você deve usar strictness sempre que puder. Também existe uma extensão chamada `StrictData` que deixa todos os campos do `data` como strict por padrão.
+
+### irrefutable patterns
+
+Apesar de ser recomendado sempre tentar cobrir todos os casos de um pattern matching em Haskell, ele não é proibido por padrão (apesar de ter warning). Um exemplo:
+
+```hs
+parse :: Maybe a -> a
+parse (Just x) = x
+```
+
+E ao chamarmos `parse Nothing`, essa função irá falhar... O jeito seria a gente também cubrir o caso do `Nothing` ou então cubrir todos os outros casos com `_`.
+
+### o que são thunks?
+
+O pilar da programação lazy em Haskell se deve ao fato de existirem thunks, aonde thunks são criadas para uma expressão não avaliada. A avaliação de um thunk se chama `force`, vamos ver um exemplo em JavaScript:
+
+```js
+const lazy = value => {
+    const closure = () => {
+        return value
+    }
+    return closure
+}
+
+const force = value => {
+    return value()
+}
+```
+
+Aqui, o valor de `lazy(algo)` não deverá significar nada... Bem, como estamos falando de JavaScript, não tem como simular lazy eval já que até as closures são eager... Mas falando de haskell agora, uma thunk como se fosse a closure e isso fizesse com que a expressão não seja avaliada nunca e nem verificada (não se confunda com não-verificação da sintaxe), e chamamos o force para forçar a retornar um valor... Bem, vamos mostrar isto na prática (detalhe que você precisa declarar o tipo da função para funcionar):
+
+```hs
+λ a = [1..] :: [Integer]
+a :: [Integer]
+λ b = fmap (+1) a
+-- adicionar
+-- + 1 a cada elemento
+-- de "a"
+b :: [Integer]
+λ :sprint a
+a = _
+λ :sprint b
+b = _
+λ a !! 6
+7
+λ :sprint a
+a = 1 : 2 : 3 : 4 : 5 : 6 : 7 : _
+λ b !! 9
+11
+λ :sprint b
+b = _ : _ : _ : _ : _ : _ : _ : _ : _ : 11 : _
+```
+
+No caso, a thunk é o `_`, que é cada valor desconhecido, que no final será forçado... Mas só executará aquela thunk no qual você chamar, se havesse este recurso em linguagens eager, faria com que todas as thunks fossem executadas, até mesmo no infinito. Em haskell não.
+
+E você deve ter se confundido no exemplo de JS entre closures X thunks, e a diferença é que thunks retornam uma função sem argumento pronta para ser executada.
+
 ## quantificação
 
 ## type-level programming
