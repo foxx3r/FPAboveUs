@@ -2177,6 +2177,37 @@ instance Comonad Foo where
 
 E é basicamente isso. Para artigos mais avançados, eu recomendo <https://www.google.com/amp/s/fmapfixreturn.wordpress.com/2008/07/09/comonads-in-everyday-life/amp/> e <https://www.quora.com/What-is-a-Comonad-and-when-should-I-use-them>.
 
+### transformações naturais
+
+Basicamente, para este tópico, eu vou apenas dar alguns exemplos de transformações naturais:
+
+```hs
+f :: a -> m a
+g :: m a -> a
+h :: S a -> H a
+```
+
+Agora, para encerrar o tópico:  **monads são apenas monads na categoria dos endofunctors contendo duas η (return) e μ (join)**.
+
+Aonde o `join` transforma um `m (m a)` em um `m a`.
+
+### produtos e coprodutos
+
+A gente já sabe o que o prefixo "co" significa... Basicamente, um produto é sinônimo de product type, e ele tem esse nome pois o cálculo de todas as possibilidades são o seu produto, assim como os sum types. Um exemplo de um product type:
+
+```hs
+data Colot = Col String
+```
+
+Daí o construtor `Col` leva um `String` argumento... mas por causa do laziness, tudo em haskell é co alguma coisa... codata, cointeger, colista... Não irei falar muito aqui sobre codado, mas você pode seguir [este link aqui](https://stackoverflow.com/questions/28841260/what-is-the-difference-between-codata-and-data)... Mas resumindo da forma mais simples possível, como em haskell tudo é potencialmente infinito, tudo é um co-... Idris, uma linguagem de programação da família Haskell separa bem os dados e codados:
+
+```idr
+codata Foo = Foo Foo
+data Foo a = Foo a
+```
+
+E como você já viu, codados são ótimos para lidar com streams.
+
 ## lazy programming
 
 ## quantificação
