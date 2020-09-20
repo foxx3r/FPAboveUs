@@ -113,7 +113,7 @@ coisas que irão cair no curso:
     * [irrefutable patterns](#irrefutable-patterns)
     * [o que são thunks?](#o-que-são-thunks)
     * [WHNF](#whnf)
-    * [day's plot twist: laziness são impuras e seq te permite ter efeitos observáveis](#plor-twist)
+    * [day's plot twist: laziness é impura e seq te permite ter efeitos observáveis](#days-plot-twist-laziness-é-impura-e-seq-te-permite-ter-efeitos-observáveis)
 * [quantificação](#quantificação)
     * [quantificação universal](#quantificação-universal)
     * [quantificação existencial](#quantificação-existencial)
