@@ -1529,7 +1529,7 @@ Aonde o 0 é o acumulador. Tome cuidado com qual acumulador usar. Por exemplo, u
 
 ### zip
 
-Basicamenre, o zip nos permite pegar 2 listas, e juntar o index 1 da primeira lista com o index 1 da outra lista numa mesma tupla, e assim por diante. Alguns exemplos:
+Basicamente, o zip nos permite pegar 2 listas, e juntar o index 1 da primeira lista com o index 1 da outra lista numa mesma tupla, e assim por diante. Alguns exemplos:
 
 ```hs
 zip [1, 2, 3] [9, 8, 7]
@@ -2312,6 +2312,8 @@ b undefined
 
 Apesar de tudo, você deve usar strictness sempre que puder. Também existe uma extensão chamada `StrictData` que deixa todos os campos do `data` como strict por padrão.
 
+Um fato interessante é que tornar uma função recursiva com argumento strict, faz com que ela seja uma tail recursion.
+
 ### irrefutable patterns
 
 Apesar de ser recomendado sempre tentar cobrir todos os casos de um pattern matching em Haskell, ele não é proibido por padrão (apesar de ter warning). Um exemplo:
@@ -2367,6 +2369,43 @@ b = _ : _ : _ : _ : _ : _ : _ : _ : _ : 11 : _
 No caso, a thunk é o `_`, que é cada valor desconhecido, que no final será forçado... Mas só executará aquela thunk no qual você chamar, se havesse este recurso em linguagens eager, faria com que todas as thunks fossem executadas, até mesmo no infinito. Em haskell não.
 
 E você deve ter se confundido no exemplo de JS entre closures X thunks, e a diferença é que thunks retornam uma função sem argumento pronta para ser executada.
+
+### WHNF
+
+Existem várias formas de escrever uma função, mas o que nos interessa a este ponto são duas: normal form & weak head normal form (WHNF). Em haskell, funções só são avaliadas na normal form em case-statements. Veja a seguinte explicação:
+
+```hs
+-- normal form
+7
+(10, 'c')
+\x -> x + 1
+
+-- not in normal form
+1 + 2 -- porque a gente
+-- poderia avaliar
+-- isso para 3, o
+-- que não é possível
+-- na forma normal,
+-- nos quais
+-- os valores já devem
+-- estar avaliados
+
+-- weak head normal form
+(1 + 1, "foo")
+\x -> 2 + 2
+'f':("oo" ++ "bar")
+
+-- not in weak head normal form
+1 + 2
+(\x -> x + 2) 2
+"he" ++ "llo"
+```
+
+Perceberam a diferença? No WHNF, as funções podem ser reduzidas, igual ao "not in normal form", porém, eles tem data constructors associados a eles, como o `(,)` (sim, a vírgula é algo feito em Haskell), `(:)` e o lambda, e os valores que não são WHNF, são porque eles são aplicações de funções, mas só pode ser um WHNF caso seja uma lambda abstraction ou haja um data constructor.
+
+### day's plot twist: laziness são impuras e seq te permite ter efeitos observáveis
+
+Basicamente, `seq` te permite ter efeitos colaterais observáveis e é uma das maiores críticas da comunidade Haskell, [veja este link para mais informações](http://h2.jaguarpaw.co.uk/posts/impure-lazy-language/). Mas basicamente, não há como ter laziness sem impureza, ainda mais por causa das thunks... Mas a questão é que o compilador não deixa você ver esses efeitos, e usar seq permite com que você veja...
 
 ## quantificação
 
