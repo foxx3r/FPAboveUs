@@ -2541,6 +2541,43 @@ O system Fω ou simplesmente system F-ômega, é um system F com type-level func
 
 O system FC é um sistema que permite constraints de igualdade, coerções de tipos e GADTs. [Aqui está o link da proposta original](https://gitlab.haskell.org/ghc/ghc/-/wikis/commentary/compiler/fc).
 
+### ScopedTypeVariables
+
+A extensão `ScopedTypeVariables` nos permite burlar uma pequena restrição, como essa:
+
+```hs
+foo :: a -> b -> c
+foo x y = id' y
+    where
+        foo :: a -> b
+        foo _ = ...
+```
+
+Aonde em Haskell normal, ele consideraria o `a` e o `b` do `bar` como os mesmos do `foo`, com `ScopedTypeVariables`, isso não acontece.
+
+### tipos impredicativos
+
+Basicamente, a extensão `ImpredicativeTypes` vai ser adicionada no futuro, e está diretamente associado a higher rank order (`rankNTypes`), imagine o exemplo de rankNTypes:
+
+```hs
+{-# LANGUAGE RankNTypes #-}
+
+foo :: (forall a. Num a => a -> a) -> (Int, Double) -> (Int, Double)
+foo f (i, d) = (f i, f d)
+```
+
+Agora, vamos aplicar isso a um construtor... Uhmm, `Maybe`:
+
+```hs
+{-# LANGUAGE ImpredicativeTypes #-}
+
+foo :: Maybe (forall a. Num a => a -> a) -> (Int, Double) -> Maybe (Int, Double)
+foo (Just f) (i, d) = Just (f i, f d)
+foo Nothing = Nothing
+```
+
+Mas como Haskell ainda não suporta impredicative types, infelizmente esta feature não pode ser usada :(
+
 ## type-level programming
 
 ## coisas específicas de Haskell
