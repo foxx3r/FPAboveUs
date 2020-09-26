@@ -2428,9 +2428,118 @@ id x = x
 Ou então:
 
 ```hs
-id :: ∀a. a -> a
-id x = x
+id : ∀a. a → a
+id(x) = x
 ```
+
+### quantificação existencial
+
+A diferença entre quantificação universal e quantificação existencial, é que quantificação universal afirma "para todo x, ..." e a existencial diz "há pelo menos um x que ...", então basicamente a quantificação universal afirma que existe um x, e a existencial afirma que talvez exista um x, e você vai entender o porque quando formos falar de phantom types. Para usar quantificação existencial, adicione o seguinte ao topo do seu arquivo:
+
+```hs
+{-# LANGUAGE ExistentialQuantification #-}
+```
+
+E eles só são usados em ADTs. Um exemplo:
+
+```hs
+data Foo = forall a. Foo
+    { value  :: a
+    , update :: a -> a
+    , print  :: a -> String }
+```
+
+Isso a gente vai falar mais no capítulo sobre records, mas basicamente pense nisso como um JSON ou algo do tipo que você está acostumado na sua linguagem. E a notação matemática:
+
+```
+∃t. (t, t → t, t → String)
+```
+
+E isso:
+
+```hs
+data SBox = forall a. Show a => SBox a
+```
+
+Seria isso:
+
+```
+∃t. Show t ⇒ t
+```
+
+### rankNTypes
+
+Basicamente, um rank de tipos é classificado da seguinte maneira:
+
+```hs
+rank 0: Int
+rank 1: forall a. a -> Int
+rank 2: (forall a. a -> a) -> Int
+rank 3: ((forall a. a -> a) -> Int) -> Int
+rank 4: (((forall a. a -> a) -> Int) -> Int) -> Int
+...
+```
+
+E como você já deve ter percebido, a gente usa o rank 1 por padrão. Para habilitar outros ranks, use a extensão `RankNTypes`. E não se confunda, `Rank2Types` é uma versão antiga do `RankNTypes`. Então... Antes de apresentarmos o rankNTypes, vamos primeiro falar sobre qual problema ele resolve. Vamos simplesmente criar uma função e ver qual tipo ela tem:
+
+```hs
+λ foo f (i, d) = (f i, f d)
+foo :: (t -> b) -> (t, t) -> (b, b)
+```
+
+Ok, mas isso não é exatamente o que a gente quer... O sistema de tipos está insinuando pra gente que retornamos uma tupla com 2 tipos iguais e isso é totalmente monomórfico. Mas eu queria fazer polimórfico, então vamos fazer:
+
+```hs
+foo :: Num n => (n -> n) -> (Int, Double) -> (Int, Double)
+foo f (i, d) = (f i, f d)
+```
+
+Não compila... Resumindo, a gente quer pegar uma função polimórfica e aplicar ela a `Int` e `Double`, mas o compilador do Haskell infere o tipo da função forçadamente para `Int` e somente para `Int`. E preste atenção nisso, você não precisa saber o que é agora mas você deve se lembrar no futuro: o erro foi gerado porque ele tentou unificar `Int` e `Double` com `Int ~ Double`. Para burlar isso, vamos fazer a mesma função mas usando rank 2:
+
+```hs
+foo :: (forall n. Num n => n -> n) -> (Int, Double) -> (Int, Double)
+foo f (i, d) = (f i, f d)
+-- foo (+1) (6, 10) == (7, 11)
+```
+
+Outro fato interessante é que um `(forall a. a -> a)` é local, portanto, funcionará apenas dentro dos parênteses. Agora...
+
+Basicamente, ranks maiores do que 2 permitem fazer higher order ranks, um exemplo:
+
+```hs
+foo :: ((forall a. Num a => a -> a) -> Int) -> Int
+foo f b = (f id) + 1
+```
+
+Aqui a gente está dizendo que pegamos uma função aonde funciona para todo `a` (no caso, `id`) e uma outra que aplica um `Int` a nossa função. Então pense no `f id` como apenas um "modificador", ele está lá apenas para modificar o resultado final. Vamos dar um exemplo:
+
+```hs
+bar :: (forall a. Num a => a -> a) -> Int
+bar f = f 2
+```
+
+Não precisa ser necessariamente um rank2. Isso quis dizer que iremos fazer um `foo (id 2) + 1` assim:
+
+```hs
+foo bar
+-- 3
+```
+
+### Hindley-Milner
+
+Basicamente, o Hindley-Milner é uma técnica de inferência de tipos bem famosa e eficiente. Basicamente, ele é 100% decidível e nasceu nos MLs (aliás, é um dos pontos mais marcantes das MLs), e ela tenta aproveitar o máximo possível do polimorfismo. Vou deixar um [link para vocês saberem mais sobre](https://stackoverflow.com/questions/399312/what-is-hindley-milner).
+
+### system-F
+
+Basicamente o system-F é um Hindley-Milner que permite quantificações no meio do tipo, isso não te lembra algo? Sim, rankNTypes. [Aqui está um link na Wikipédia sobre](https://en.m.wikipedia.org/wiki/System_F). A propósito, o system-F é indecidivel.
+
+### system Fω
+
+O system Fω ou simplesmente system F-ômega, é um system F com type-level functions (que iremos discutir no próxima capítulo) e type families. Você pode ver mais olhando na página do system F na Wikipédia, aonde há uma secção desrinada apenas ao system Fω.
+
+### system FC
+
+O system FC é um sistema que permite constraints de igualdade, coerções de tipos e GADTs. [Aqui está o link da proposta original](https://gitlab.haskell.org/ghc/ghc/-/wikis/commentary/compiler/fc).
 
 ## type-level programming
 
