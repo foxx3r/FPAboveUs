@@ -2122,7 +2122,9 @@ Aonde `cofoo` é o dual (inverso) de `foo`.
 Existe uma famosa frase chamada "se você está trabalhando com grandes estruturas de dados, porém separadas em pequenas partes mas semelhantes, então você está provavelmente mexendo com comonads". E aqui está alguns exemplos interessantes para se usar comonads:
 
 **1.** Avaliar um autômato celular.
+
 **2.** Sequências, streams e segmentos.
+
 **3.** Coisas que simulam a vida real, como o Game Of Life.
 
 Mas primeiro, antes de explicarmos a teoria, vamos criar uma comonad em Haskell. Primeiro importe a biblioteca com:
