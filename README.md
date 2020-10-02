@@ -2582,6 +2582,352 @@ Mas como Haskell ainda não suporta impredicative types, infelizmente esta featu
 
 ## type-level programming
 
+Neste capítulo, você irá aprender a como programar no nível dos tipos. Nós vimos no capítulo anterior sobre sistemas de tipos e uma introdução a type-level programming com rankNTypes e impredicative types.
+
+### typeclasses
+
+Basicamente, uma declaração de uma interface padrão que os tipos que instanciem ela devem seguir. Um exemplo:
+
+```hs
+class Eq a => MyClass a where
+    (#) :: a -> a -> Bool
+```
+
+Agora, a gente diz que `MyClass` recebe um tipo `a` (a instância) e temos uma função `(#)` que recebe esses dois `a` e retorna um `Bool`, e que esse `a` deve instanciar `Eq` também. Lembre-se que essa anotação de tipos não diz nada sobre o que a função irá fazer, pois a gente que define como ela vai se comportar pro nosso tipo. Vamos supor que a função `(#)` retorne `True` se o primeiro argumento é verdadeiro, com isso em mente, vamos criar algumas instâncias:
+
+```hs
+instance MyClass (Either a b) where
+    (#) (Left _) (Right _) = False
+    (#) (Left _) (Left _) = False
+    (#) (Right _) (Right _) = True
+    (#) (Right _) (Left _) = True
+
+instance MyClass (Maybe a) where
+    (#) (Just _) None = True
+    (#) (Just _) (Just _) = True
+    (#) None None = False
+    (#) None (Just _) = False
+
+instance MyClass Bool where
+    (#) True _ = True
+    (#) False _ = False
+
+instance MyClass Int where
+    (#) 0 _ = False
+    (#) 1 _ = True
+    (#) x _ = if x > 0 then True else False
+```
+
+Perceba que a gente tem que chamar o `Maybe` e `Either` entre parênteses e a gente já vai explicar isso. Agora, suponha que temos uma função assim:
+
+```hs
+foo x y = x # y
+```
+
+O tipo desta função seria:
+
+```hs
+foo :: MyClass a => a -> a -> Bool
+```
+
+A arrow syntax `MyClass a => ...` significa que o tipo `a` deve instanciar a typeclass `a`. Se você sabe alguma linguagem OO, então você já deve ter sacado que typeclasses são duck typing / interfaces. Agora, lembra da aula sobre endomorfismo? Vamos criar um:
+
+```hs
+class MyClass f where
+    id_ :: a -> f a
+```
+
+Aqui ele assume que `f` é do tipo `* -> *`, por isso a gente ao instanciar para `Maybe`, não devemos colocar parênteses, e colocar apenas um parâmetro no `Either`:
+
+```hs
+instance MyClass (Either a) where
+    id_ (Left _) = Left "error"
+    id_ (Right x) = Right x
+
+instance MyClass Maybe where
+    id_ None = None
+    id_ (Just x) = Just x
+```
+
+Agora, se fizermos assim:
+
+```hs
+foo (Right 4)
+```
+
+O tipo de `foo` será:
+
+```hs
+foo :: MyClass a => a
+```
+
+Você também pode converter esse `foo` para `Maybe`. Um fato interessante é que você não precisa instanciar um tipo para aplicar a função de endomorfismo nela, porque o endomorfismo é equivalente a aquele próprio tipo de dado. Você também pode ter endomorfismo de vários tamanhos, mas geralmente é para converter seu tipo para o tipo da sua typeclass.
+
+Há também os pragmas `{-# MINIMAL #-}` e `{-# OVERLAPPING #-}`. O `MINIMAL` nos diz o requerimento mínimo para uma typeclass ser instanciada, por exemplo, se a gente criar uma typeclass com uma função `foo` e `bar`, então o pragma `MINIMAL` anotado será:
+
+```hs
+{-# MINIMAL foo, bar #-}
+```
+
+Que quer dizer que para instanciarmos a minha typeclass, o tipo deve pelo menos implementar as funções `foo` e `bar` (caso não implemente alguma, só vai gerar um warning, mas que pode trazer problemas futuros). Agora se eu disser que o comportamento padrão de `bar` é a negação de `foo` (no qual iremos ensinar depois), então o `MINIMAL` será:
+
+```hs
+{-# MINIMAL foo #-}
+```
+
+Em que o requerimento mínimo é anotar `foo`, mas e por que não `bar`? Porque ao anotar `foo`, a gente já define o comportamento de `bar`, mas o mesmo não acontece com o `bar`, pois não dizemos na typeclass que `foo` é o contrário de `bar`. Agora que `foo` é o contrário de `bar` e vice-versa, vamos ver a notação `MINIMAL`:
+
+```hs
+{-# MINIMAL foo | bar #-}
+```
+
+Que quer dizer que devemos pelo menos instanciar `foo` ou `bar`.
+
+Agora vamos falar sobre o `{-# OVERLAPPING #-}`. Mas para isso, vamos usar a extensão `MultiParamTypeClasses` que nos permite escrever por exemplo:
+
+```hs
+class MyClass (Maybe Int) where
+    ...
+```
+
+Ao invés de:
+
+```hs
+class MyClass (Maybe a) where
+    ...
+```
+
+Ou seja, typeclasses normalmente requerem um parâmetro polimórfico (com restrições aplicadas via arrow syntax), mas com `FlexibleInstances` você pode anotar tipos monomórficos. Ao invés de tentar explicar overlapping instances, vou mostrar um exemplo:
+
+```hs
+{-# LANGUAGE OverlappingInstances #-}
+{-# LANGUAGE FlexibleInstances #-}
+{-# LANGUAGE MultiParamTypeClasses #-}
+
+class MyClass a b where
+    fn :: (a, b)
+
+instance {-# OVERLAPPING #-} MyClass Int b where
+    fn = error "1"
+
+instance {-# OVERLAPPING #-} MyClass a Int where
+    fn = error "2"
+
+instance {-# OVERLAPPING #-} MyClass Int Int where
+    fn = error "3"
+
+instance {-# OVERLAPPING #-} MyClass a b where
+    fn = error "4"
+
+ex1 :: (Int, Int)
+ex1 = fn
+-- error "3"
+
+ex2 :: (Bool, Bool)
+ex2 = fn
+-- error "4"
+
+ex3 :: (Int, g)
+ex3 = fn
+-- error "1"
+
+ex4 :: (String, Int)
+ex4 = fn
+-- error "2"
+```
+
+E similar ao `OVERLAPPING`, temos o `INCOHERENT` que é mais sofisticado [como você pode ver aqui](https://downloads.haskell.org/~ghc/7.10.1/docs/html/users_guide/type-class-extensions.html). E uma coisa que você não sabia é que esses pragmas estão depreciados, e agora devemos usar extensões ao invés de pragmas. Vamos usar a extensão `IncoherentInstances` para isso:
+
+```hs
+{-# LANGUAGE FlexibleInstances #-}
+{-# LANGUAGE MultiParamTypeClasses #-}
+{-# LANGUAGE IncoherentInstances #-}
+
+class MyClass a b where
+    fn :: (a, b)
+
+instance MyClass Int b where
+    fn = error "b"
+
+instance MyClass a Int where
+    fn = error "a"
+
+instance MyClass Int Int where
+    fn = error "c"
+
+example :: (Int, Int)
+example = fn
+```
+
+Falando em pragmas...  Há também os pragmas `{-# DEPRECATED #-}` e `{-# WARNING #-}`. O `DEPRECATED` diz que algo não deve ser usado por ser antigo, um exemplo:
+
+```hs
+module Wibble {-# DEPRECATED "Use Wobble instead" #-} where
+  ...
+```
+
+Você também pode aplicar o mesmo para funções, tipos, construtores e typeclasses:
+
+```hs
+{-# DEPRECATED function, Type, DataConstructor, Typeclass "these are deprecated" #-}
+```
+
+Já o `WARNING` serve para avisar para tomar cuidado. E assim como o `DEPRECATED`, serve além de módulo. Um exemplo:
+
+```hs
+{-# WARNING unsafePerformIO "this function is very dangerous!" #-,}
+```
+
+Agora, iremos falar sobre a extensão `UndecidableInstances`, que desabilita o termination checking no sistema de tipos de Haskell, o tornando turing-complete e indecidivel. Iremos falar sobre turing-complete depois. Com esta extensão, Haskell permite expressões que podem **talvez** nunca terminar. Um exemplo seria expressões como essas:
+
+```hs
+instance Foo a => Foo a
+instance Bar b b => Foo [b]
+```
+
+Aimda sobre extensão, temos a extensão `TypeSynonymInstances`, na qual nos permite fazer coisas como:
+
+```hs
+type Foo = [Int]
+
+instance Bar Foo
+```
+
+Caso contrário, a gente teria que fazer `instance Bar [Int]`. Agora, a última extensão: `FlexibleContexts`. Ela permite expressões aninhadas como:
+
+```hs
+instance (MyClass (Maybe a)) => Foo (Either a b) where
+    ...
+```
+
+Há também a function arrow, mas antes de explicarmos o que ê isto, vamos dar uma olhada na definição de `Functor`:
+
+```hs
+type Functor :: (* -> *) -> Constraint
+class Functor f where
+    fmap :: (a -> b) -> f a -> f b
+    (<$) :: a -> f b -> f a
+    {-# MINIMAL fmap #-}
+```
+
+Agora, vamos ver suas definições:
+
+```hs
+instance Functor (Map k) -- Defined in ‘Data.Map.Internal’
+instance Functor (Array i) -- Defined in ‘GHC.Arr’
+instance Functor (Either a) -- Defined in ‘Data.Either’
+instance Functor [] -- Defined in ‘GHC.Base’
+instance Functor Maybe -- Defined in ‘GHC.Base’
+instance Functor IO -- Defined in ‘GHC.Base’
+instance Functor ((->) r) -- Defined in ‘GHC.Base’
+instance Functor ((,,,) a b c) -- Defined in ‘GHC.Base’
+instance Functor ((,,) a b) -- Defined in ‘GHC.Base’
+instance Functor ((,) a) -- Defined in ‘GHC.Base’
+```
+
+Há uma sintaxe estranha aí, ou melhor, várias... Que já iremos explicar. No caso, `((->) r)` quer dizer instância para qualquer função com um parâmetro. Vamos ver como ele é definido para `fmap`:
+
+```hs
+instance Functor ((->) r) where
+    fmap f g = f . g
+```
+
+Isso quer dizer que caso o segundo argumento (`f a`) seja uma função, então ele vai agir como uma composição das duas funções. Isso também serve para funções de 2 argumentos com `(->)`. Um exemplo:
+
+```hs
+class A b where
+    foo :: Num a => (a -> a -> a) -> (a -> a -> a) -> b a a
+
+instance A (->) where
+    foo f g = f 1 . g 2
+
+ex1 :: (A b, Num a) => b a a
+ex1 = foo (+) (+)
+
+ex1 6
+-- 6 + 2 + 1 = 9
+```
+
+Agora, o `(,)` simplesmente denota uma tupla. Um exemplo:
+
+```hs
+class Foo f where
+    foo :: Num a => f a
+
+instance Num a => Foo ((,) a) where
+    foo = (1, 2)
+
+instance Num a => Foo ((,,) a b) where
+    foo = (1, 2, 3)
+
+instance Num a => Foo ((,,,) a b c) where
+    foo = (1, 2, 3, 4)
+
+instance Num a => Foo ((,,,,) a b c d) where
+    foo = (1, 2, 3, 4, 5)
+```
+
+Agora, outro assunto sobre typeclasses são **polyvariadic functions**. Isso quer dizer que a função recebe qualquer número de argumentos. Repare nos nossos 2 exemplos e você vai entender como é feito. Primeiro, vamos começar definindo a soma de todos os argumentos:
+
+```hs
+class Sum r where
+    sumOf :: Integer -> r
+
+instance Sum Integer where
+    sum = id
+
+instance (Sum r) => Sum (Integer -> r) where
+    sum x = sum . (x +) . toInteger
+
+ex1 :: Integer
+ex1 = sum 3
+-- 3
+
+ex2 :: Integer
+ex2 = sum 7 1
+-- 8
+
+ex3 :: Integer
+ex3 = sum 8 2 3 4 3
+-- 20
+```
+
+E agora, um exemplo com uma função que concatena:
+
+```hs
+class Concat s where
+    concat :: String -> s
+
+instance Concat String where
+    concat = id
+
+instance (Concat s) => Concat (String -> s) where
+    concat s = concat . (s ++)
+
+ex1 :: String
+ex1 = concat "a"
+-- a
+
+ex2 :: String
+ex2 = concat "a" "b" "c"
+-- abc
+```
+
+Agora, vamos ver outro recurso: **default behaviour**. Para isso, vamos recriar a typeclasse `Eq`:
+
+```hs
+class Eq a where
+    (==) :: a -> a -> Bool
+    (/=) :: a -> a -> Bool
+    (==) a b = not (a /= b)
+    (/=) a b = not (a == b)
+    {-# MINIMAL (==) | (/=) #-}
+```
+
+Isso significa que se caso não provermos a função `(==)` na instânciação, então `(==)` vai ser o contrário de `(/=)` e vice-versa, assim podemos anotar apenas um dos dois.
+
+### subtipagem
+
 ## coisas específicas de Haskell
 
 ## recursion schemes
