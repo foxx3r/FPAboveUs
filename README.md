@@ -2924,7 +2924,15 @@ class Eq a where
     {-# MINIMAL (==) | (/=) #-}
 ```
 
-Isso significa que se caso não provermos a função `(==)` na instânciação, então `(==)` vai ser o contrário de `(/=)` e vice-versa, assim podemos anotar apenas um dos dois.
+Isso significa que se caso não provermos a função `(==)` na instânciação, então `(==)` vai ser o contrário de `(/=)` e vice-versa, assim podemos anotar apenas um dos dois. E se duas funções são do mesmo tipo, então você pode anotá-las na mesma linha. Vamos reescrever a typeclasse `Eq` com isso:
+
+```hs
+class Eq a where
+    (==), (/=) :: a -> a -> Bool
+    (==) a b = not (a /= b)
+    (/=) a b = not (a == b)
+    {-# MINIMAL (==) | (/=) #-}
+```
 
 ### subtipagem
 
