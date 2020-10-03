@@ -189,11 +189,10 @@ Coisas que irão cair no curso:
 ## Instalação
 
 
-### instalando o stack
+### Instalando o stack
+O stack será o seu segundo melhor amigo daqui pra frente, atrás apenas do GHC. Ele é um gerenciador de pacotes e resolve muitos problemas por você. Para instalá-lo, acesse <https://docs.haskellstack.org/en/stable/README/> e siga o manual de instalação para o seu sistema operacional. Como nem tudo nesta vida é fácil, recomendo você ler a documentação do stack em <https://docs.haskellstack.org/en/stable/GUIDE/> para não ter problemas futuros, e caso os tenha, que saiba resolver. E digo isso por experiência própria :)
 
-O stack vai ser o seu segundo melhor amigo daqui pra frente, atrás apenas do GHC. Ele é um gerenciador de pacotes e resolve muitos problemas por você. Para instalá-lo, acesse <https://docs.haskellstack.org/en/stable/README/> e siga o manual de instalação para o seu sistema operacional. Como nem tudo nesta vida é fácil, recomendo você ler a documentação do stack em <https://docs.haskellstack.org/en/stable/GUIDE/> para não ter problemas futuros, e caso os tenha, que saiba resolver. E digo isso por experiência própria :)
-
-### configurando o stack
+### Configurando o stack
 
 Para configurar o stack, você primeiro deve rodar o comando:
 
@@ -213,15 +212,15 @@ Para instalar o cabal, digite o seguinte comando no seu terminal:
 
 Iremos discutir no capítulo a seguir as diferenças dele pro stack.
 
-### stack vs cabal
+### Stack vs Cabal
 
 Basicamente o stack usa o cabal por baixo, mas usa o stackage como repositório ao invés do hackage como o cabal. E pelo stack usar o cabal por baixo, você não tem perda de compatibilidade. Mas é apenas isso?! Não!! O stack é um cabal melhorado ou mais automatizado. Basicamente o stack evita de você ter as cabal hells, uma dor de cabeça imensa para programadores Haskell no passado! Apesar do cabal ter evoluído bastante nos últimos tempos com o `cabal sandbox` e os comandos new-*, iremos usar o stack neste tutorial. Mas fica a sua escolha.
 
-### instalando o SWI-prolog
+### Instalando o SWI-prolog
 
 Iremos ensinar um pouco sobre a linguagem prolog aqui, e já é bom ter de antemão, o interpretador instalado. Para instalá-lo, confira no site oficial e instale de acordo com o seu sistema operacional (ou você pode pesquisar no gerenciador de pacotes da sua distribuição, mas não é uma coisa que geralmente se recomenda) em <https://www.swi-prolog.org/Download.html>.
 
-### instalando o Emacs
+### Instalando o Emacs
 
 Basicamente o Emacs é um editor de texto muito poderoso (podendo acessar o telegram, músicas, servir como daemon init do sistema, ser usado para fazer programação literária e muito mais), que usa a linguagem Elisp, uma DSL parecida com Common LISP. Caso você esteja acostumado com o VI/VIM/neovim, não se preocupe, ensinaremos a instalar o evil depois, que irá nos permitir usar keybindings (combinações de teclas) iguais as do VI no Emacs. Mas até mesmo usando as keybindings do VI, acho que é importante saber Emacs, portanto, eu recomendo você ler o [tour sob o Emacs](https://www.gnu.org/software/emacs/tour).
 
@@ -235,7 +234,7 @@ Para instalar o Emacs no seu sistema operacional Windows, acesse a [página de d
 
 Para instalar o Emacs em um sistema unix-like, você pode instalar ele pelo gerenciador de pacotes mesmo que não tem problema. Mas caso não confie no gerenciador de pacotes da sua distribuição, instale pelo [site oficial](https://www.gnu.org/software/emacs/download.html).
 
-### configurando o Emacs
+### Configurando o Emacs
 
 Basicamente, o Emacs tem 3 implementações de gerenciamento de pacotes:
 
@@ -293,7 +292,7 @@ E por último, mas não menos importante, vamos habilitar a contagem de linhas e
 
 No futuro, iremos ensinar a como configurar mais ainda o Emacs :)
 
-### instalando Agda e o agda-stdlib
+### Instalando Agda e o agda-stdlib
 
 Agda é uma linguagem de provação de teoremas dependentemente tipada que iremos discutir no último capítulo do curso, e portanto, iremos instalar agora, com os seguintes comandos:
 
@@ -310,7 +309,7 @@ Depois de ter instalado Agda, rode o seguinte comando:
 
 Lembra que eu disse que Agda é muito dependente do Emacs? O agda-mode setup irá configurar o agda-mode no Emacs, para que possamos digitar unicodes e poder interpretar Agda pelo Emacs.
 
-### configurando o nosso .ghci e hoogle
+### Configurando o nosso .ghci e hoogle
 
 Antes de tudo, vamos configurar o interpretador do Haskell. O arquivo de configuração fica em `$HOME/.ghci`, no qual aceita código válido dentro do GHCi. Caso você ainda não saiba, comentários de uma única linha em Haskell são feitos usando `--` e comentários de múltiplas linhas são feitos usando `{- -}`. Vamos colocar isso no arquivo de configuração do GHCi:
 
@@ -344,7 +343,7 @@ E então, rode:
 
 `λ :hoogle "a -> a"`
 
-## história da programação funcional e do lambda calculus
+## História da programação funcional e do lambda calculus
 
 A programação funcional nasceu como um modelo matemático arquitetado por Alan Church, o lambda-calculus. O Church era professor do Alan Turing, que inventou o modelo concorrente: o modelo de turing. E basicamente o modelo de turing foi o mais adotado com o passar dos anos, e o lambda-calculus se tornou mais acessível para pessoas acadêmicas. Mas o cenário mudou um pouco quando Haskell conseguiu resolver o maior problema da programação funcional: I/O. Após isso, várias linguagens funcionais também cresceram, como Clojure, Elixir, Scala, os LISPs voltaram a vida e Scheme também embarcou nessa... F# e OCaml foram criados, Rust mais recentemente... E linguagens imperativas agora estão adotando cada vez mais features funcionais
 
@@ -368,7 +367,7 @@ E desde então, ML não é só mais uma linguagem, é uma família de linguagens
 
 Espera, Haskell e Rust? Como o assunto aqui não é Rust, pesquisem na internet sobre. Mas sobre Haskell, há controvérsias... Assim como Rust. E eu creio firmemente que Haskell seja uma ML, apesar de ter certas dúvidas em relação a Rust. Mas por que eu creio que Haskell seja uma ML? Porque Haskell surgiu como um lazy ML, e o argumento que muita gente contrária diz "Haskell foi uma junção de várias linguagens na época, incluindo algumas MLs, mas o seu maior inspirador foi o Miranda..No final, foi um processo inevitável, eram MLs, mas não quer dizer que Haskell também seja, porque existiam não-MLs" não vale nada, já que Haskell queria ser um lazy ML, e também, muitas coisas em Haskell poderiam "melhorar", mas eles queriam que a linguagem fosse mais parecida com ML.
 
-### evolução do lambda-calculus
+### Evolução do lambda-calculus
 
 Alonzo Church cria o lambda-calculus na década 30;
 
@@ -386,7 +385,7 @@ em 1994, Augustsson e Petersson criam GADTs (estruturas de dados álgebricos gen
 
 E em 1991, o Henk desenhou o lambda cube... Assim, chegando a última evolução do lambda-calculus atualmente: O lambda-pi-calculus... Que deveria se chamar apenas pi-calculus (sim, se tornou incompatível com o lambda-calculus) mas já existia uma formalização com este nome;
 
-## características funcionais
+## Características funcionais
 
 Agora, chegou a hora em que vamos realmente ter contato com o Haskell. No futuro, iremos ensinar IO e, consequentemente, a como compilar um arquivo Haskell. Por enquanto, abra o interpretador com:
 
@@ -396,7 +395,7 @@ Agora, se você quiser digitar múltiplas linhas dentro do GHCi (como por exempl
 
 Ou então se você preferir (e é o que eu recomendo), abra um arquivo e digite as funções nele, e então chame `:l meu_arquivo.hs` no ghci e ele vai importar todas as funções deste arquivo e você poderá rodá-las, e para recompilar o arquivo, basta digitar `:r`
 
-### dados imutáveis
+### Dados imutáveis
 
 Basicamente, linguagens funcionais te previnem de ter efeitos colaterais, e eles são causados principalmente por mutabilidade. Em uma linguagem como Python, o seguinte seria possível:
 
@@ -423,7 +422,7 @@ Este código funciona, mas ê um loop infinito, mas por que? Porque simplesmente
 
 Obs: para ver o tipo de uma variável no GHCi, use `:t variavel`, ou `:i variavel` para mais informações.
 
-### transparência referencial
+### Transparência referencial
 
 Basicamente, a transparência referencial quer dizer que você pode trocar toda a lógica de uma função por um código inline. Ainda não entendeu? Então veja um exemplo:
 
@@ -446,7 +445,7 @@ print (4 + 6)
 
 E o exemplo é bem simples, talvez todas as linguagens permitem definir este exemplo simples, mas não para tudo... Nem tudo em uma linguagem pode ser transparentemente referencial. E portanto, as linguagens funcionais comumente tem a característica de serem transparentemente referenciais.
 
-### sem nulos e exceções
+### Sem nulos e exceções
 
 Basicamente, o `null` ê o erro do século. Ele basicamente consegue quebrar o sistema de tipos, e você não tem como saber por onde ele virá, e talvez ele foi feito para quebrar o sistema de tipos... Um erro grave de arquitetura, porque o `null` não funciona sem você abrir uma exceção para ele no sistema de tipos, ou torná-lo menos rigoroso.
 
@@ -484,7 +483,7 @@ parse (Left "I missed the bus") -- erro
 parse (Right "I won the lottery") -- "hello, you have a good luck"
 ```
 
-### funções tem tipos únicos
+### Funções tem tipos únicos
 
 Em linguagens funcionais, funções tem tipos concretos, exemplo:
 
@@ -498,7 +497,7 @@ bar _ = 0
 
 Por que os dois exemplos não compilam? Porque na primeira linha, ele infere que o tipo do primeiro argumento de foo ê `Int`, mas no segundo, `print` só pode receber `String`, então, ele inferirá que x é `String`, mas não tem como x ser `Int` e `String` ao mesmo tempo. E no bar, ele inferiu que o tipo de entrada é um número, e o tipo de saída é uma string, mas abaixo, a gente retorna um 0.
 
-### toda função retorna algo
+### Toda função retorna algo
 
 Em funcional, tudo é baseado em funções, aonde toda função retorna algo, um exemplo:
 
@@ -511,7 +510,7 @@ sum x y = x + y  :: Int
 
 Aonde `::` é o tipo de retorno.
 
-### first class functions
+### First class functions
 
 Uma linguagem é chamada first class se as funções dela são tratadas como qualquer outro tipo de dado da linguagem, isso inclui as seguintes regras:
 
@@ -571,11 +570,11 @@ sumWith10(20) // == sumWith10()(10)(20)
 
 Aonde cada parêntese se refere a um espaço em Haskell.
 
-### sem globais
+### Sem globais
 
 Todas as variáveis em funcional são locais, assim como funções aninhadas... Aliás, lembra que em Haskell, uma variável (constante polimórfica) é só uma função (ou tratada como -- first class), funções/variáveis dentro de funções/variáveis (que são a mesma coisa) não são acessíveis fora dela. Isso é muito mais seguro porque código global é uma ameaça, e código local só você pode ter o controle.
 
-### side effects
+### Side effects
 
 O termo side effect quer dizer que uma função pode ter efeitos colaterais, e geralmente elas são classificadas com as seguintes regras:
 
@@ -585,14 +584,14 @@ O termo side effect quer dizer que uma função pode ter efeitos colaterais, e g
 
 E linguagens funcionais não tem side effects... Mas pera, não dá para programar em GUI ou escrever/ler do disco??? Calma, Haskell tem side effects controlados pela monad IO.
 
-### pureza
+### Pureza
 
 En funcional, pureza se refere a funções que tem seus resultados determinados pelos seus argumentos, e nunca por uma variável global. E elas também não podem ter side effects.
 
-## lambda-calculus
+## Lambda-calculus
 
 
-### funções simples
+### Funções simples
 
 Basicamente, com o lambda-calculus, você consegue criar funções, aonde λ é o lambda e tudo antes do ponto é um argumento. Alguns exemplos:
 
@@ -618,7 +617,7 @@ Exemplos:
 (λx.x+1)(3) -- retorna 4
 ```
 
-### números em lambda-calculus
+### Números em lambda-calculus
 
 Os números do lambda-calculus são definidos pelo numeral de Church, assim:
 
@@ -642,7 +641,7 @@ Aonde f seria um:
 
 `λx.x+1`
 
-### lógica booleana em lambda-calculus
+### Lógica booleana em lambda-calculus
 
 Agora que você já sabe formar passos em lambda-calculus na sua cabeça (caso contrário, leia a lição anterior), vou deixar você pensar sozinho:
 
@@ -657,11 +656,11 @@ if := λabc.a b c
 eq := λxy.if x == 0 then true else false
 ```
 
-## programação lógica
+## Programação lógica
 
 A programação lógica é baseada na resolução SLD e nas claúsulas de horn, e usa backtracking por baixo para resolver claúsulas, e calma, apesar dos nomes difíceis, Prolog é a linguagem mais simples que eu já vi na minha vida :)
 
-### a linguagem Prolog
+### A linguagem Prolog
 
 A linguagem de programação Prolog foi criada em 1972 com intuito em programação lógica, linguística e inteligência artificial. Mas o que faz esta linguagem se destacar tanto entre as linguagens de programação lógica? Bem, eu te dou 3 motivos:
 
@@ -669,7 +668,7 @@ A linguagem de programação Prolog foi criada em 1972 com intuito em programaç
 2. Nenhuma outra linguagem de programação lógica inovou tanto quanto Prolog.
 3. Prolog além de suportar a resolução SLDNF, suporta cut da árvore de backtracking, assim sendo muito mais rápida e eficiente.
 
-### o paradigma de programação declarativo
+### O paradigma de programação declarativo
 
 O paradigma declarativo te permite não mais dizer passo a passo o que seu computador deve fazer, mas sim, o que seu computador deve fazer para chegar a determinado resultado. Por exemplo, em SQL temos a seguinte declaração:
 
@@ -689,7 +688,7 @@ accumulator.reverse_by_country("desc")
 
 Mas por que tivemos que especificar tudo em Python e fazer quase nada em SQL apenas dizendo como eu queria? Porque simplesmente SQL é declarativo. Python não. Haskell e Prolog são dois exemplos de linguagem declarativa.
 
-### predicados
+### Predicados
 
 Agora, você escreve seus predicados em um arquivo .pl ou .pro, e testa eles (com ?-) entrando no interpretador com:
 
@@ -714,7 +713,7 @@ mae(X, Y) :- filho(Y, X).
 
 Agora que você sabe isto, você já pode escrever programas mais complexos em Prolog. Viu como é simples? Você consegue até entender um programa de árvore genealógica que eu fiz <https://github.com/foxx3r/genealogy_prolog>, e basicamente Prolog é pura lógica.
 
-### modus ponens
+### Modus ponens
 
 Basicamente, diz que em `P ⊦ Q`, quer dizer "se P implica Q, e Q é verdadeiro, então P também é". Uma curiosidade é que vírgula em Prolog significa AND e ponto-e-vírgula significa OR. Vamos ver um exemplo:
 
@@ -725,7 +724,7 @@ irmao(X, Y) :- mae(M, X), mae(M, Y), X \= Y, homem(X).
 
 Aqui, irmao é um modus ponens verdadeiro para todos que tem o mesmo pai/mãe que ele, e que não é ele próprio e contanto que seja homem.
 
-### backtracking
+### Backtracking
 
 Bem, o backtracking é o algorítmo de resolução que o Prolog usa, e basicamente ele consegue fazer coisas como testar e eliminar possibilidades. Vamos ver um pequeno exemplo:
 
@@ -772,7 +771,7 @@ E o que acontece na real, é que minúsculas em Prolog são átomos (valores que
 > Backtracking é um tipo de algoritmo que representa um refinamento da busca por força bruta, em que múltiplas soluções podem ser eliminadas sem serem explicitamente examinadas. O termo foi cunhado pelo matemático estado-unidense D. H. Lehmer na década de 1950.
 > O procedimento é usado em linguagens de programação como Prolog. Uma busca inicial em um programa nessa linguagem segue o padrão busca em profundidade, ou seja, a árvore é percorrida sistematicamente de cima para baixo e da esquerda para direita. Quando essa pesquisa falha ou é encontrado um nodo terminal da árvore, entra em funcionamento o mecanismo de backtracking. Esse procedimento faz com que o sistema retorne pelo mesmo caminho percorrido com a finalidade de encontrar soluções alternativas.
 
-### resolução SLD
+### Resolução SLD
 
 Basicamente, a resolução SLD trabalha como o algorítmo de inferência do Prolog sob as claúsulas horn. Ele trabalha com unificações, um exemplo de unificação:
 
@@ -795,7 +794,7 @@ X = a.
 
 Aonde em casos que ele não pode afirmar nada e nem negar (como no caso de `X = Y`), ele apenas concorda com você.
 
-### cut, negação e a resolução SLDNF
+### Cut, negação e a resolução SLDNF
 
 Primeiro, vamos falar sobre o controverso cut... Mas por que controverso? Porque simplesmente, ele foi adicionado apenas por motivos de eficiência em Prolog e não segue as claúsulas horn. A lógica do cut é cortar a árvore de busca de possibilidades do backtracking, assim, permitindo maior performance. Um exemplo, aonde `!` é o cut operator:
 
@@ -845,11 +844,11 @@ X = Y, Y = 3.
 
 Aqui você pode ver que o X e Y foram repetidos, mas... Isso é realmente necessário? Não! Por isso usamos o cut. Agora, iremos falar sobre a resolução SLDNF, que é basicamente a resolução SLD com "negação por falha". Mas o que quer dizer "negação por falha"? Simplesmente quando passamos um predicado simples para o Prolog, como `foo(X) :- bar(X)`, você verifica se X é bar, mas e se der falha? Você pode usar o operador `\+` para negar a expressäo caso dê falha, ou seja, uma expressäo falsa virá a se tornar verdadeira. A expressäo acima ficaria `foo(X) :- \+ bar(X)`.
 
-## programação funcional no geral
+## Programação funcional no geral
 
 Agora neste capítulo iremos te ensinar features funcionais
 
-### morfismo
+### Morfismo
 
 Basicamente, morfismo quer dizer uma "forma", em Haskell, ela diz a forma de um objeto/função, ou seja, é a anotação de tipos. Vamos ver a anotação de uma função matemática:
 
@@ -897,7 +896,7 @@ parse None = error "foo"
 
 Wow, pera lá, por que podemos dae erro? Como sabemos que ele sempre vai ser do tipo do nosso tipo? Bem, claramente não iremos falar disso agora, mas em Haskell (e basicamente todas as linguagens turing completas com polimorfismo paramétrico), você pode ter funções que sejam de todos os tipos, os famosos bottom values.
 
-### polimorfismo
+### Polimorfismo
 
 Basicamente o polimorfismo significa "muitas formas", e se você veio de alguma linguagem como TypeScript, Rust, Java, Dart, Swift ou C++, você deve conhecer esta feature pelo nome "generics". E se não veio, basicamente ela quer dizer que um argumento/retorno pode ter várias formas. E bem, como você já deve saber, o sistema de tipos de Haskell é bem forte e te previne de muito erro, então você não pode fazer algo como `foo :: x -> y`, tipos de retornos genéricos tem que se basear no tipo de entrada, caso contrário, você terá que explicitar o tipo retornado. Alguns exemplos de polimorfismo em Haskell:
 
@@ -917,7 +916,7 @@ const 1 7
 -- 1
 ```
 
-### função id
+### Função id
 
 Na matemática, o elemento identidade é o elemento que não muda em nada a operação. Por exemplo, `1 + 0` é igual a 1, então o elemento identidade é o 0. Mas... No caso de Haskell, estamos falando da função identidade, e por que ela é tão importante? Basicamente, se uma função te obriga a passar uma função para dentro dela, mas você não quer modificar o resultado, então você passa a função id. Um exemplo:
 
@@ -931,11 +930,11 @@ func id
 -- 5
 ```
 
-### isomorfismo
+### Isomorfismo
 
 Basicamente, a palavra isomorfismo quer dizer que um objeto X é o mesmo que um Y. Por exemplo, como a gente já havia discutido aqui antes `foo x = ...` é isomórfico a `foo = \x -> ...`.
 
-### pattern matching
+### Pattern matching
 
 Basicamente, pattern matching são uma espécie de if mais poderoso, e você vai entender o porque agora:
 
@@ -1008,7 +1007,7 @@ bmiTell bmi
 
 Aonde o otherwise seria o "caso contrário".
 
-### composição
+### Composição
 
 Basicamente, a composição matemática é algo como:
 
@@ -1033,7 +1032,7 @@ baz 5
 -- 64 == (3 + 5) * (3 + 5) == foo (bar 3 5)
 ```
 
-### lifting
+### Lifting
 
 Basicamente o termo lifting se refere a pegar um valor e converter ele para um contexto, no qual iremos explicar daqui há a algumas aulas, aqui estão alguns exemplos:
 
@@ -1048,7 +1047,7 @@ a :: String
 a :: MonadTrans t => t [] String
 ```
 
-### constraints
+### Constraints
 
 Basicamente, uma constraint é uma restrição que podemos fazer no sistema de tipos, ou no nosso caso, é para deixar o código mais polimórfico. Um exemplo:
 
@@ -1138,7 +1137,7 @@ fromInteger 6 :: Foo
 
 Mas iremos falar disso depois.
 
-### declarativismo
+### Declarativismo
 
 Basicamente, Haskell suporta programação declarativa com o `where`, assim:
 
@@ -1152,7 +1151,7 @@ joao = name
         name = "joao"
 ```
 
-### curry e point-free
+### Curry e Point-free
 
 Ah... O curry, o maravilhoso curry, tão suculen... Espwra, a gente não está falando do molho, e sim do currying do haskell curry (um matemático). Basicamente, o curry são lambda-calculus aninhados, e lambda-calculus são funções, certo? Então... `foo x y = ...` é igual a `foo = \x -> \y -> ...`, e tudo em Haskell é curried automaticamente. Existe uma função chamada `curry` que pega uma função de 2 argumentos (se você quiser mais, você vai precisar criar uma função pra cada elemento, esta é uma das desvantagens de não usar curry) e retorna ela sem curry, por exemplo:
 
@@ -1221,7 +1220,7 @@ function closure() {
 }
 ```
 
-### recursão
+### Recursão
 
 Um ponto que difere Haskell de outras linguagens, é que usa-se recursão ao invés de loop, isto quer dizer que, executamos um loop chamando a própria função. Vamos ver um exemplo:
 
@@ -1286,9 +1285,9 @@ product [1, 2, 3, 4]
 24
 ```
 
-### tail call recursion e tail call optimization
+### Tail call recursion e tail call optimization
 
-Conhecida também como processk iterativo linear por schemeiros/SICPeiros
+Conhecida também como processo iterativo linear por schemeiros/SICPeiros
 .. Este tipo de recursão é iterativo, ou seja, diferente da recursão convencional, ele não vai acumulando `1 * 2 * 3 * 4` por exemplo, ele vai fazendo avaliando a cada iteração esse valor e produzindo o resultado, assim, as probabilidades da complexidade do algoritmo ser O(n) são muito grandes, um exemplo de como um fatorial é calculado por baixo:
 
 ```lisp
@@ -1428,7 +1427,7 @@ Depois, temos `n - 1` que vira 0, e `cur + prev (2 + 1)` dá 3, e `prev` vira `c
 
 E basicamente se a linguagem suportar a otimização TCO (Taill Call Optimization), o compilador conseguirá tratar essa recursão como um loop iterativo e otimizá-lo.
 
-### total functions e partial functions
+### Total functions e partial functions
 
 Uma função parcial em Haskell é uma função cujo argumento de retorno pode ser diferente, por exemplo, um bottom, que como discutimos já, permite que algumas funções se encaixem em tosos os tipos. Um exemplo de função parcial é o `head` e o `tail`, que podem retornar erro caso a lista esteja vazia. E o motivo de Haskell não ter adotado `Maybe` ou `Either` nestes casos é por compatibilidade, porque Haskell queria se parecer com um lazy ML. E total functions são o contrário de partial functions. Vamos criar um `head` total:
 
@@ -1438,7 +1437,7 @@ head [] = None
 head (x:_) = Just x
 ```
 
-### list comprehension
+### List Comprehension
 
 Basicamente, a compreensão de listas tem a seguinte sintaxe:
 
@@ -1463,7 +1462,7 @@ Alguns exemplos:
 [2,6,10,14,18]
 ```
 
-### fmap
+### Fmap
 
 Basicamente, o `fmap` quer dizer functor map, no qual iremos falar mais a frente em teoria das categorias. Basicamente, com `fmap`, a gente consegue aplicar funções em valores/tipos que derivem de `Functor`. Vamos ver a definição de `Functor` com `:i`:
 
@@ -1502,7 +1501,7 @@ fmap id [1, 2, 3]
 
 E um fato interessante é que o `map` é um `fmap` que funciona apenas para listas e foi um erro de design, e até hoje é mantido apenas por compatibilidade. Então, sempre usem `fmap`. O `<$>` é um `fmap` infixo, isso significa que `fmap (+2) [1..10]` é igual a `(+2) <$> [1..10]`.
 
-### filter
+### Filter
 
 Basicamente o filter filtra os resultados em uma lista, por exemplo:
 
@@ -1517,7 +1516,7 @@ filter (\x -> length x > 4) ["a", "ab", "abc", "abcd", "abcde", "abcdef", "abcde
 -- ["abcde", "abcdef", "abcdefg"]
 ```
 
-### fold ou reduce
+### Fold ou Reduce
 
 Basicamente, o que você deve conhecer como `reduce` de outras linguagens, é o `fold` de Haskell. Haskell tem 2 tipos de fold, ou melhor... 8. Mas já vamos discutir sobre cada um. Vamos começar com o `foldl`, basicamente, fold significa dobrar. O `foldl` dobra da esquerda pra direita, ou seja:
 
@@ -1528,7 +1527,7 @@ foldl (+) 0 [1..10]
 
 Aonde o 0 é o acumulador. Tome cuidado com qual acumulador usar. Por exemplo, usar 1 em operações com + aumentaria o resultado em 1, e usar 0 em operações com * sempre retornaria 0, porque todo número multiplicado por 0 é igual a 0. Já o `foldr` começa a dobrar da direita para a esquerda, e só vai se diferenciar do `foldl` se a operação não for comutativa (e.g: `a + b` é `b + a`, portanto, adição é comutativa). Agora, temos o `foldl1` e `foldr1`, aonde o acumulador por padrão é 1, e é bem interessante você usar semore que puder. Já o `foldl'` e `foldr'` (conta com o `foldl1'` e `foldr1'`) são os que eu recomendo sempre usar, ele são uma versão sem stack overflow dos `fold`s, que basicamente usa strictness evaluation que iremos explicar nos capítulos sobre lazy programming.
 
-### zip
+### Zip
 
 Basicamente, o zip nos permite pegar 2 listas, e juntar o index 1 da primeira lista com o index 1 da outra lista numa mesma tupla, e assim por diante. Alguns exemplos:
 
@@ -1539,7 +1538,7 @@ zip [1..5] [9, 8]
 -- [(1, 9), (2, 8)]
 ```
 
-### continuation passing style
+### Continuation Passing Style
 
 Basicamente, o CPS é um caso de callback, aonde você se aproveita da computação de recursos na stack, e aonde você acumula valores... Uhmm, acumular, vocês se lembram desta frase? Bora ver um exemplo de callback em JavaScript:
 
@@ -1559,11 +1558,11 @@ fact' n k = fact_iter n 1
 
 Aonde `fact_iter` é uma continuação de `fact'` e `fact_iter` (a recursão) é uma continuação de si mesma, aonde `k` é o callback. Repare que a continuação é sempre a última coisa que a função faz.
 
-### tipos em Haskell
+### Tipos em Haskell
 
 Como todos sabemos, o `Int` em Haskell é um inteiro normal, que deriva de `Num`, e `Integer` é conhecido como big int, aonde temos um tamanho infinito de possibilidades de números. `Char` é apenas um caractere, `[a]` é uma lista com tipos `a` dentro dela, e `String` é um sinônimo para `[Char]`. `Float` são números de ponto flutuante e `Fractional` é um número de ponto flutuante que pode ser representado fracionalmente. `Word` equivale ao word do processador. `(Int, Int, Int)` é uma tupla com 3 `Int`s. E `Bool` são booleanos. `*` é o tipo dos tipos nos quais iremos falar no capítulo sobre type-level programming, e `Constraint`, bem... A maneira mais simplesnde explicá-lo mas talvez não tão correta/perfeccionista, seria que ele é geralmente retornado por typeclasses e quer dizer que ela pode servir com constraint.
 
-## introdução a teoria das categorias
+## Introdução a teoria das categorias
 
 A teoria das categorias pode não ser tão útil ou amplamente utilizada por matemáticos, mas se encaixa exatamente com programação, porque você tem uma generalização da matemática toda em categorias, e categorias são possíveis de serem expressadas em programação de forma simples.
 
@@ -2210,7 +2209,7 @@ data Foo a = Foo a
 
 E como você já viu, codados são ótimos para lidar com streams.
 
-## lazy programming
+## Lazy programming
 
 Agora, você vai aprender sobre este maravilhoso recurso e as vezes tão controverso que levou haskell a ser criado: **lazy programming**.
 
@@ -2409,7 +2408,7 @@ Perceberam a diferença? No WHNF, as funções podem ser reduzidas, igual ao "no
 
 Basicamente, `seq` te permite ter efeitos colaterais observáveis e é uma das maiores críticas da comunidade Haskell, [veja este link para mais informações](http://h2.jaguarpaw.co.uk/posts/impure-lazy-language). Mas basicamente, não há como ter laziness sem impureza, ainda mais por causa das thunks... Mas a questão é que o compilador não deixa você ver esses efeitos, porém usar `seq` permite com que você veja...
 
-## quantificação e sistemas de tipos
+## Quantificação e sistemas de tipos
 
 
 ### quantificação universal
@@ -2581,7 +2580,7 @@ foo Nothing = Nothing
 
 Mas como Haskell ainda não suporta impredicative types, infelizmente esta feature não pode ser usada :(
 
-## type-level programming
+## Type-level programming
 
 Neste capítulo, você irá aprender a como programar no nível dos tipos. Nós vimos no capítulo anterior sobre sistemas de tipos e uma introdução a type-level programming com rankNTypes e impredicative types.
 
@@ -2938,18 +2937,18 @@ class Eq a where
 ### subtipagem
 
 
-## coisas específicas de Haskell
+## Coisas específicas de Haskell
 
 
-## recursion schemes
+## Recursion Schemes
 
 
-## lenses
+## Lenses
 
 
-## tipos dependentes
+## Tipos Dependentes
 
 
-## livros recomendados
+## Livros recomendados
 
 
