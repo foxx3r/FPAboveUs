@@ -1,9 +1,9 @@
 # Aprenda programação funcional
+Este repositório irá te ensinar programação funcional do zero com Haskell! :)
 
-Este repositório irá te ensinar programação funcional do zero com Haskell :) também falaremos um pouco de Prolog e Agda aqui.
+Também falaremos um pouco de Prolog e Agda aqui.
 
 # Como contribuir
-
 Para contribuir com o projeto, você deve seguir as seguintes regras:
 
 1. Sem comentários ou exemplos que possam ofender os demais
@@ -18,95 +18,94 @@ Para contribuir com o projeto, você deve seguir as seguintes regras:
 10. Se for modificar as regras, faça-o em um PR separado.
 11. O commit deve estar em inglês.
 
-obs: se você sabe bem matemática, eu ficaria bastante grato se você pudesse ajudar a criar um capítulo sobre matemática ;)
+Obs: se você sabe bem matemática, eu ficaria bastante grato se você pudesse ajudar a criar um capítulo sobre matemática ;)
 
 # Conteúdo
-
-coisas que irão cair no curso:
-* [instalação](#instalação)
-    * [instalando o stack](#instalando-o-stack)
-    * [configurando o stack](#configurando-o-stack)
-    * [stack vs cabal](#stack-vs-cabal)
-    * [instalando o SWI-prolog](#instalando-o-swi-prolog)
-    * [instalando o Emacs](#instalando-o-emacs)
+Coisas que irão cair no curso:
+* [Instalação](#instalação)
+    * [Instalando o stack](#instalando-o-stack)
+    * [Configurando o stack](#configurando-o-stack)
+    * [Stack vs Cabal](#stack-vs-cabal)
+    * [Instalando o SWI-prolog](#instalando-o-swi-prolog)
+    * [Instalando o Emacs](#instalando-o-emacs)
         * [Emacs no Windows](#emacs-no-windows)
         * [Emacs em Unix-like](#emacs-em-unix-like)
-    * [configurando o Emacs](#configurando-o-emacs)
-    * [instalando Agda e o agda-stdlib](#instalando-agda-e-o-agda-stdlib)
-    * [configurando o nosso .ghci + hoogle](#configurando-o-nosso-ghci-e-hoogle)
-* [história da programação funcional e do lambda-calculus](#história-da-programação-funcional-e-do-lambda-calculus)
+    * [Configurando o Emacs](#configurando-o-emacs)
+    * [Instalando Agda e o agda-stdlib](#instalando-agda-e-o-agda-stdlib)
+    * [Configurando o nosso .ghci + hoogle](#configurando-o-nosso-ghci-e-hoogle)
+* [História da programação funcional e do lambda-calculus](#história-da-programação-funcional-e-do-lambda-calculus)
     * [LISP](#lisp)
     * [ML](#ml)
-    * [evolução do lambda-calculus](#evolução-do-lambda-calculus)
-* [características funcionais](#características-funcionais)
-    * [dados imutáveis](#dados-imutáveis)
-    * [transparência referencial](#transparência-referencial)
-    * [sem nulos e exceções](#sem-nulos-e-exceções)
-    * [funções tem tipos únicos](#funções-tem-tipos-únicos)
-    * [toda função retorna algo](#toda-função-retorna-algo)
-    * [first class functions](#first-class-Functions)
-    * [sem globais](#sem-globais)
-    * [side effects](#side-effects)
-    * [pureza](#pureza)
-* [lambda-calculus](#lambda-calculus)
-    * [funções simples](#funções-simples)
-    * [números em lambda-calculus](#números-em-lambda-calculus)
-    * [lógica booleana em lambda-calculus](#lógica-booleana-em-lambda-calculus)
-* [programação lógica](#programação-lógica)
-    * [a linguagem prolog](#a-linguagem-prolog)
-    * [o paradigma de programação lógico](#o-paradigma-de-programação-lógico)
-    * [o paradigma de programação declarativo](#o-paradigma-de-programação-declarativo)
-    * [predicados](#predicados)
-    * [modus ponens](#modus-ponens)
-    * [backtracking](#backtracking)
-    * [resolução SLD](#resolução-sld)
-    * [cut, negação e a resolução SLDNF](#cut-negação-e-a-resolução-sldnf)
-* [programação funcional no geral](#programação-funcional-no-geral)
-    * [morfismo](#morfismo)
-    * [polimorfismo](#polimorfismo)
-    * [função id](#função-id)
-    * [isomorfismo](#isomorfismo)
-    * [pattern matching](#pattern-matching)
-    * [composição](#composição)
-    * [lifting](#lifting)
-    * [constraints](#constraints)
-    * [declarativismo](#declarativismo)
-    * [curry e point-free](#curry-e-point-free)
+    * [Evolução do lambda-calculus](#evolução-do-lambda-calculus)
+* [Características funcionais](#características-funcionais)
+    * [Dados imutáveis](#dados-imutáveis)
+    * [Transparência referencial](#transparência-referencial)
+    * [Sem nulos e exceções](#sem-nulos-e-exceções)
+    * [Funções tem tipos únicos](#funções-tem-tipos-únicos)
+    * [Toda função retorna algo](#toda-função-retorna-algo)
+    * [First class functions](#first-class-Functions)
+    * [Sem globais](#sem-globais)
+    * [Side effects](#side-effects)
+    * [Pureza](#pureza)
+* [Lambda-calculus](#lambda-calculus)
+    * [Funções simples](#funções-simples)
+    * [Números em lambda-calculus](#números-em-lambda-calculus)
+    * [Lógica booleana em lambda-calculus](#lógica-booleana-em-lambda-calculus)
+* [Programação lógica](#programação-lógica)
+    * [A linguagem prolog](#a-linguagem-prolog)
+    * [O paradigma de programação lógico](#o-paradigma-de-programação-lógico)
+    * [O paradigma de programação declarativo](#o-paradigma-de-programação-declarativo)
+    * [Predicados](#predicados)
+    * [Modus ponens](#modus-ponens)
+    * [Backtracking](#backtracking)
+    * [Resolução SLD](#resolução-sld)
+    * [Cut, negação e a resolução SLDNF](#cut-negação-e-a-resolução-sldnf)
+* [Programação funcional no geral](#programação-funcional-no-geral)
+    * [Morfismo](#morfismo)
+    * [Polimorfismo](#polimorfismo)
+    * [Função id](#função-id)
+    * [Isomorfismo](#isomorfismo)
+    * [Pattern matching](#pattern-matching)
+    * [Composição](#composição)
+    * [Lifting](#lifting)
+    * [Constraints](#constraints)
+    * [Declarativismo](#declarativismo)
+    * [Curry e point-free](#curry-e-point-free)
     * [Higher Order Functions e closures](#higher-order-functions-e-closures)
-    * [recursão](#recursão)
-    * [tail call recursion e tail call optimization](#tail-call-recursion-e-tail-call-optimization)
-    * [total functions e partial functions](#total-functions-e-partial-functions)
-    * [list comprehension](#list-comprehension)
-    * [fmap](#fmap)
-    * [filter](#filter)
-    * [fold ou reduce](#fold-ou-reduce)
-    * [zip](#zip)
-    * [continuation passing style](#continuation-passing-style)
-    * [tipos em haskell](#tipos-em-haskell)
-* [introdução a teoria das categorias](#introdução-a-teoria-das-categorias)
-    * [o que é uma categoria?](#o-que-é-uma-categoria)
-    * [endomorfismo](#endomorfismo)
-    * [idempotência](#idempotência)
-    * [monomorfismo](#monomorfismo)
-    * [o que são domínios e codomínios?](#o-que-são-domínios-e-codomínios)
-    * [setóide](#setóide)
-    * [semigrupo](#semigrupo)
-    * [injetividade](#injetividade)
-    * [sobrejetividade](#sobrejetividade)
-    * [bijetividade](#bijetividade)
-    * [função inversa](#função-inversa)
-    * [o que é uma operação binária?](#o-que-é-uma-operação-binária)
-    * [o que são funtores?](#o-que-são-funtores)
-    * [o que são endofuntores?](#o-que-são-endofuntores)
-    * [o que são monoids?](#o-que-são-monoids)
-    * [o que são applicative functors?](#o-que-são-applicative-functors)
-    * [o que são monads?](#o-que-são-monads)
-    * [o que são free monads?](#o-que-são-free-monads)
-    * [o prefixo co](#o-prefixo-co)
-    * [comonads](#comonads)
-    * [transformações naturais](#transformações-naturais)
-    * [produtos e coprodutos](#produtos-e-coprodutos)
-* [lazy programming](#lazy-programming)
+    * [Recursão](#recursão)
+    * [Tail call recursion e tail call optimization](#tail-call-recursion-e-tail-call-optimization)
+    * [Total functions e partial functions](#total-functions-e-partial-functions)
+    * [List comprehension](#list-comprehension)
+    * [Fmap](#fmap)
+    * [Filter](#filter)
+    * [Fold ou Reduce](#fold-ou-reduce)
+    * [Zip](#zip)
+    * [Continuation Passing Style](#continuation-passing-style)
+    * [Tipos em haskell](#tipos-em-haskell)
+* [Introdução a teoria das categorias](#introdução-a-teoria-das-categorias)
+    * [O que é uma categoria?](#o-que-é-uma-categoria)
+    * [Endomorfismo](#endomorfismo)
+    * [Idempotência](#idempotência)
+    * [Monomorfismo](#monomorfismo)
+    * [O que são domínios e codomínios?](#o-que-são-domínios-e-codomínios)
+    * [Setóide](#setóide)
+    * [Semigrupo](#semigrupo)
+    * [Injetividade](#injetividade)
+    * [Sobrejetividade](#sobrejetividade)
+    * [Bijetividade](#bijetividade)
+    * [Função inversa](#função-inversa)
+    * [O que é uma operação binária?](#o-que-é-uma-operação-binária)
+    * [O que são funtores?](#o-que-são-funtores)
+    * [O que são endofuntores?](#o-que-são-endofuntores)
+    * [O que são monoids?](#o-que-são-monoids)
+    * [O que são applicative functors?](#o-que-são-applicative-functors)
+    * [O que são monads?](#o-que-são-monads)
+    * [O que são free monads?](#o-que-são-free-monads)
+    * [O prefixo co](#o-prefixo-co)
+    * [Comonads](#comonads)
+    * [Transformações Naturais](#transformações-naturais)
+    * [Produtos e Coprodutos](#produtos-e-coprodutos)
+* [Lazy programming](#lazy-programming)
     * [o que é laziness?](#o-que-é-laziness)
     * [o que é strictness?](#o-que-é-strictness)
     * [bang patterns](#bang-patterns)
@@ -188,6 +187,7 @@ coisas que irão cair no curso:
     * [purely functional data structures](#purely-functional-data-structures)
 
 ## instalação
+
 
 ### instalando o stack
 
@@ -590,6 +590,7 @@ E linguagens funcionais não tem side effects... Mas pera, não dá para program
 En funcional, pureza se refere a funções que tem seus resultados determinados pelos seus argumentos, e nunca por uma variável global. E elas também não podem ter side effects.
 
 ## lambda-calculus
+
 
 ### funções simples
 
@@ -998,11 +999,11 @@ number x = case x of
 São uma forma mais bonita e que permite múltiplos casos em relação ao if. Um exemplo bem famoso:
 
 ```hs
-bmiTell bmi  
-    | bmi <= 18.5 = "You're underweight, you emo, you!"  
-    | bmi <= 25.0 = "You're supposedly normal. Pffft, I bet you're ugly!"  
-    | bmi <= 30.0 = "You're fat! Lose some weight, fatty!"  
-    | otherwise   = "You're a whale, congratulations!"  
+bmiTell bmi
+    | bmi <= 18.5 = "You're underweight, you emo, you!"
+    | bmi <= 25.0 = "You're supposedly normal. Pffft, I bet you're ugly!"
+    | bmi <= 30.0 = "You're fat! Lose some weight, fatty!"
+    | otherwise   = "You're a whale, congratulations!"
 ```
 
 Aonde o otherwise seria o "caso contrário".
@@ -1538,7 +1539,7 @@ zip [1..5] [9, 8]
 -- [(1, 9), (2, 8)]
 ```
 
-### continuation passing style 
+### continuation passing style
 
 Basicamente, o CPS é um caso de callback, aonde você se aproveita da computação de recursos na stack, e aonde você acumula valores... Uhmm, acumular, vocês se lembram desta frase? Bora ver um exemplo de callback em JavaScript:
 
@@ -1600,8 +1601,8 @@ A anotação `cat :: * -> * -> *` quer dizer que `cat` deve ser um tipo que rece
 data Foo a b = Foo a b deriving (Show)
 
 instance Cat Foo where
-    id_ = Foo undefined undefined -- tem que ser um bottom, porque como o a é 
-                                  -- quantificado (não vem de nenhum 
+    id_ = Foo undefined undefined -- tem que ser um bottom, porque como o a é
+                                  -- quantificado (não vem de nenhum
                                   -- arg de fora), ele tem que ser de todos os
                                   -- tipos, e não um dinâmico como o cat
     (...) f g = \x -> f (g x) -- associativo
@@ -1840,7 +1841,6 @@ mempty :: [Int]
 ```
 
 E também temos um `mappend` que é por padrão igual ao `<>` da typeclass `Semigroup`, no qual concatena/junta dois elementos.
-
 
 ### o que são applicative functors?
 
@@ -2411,6 +2411,7 @@ Basicamente, `seq` te permite ter efeitos colaterais observáveis e é uma das m
 
 ## quantificação e sistemas de tipos
 
+
 ### quantificação universal
 
 Basicamente, a quantificação universal corresponderia ao polimorfismo paramétrico... Ela é denotada por `∀` (forall) na matemática, e existem várias extensões que te permite usar `forall`, sendo elas `-XRankNTypes`, `-XExplicitForAll` e `-XRank2Types`, sendo a primeira a mais usada e a última, a versão antigo e **depreciada** do `-XRankNTypes`. Então, vamos começar com o básico:
@@ -2936,12 +2937,19 @@ class Eq a where
 
 ### subtipagem
 
+
 ## coisas específicas de Haskell
+
 
 ## recursion schemes
 
+
 ## lenses
+
 
 ## tipos dependentes
 
+
 ## livros recomendados
+
+
