@@ -450,11 +450,11 @@ E o exemplo é bem simples, talvez todas as linguagens permitem definir este exe
 
 Basicamente, o `null` ê o erro do século. Ele basicamente consegue quebrar o sistema de tipos, e você não tem como saber por onde ele virá, e talvez ele foi feito para quebrar o sistema de tipos... Um erro grave de arquitetura, porque o `null` não funciona sem você abrir uma exceção para ele no sistema de tipos, ou torná-lo menos rigoroso.
 
-Linguagens funcionais não tem `null`, no caso, Haskell tem o `Maybe` para caso a função possa não retornar nada, que contém os construtores `Just` para caso retorne e `None` para caso não retorne, e isso é perfeitamente seguro porque eles são do mesmo tipo. Um exemplo:
+Linguagens funcionais não tem `null`, no caso, Haskell tem o `Maybe` para caso a função possa não retornar nada, que contém os construtores `Just` para caso retorne e `Nothing` para caso não retorne, e isso é perfeitamente seguro porque eles são do mesmo tipo. Um exemplo:
 
 ```hs
-div _ 0 = None -- "_" é uma boa prática porque não o usamos
-               -- e 0 quer dizer que se o valor y for 0, então retorne None
+div _ 0 = Nothing -- "_" é uma boa prática porque não o usamos
+               -- e 0 quer dizer que se o valor y for 0, então retorne Nothing
 div x y = Just $ x / y -- caso o segundo valor seja 0
                        -- retorne Just $ x / y
                        -- aonde $ ê tipo um parêntese
@@ -465,10 +465,10 @@ Obs: para funções múltiplas linhas como essa, insira `:{` e `:}` no GHCi
 Mas como o `Maybe` é definido? Simples:
 
 ```hs
-data Maybe a = None | Just a
+data Maybe a = Nothing | Just a
 ```
 
-Você não precisa entender este código agora, só precisamos saber que criamos um tipo `Maybe` que recebe um parâmetro `a` de qualquer tipo, e tem o construtor sem argumentos `None` e `Just` que é unário (recebe apenas 1 argumento). E não é importante agora entender o que eu falei, mas sim entender que este código existe... Porque linguagens funcionais geralmente não tem exceções, e no caso de Haskell, a gente usa o `Either`, que é definido como:
+Você não precisa entender este código agora, só precisamos saber que criamos um tipo `Maybe` que recebe um parâmetro `a` de qualquer tipo, e tem o construtor sem argumentos `Nothing` e `Just` que é unário (recebe apenas 1 argumento). E não é importante agora entender o que eu falei, mas sim entender que este código existe... Porque linguagens funcionais geralmente não tem exceções, e no caso de Haskell, a gente usa o `Either`, que é definido como:
 
 ```hs
 data Either a b = Left a | Right b
@@ -885,13 +885,13 @@ ex f b = f b
 
 parse :: Maybe String -> String
 parse (Just x) = x
-parse None = "failed"
+parse Nothing = "failed"
 
 -- ou...
 
 parse :: Maybe a -> a
-parse (Just x) = x -- não sabemos o tipo de x, então o que faremos em None?
-parse None = error "foo"
+parse (Just x) = x -- não sabemos o tipo de x, então o que faremos em Nothing?
+parse Nothing = error "foo"
 ```
 
 Wow, pera lá, por que podemos dae erro? Como sabemos que ele sempre vai ser do tipo do nosso tipo? Bem, claramente não iremos falar disso agora, mas em Haskell (e basicamente todas as linguagens turing completas com polimorfismo paramétrico), você pode ter funções que sejam de todos os tipos, os famosos bottom values.
@@ -974,7 +974,7 @@ Um if sempre deve ter um bloco else e não pode ter mais de uma verificação (a
 
 ```hs
 id :: Int -> Maybe Int
-id = if x == 0 then None else Just x
+id = if x == 0 then Nothing else Just x
 ```
 
 **2. case**
@@ -1433,7 +1433,7 @@ Uma função parcial em Haskell é uma função cujo argumento de retorno pode s
 
 ```hs
 head :: [a] -> Maybe a
-head [] = None
+head [] = Nothing
 head (x:_) = Just x
 ```
 
@@ -2603,10 +2603,10 @@ instance MyClass (Either a b) where
     (#) (Right _) (Left _) = True
 
 instance MyClass (Maybe a) where
-    (#) (Just _) None = True
+    (#) (Just _) Nothing = True
     (#) (Just _) (Just _) = True
-    (#) None None = False
-    (#) None (Just _) = False
+    (#) Nothing Nothing = False
+    (#) Nothing (Just _) = False
 
 instance MyClass Bool where
     (#) True _ = True
@@ -2645,7 +2645,7 @@ instance MyClass (Either a) where
     id_ (Right x) = Right x
 
 instance MyClass Maybe where
-    id_ None = None
+    id_ Nothing = Nothing
     id_ (Just x) = Just x
 ```
 
