@@ -126,7 +126,7 @@ Coisas que irão cair no curso:
 * [Type-level programming](#type-level-programming)
     * [Typeclasses](#typeclasses)
     * [Subtipagem](#subtipagem)
-    * [Variância](#variancia)
+    * [Variância](#variância)
     * [Tipos de dados abstratos (ADTs) / sum types, nullary e unários](#adts)
     * [Higher Kinded Types (HKTs)](#hkts)
     * [Sinônimos de tipos](#sinonimos-de-tipos)
@@ -2934,21 +2934,60 @@ class Eq a where
     {-# MINIMAL (==) | (/=) #-}
 ```
 
-### subtipagem
+### Subtipagem
 
+O termo subtipagem está relacionado com herança, mas não é herança... Herança em lingiagens orientadas a objetos quer dizer que uma classe B herda todos os traços de uma classe A, as funções e atributos (variáveis locais encapsuladas na classe). Já a subtipagem, quer dizer que se B é um subtipo de A, então os 2 são independentes, mas podemos usar métodos da classe A em B, isso significa que se temos um objeto X, ele deve ser então um A para depois ser um B. Confuso? Vamos explicar usando o trio `Functor`, `Applicative` e `Monad`:
+
+```hs
+class Functor (f :: * -> *) where
+  fmap :: (a -> b) -> f a -> f b
+  (<$) :: a -> f b -> f a
+  {-# MINIMAL fmap #-}
+
+class Functor f => Applicative (f :: * -> *) where
+  pure :: a -> f a
+  (<*>) :: f (a -> b) -> f a -> f b
+  GHC.Base.liftA2 :: (a -> b -> c) -> f a -> f b -> f c
+  (*>) :: f a -> f b -> f b
+  (<*) :: f a -> f b -> f a
+  {-# MINIMAL pure, ((<*>) | liftA2) #-}
+
+class Applicative m => Monad (m :: * -> *) where
+  (>>=) :: m a -> (a -> m b) -> m b
+  (>>) :: m a -> m b -> m b
+  return :: a -> m a
+  fail :: String -> m a
+  {-# MINIMAL (>>=) #-}
+```
+
+O que quer dizer a sintaxe `class Functor f => Applicarive f`? Basicamente diz que todo `Applicative f` deve ser um `Functor`, e que toda monad deve ser um applicative.
+
+### Variância
+
+Nos sistemas de tipos, o assunto variância se refere a 3 coisas:
+
+**1. covariância**
+
+Um objeto pode "ultrapassar" outros, ou seja, ele pode ter filhos. Supondo que temos um "a" que é pai de "b", e "c" seja filho de "b"... Supondo que a gente tenha uma função que pega qualquer covariante de "b", então a gente só pode pegar "b" (pai de "c" e filho de "a") e o "c" (filho de "b").
+
+**2. contra-variância**
+
+Se um objeto é contra-variante, então este é o maior de todos. No caso, o "a" é contra-variante. Se pegamos a contra-variante de "b", então só podemos aceitar "b" (um paradoxo, "b" é maior que seus filhos) e "a".
+
+**3. bivariância**
+
+Um objeto bivariante pode ultrapassar e ser ultrapassado por outros objetos. Por exemplo, se pegarmos o bivariante de "b", então estaremos aceitando "a", "b" e "c".
+
+Há também objetos **invariantes**, aqueles que não são nenhuma das 3 variantes. Isso quer dizer que se pegamos o invariante de "b", então aceitamos apenas "b".
+
+Ok, mas por que isso é importante? Basicamente, isto é a base dos sistemas de tipos atuais. Detinir qual a relação entre um objeto e outro é extremamente importante pro compilador, e saber definir isso é ainda mais, por isso usamos o conceito de variantes. Por exemplo, é usado bastante em OO para definir quem é quem em herança, ou em sistemas de tipo com affine/linear types (por exemplo, rust que usa affine types) para definir o conceito de lifetime. Mas por que isso é importante neste curso? Você deve se lembrar deste tópico, pois no futuro iremos falar sobre coisas mais avançadas como lenses, profunctors, optics e prisms.
 
 ## Coisas específicas de Haskell
 
-
 ## Recursion Schemes
-
 
 ## Lenses
 
-
 ## Tipos Dependentes
 
-
 ## Livros recomendados
-
-
