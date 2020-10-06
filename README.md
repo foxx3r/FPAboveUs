@@ -108,7 +108,6 @@ Coisas que irão cair no curso:
 * [Lazy programming](#lazy-programming)
     * [O que é laziness?](#o-que-é-laziness)
     * [O que é strictness?](#o-que-é-strictness)
-    * [Bang Patterns](#bang-patterns)
     * [Irrefutable Patterns](#irrefutable-patterns)
     * [O que são thunks?](#o-que-são-thunks)
     * [WHNF](#whnf)
