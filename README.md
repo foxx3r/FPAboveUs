@@ -2935,7 +2935,7 @@ class Eq a where
 
 ### Subtipagem
 
-O termo subtipagem está relacionado com herança, mas não é herança... Herança em lingiagens orientadas a objetos quer dizer que uma classe B herda todos os traços de uma classe A, as funções e atributos (variáveis locais encapsuladas na classe). Já a subtipagem, quer dizer que se B é um subtipo de A, então os 2 são independentes, mas podemos usar métodos da classe A em B, isso significa que se temos um objeto X, ele deve ser então um A para depois ser um B. Confuso? Vamos explicar usando o trio `Functor`, `Applicative` e `Monad`:
+O termo subtipagem está relacionado com herança, mas não é herança... Herança em linguagens orientadas a objetos quer dizer que uma classe B herda todos os traços de uma classe A, as funções e atributos (variáveis locais encapsuladas na classe). Já a subtipagem, quer dizer que se B é um subtipo de A, então os 2 são independentes, mas podemos usar métodos da classe A em B, isso significa que se temos um objeto X, ele deve ser então um A para depois ser um B. Confuso? Vamos explicar usando o trio `Functor`, `Applicative` e `Monad`:
 
 ```hs
 class Functor (f :: * -> *) where
@@ -2944,18 +2944,18 @@ class Functor (f :: * -> *) where
   {-# MINIMAL fmap #-}
 
 class Functor f => Applicative (f :: * -> *) where
-  pure :: a -> f a
-  (<*>) :: f (a -> b) -> f a -> f b
-  GHC.Base.liftA2 :: (a -> b -> c) -> f a -> f b -> f c
-  (*>) :: f a -> f b -> f b
-  (<*) :: f a -> f b -> f a
+  pure   :: a -> f a
+  (<*>)  :: f (a -> b) -> f a -> f b
+  liftA2 :: (a -> b -> c) -> f a -> f b -> f c
+  (*>)   :: f a -> f b -> f b
+  (<*)   :: f a -> f b -> f a
   {-# MINIMAL pure, ((<*>) | liftA2) #-}
 
 class Applicative m => Monad (m :: * -> *) where
-  (>>=) :: m a -> (a -> m b) -> m b
-  (>>) :: m a -> m b -> m b
+  (>>=)  :: m a -> (a -> m b) -> m b
+  (>>)   :: m a -> m b -> m b
   return :: a -> m a
-  fail :: String -> m a
+  fail   :: String -> m a
   {-# MINIMAL (>>=) #-}
 ```
 
